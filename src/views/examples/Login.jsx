@@ -73,7 +73,7 @@ class Login extends React.Component {
 	  .catch(err => {
 	    console.error(err);
 	    alert('Error logging in please try again');
-	  });;
+	  });
 
     
 	  // axios.post(`${process.env.REACT_APP_API_PORT}/users/login`, {

@@ -57,7 +57,8 @@ class CourseInfo extends React.Component {
 			},
 			students: [{}],
 			teachers: [{}],
-			registration: {}
+			registration: {},
+			hasRegistered: false
 		}
 	}
 	componentDidMount() {
@@ -67,6 +68,7 @@ class CourseInfo extends React.Component {
 			url: `courses/${this.props.match.params.id}`,
 		}).then(res => {
 				const data = res.data
+				console.log("Data", data)
 				this.setState({data: data})
 			}).catch(err => {
 				console.log("Error")
@@ -115,6 +117,7 @@ class CourseInfo extends React.Component {
 							data-toggle="modal"
 							data-target="#exampleModal"
 							size="sm"
+							disabled={this.state.data.hasRegistered}
 							onClick={this.addToCart}>Add to cart
 						</Button>
 					</Col>
