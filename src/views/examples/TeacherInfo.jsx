@@ -10,6 +10,8 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React from "react";
+import client from "../../apis/client";
+
 
 // reactstrap components
 import {
@@ -43,7 +45,11 @@ class TeacherInfo extends React.Component {
 		}
 	}
 	componentDidMount() {
-		axios.get(`${process.env.REACT_APP_API_PORT}/user/${this.props.match.params.id}`)
+		axios.get(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`)
+		client({
+			method: 'get' ,
+			url: `/users/${this.props.match.params.id}`,
+		  })
 			.then(res => {
 					this.setState({teacher: res.data})
 			}).catch(err => {
