@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios'
 import {StripeProvider, Elements} from 'react-stripe-elements'
 import Checkout from './Checkout'
+import client from "../../apis/client";
+
 import {
   Button,
   Card,
@@ -66,6 +68,25 @@ class Cart extends React.Component {
 			pathname: "/student/courses"
 		})
   }
+
+  confirmCourseSelection = () => {
+	console.log("CART",this.state.cart)
+//Make confirm course selection
+	client({
+		method: 'post',
+		url: '/course-registrations',
+		data: {
+			course_id: this.state.cart.map( course => {return course.id})
+		},
+	}).then(data => {
+
+	}).catch(error => {
+
+	})
+	// this.props.history.push({
+	// 	pathname: "/student/courses"
+	// })
+}
 	render () {
 		return (
 			<>
@@ -86,11 +107,9 @@ class Cart extends React.Component {
 								</Button>
               </div>
             </CardBody>
-						<StripeProvider apiKey="pk_test_P55aXLui6UUIKIktSJYLq56p00uE4eoJif">
-							<Elements>
-								<Checkout user={this.state.user} cart={this.state.cart} total={this.renderTotal()} />
-							</Elements>
-						</StripeProvider>
+			<Button size="sm" color="primary" onClick={this.confirmCourseSelection}>
+						Confirm Course Selection
+			</Button>						
           </Card>
 					<Button className="btn-block my-5" size="sm" color="primary" onClick={this.goBackToCourses}>
 						Back to course selection

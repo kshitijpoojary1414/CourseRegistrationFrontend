@@ -46,7 +46,8 @@ class CoursesTable extends React.Component {
 						limit: 0
 					},
 					students: [{}],
-					teachers: []
+					teachers: [],
+					hasRegistered: false
 				}
 			]
 	}
@@ -65,6 +66,7 @@ class CoursesTable extends React.Component {
 		url: '/courses',
 	  }).then(res => {
 					const data = res.data;
+					console.log("og data",data)
 					this.setState({data: data})
 			}).catch(err => {
 				console.log("Error")
@@ -116,7 +118,10 @@ class CoursesTable extends React.Component {
 		if (this.props.location.pathname === "/student/courses") {
 			return(
 				<td className="text-left">
+						{	!this.state.data[0].hasRegistered && 
+
 					<UncontrolledDropdown>
+						
 						<DropdownToggle
 							className="btn-icon-only text-light"
 							href="#pablo"
@@ -133,19 +138,24 @@ class CoursesTable extends React.Component {
 							>
 								Add to cart
 							</DropdownItem>
+
 							<DropdownItem
 								onClick={() => this.addToCartAndCheckout(course.id, course.name, course.price)}
 							>
 								Add to cart and register
 							</DropdownItem>
 						</DropdownMenu>
-					</UncontrolledDropdown>
+					</UncontrolledDropdown>}
+					{	this.state.data[0].hasRegistered && 
+						<span>Already Registered</span>
+					}
 				</td>
 			)
 		}
 	}
   render() {
 		console.log(this.orderList())
+		console.log("Has registered",this.state.data[0].hasRegistered)
     return (
 			<>
 				{
