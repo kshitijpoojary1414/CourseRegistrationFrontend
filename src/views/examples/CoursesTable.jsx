@@ -155,7 +155,6 @@ class CoursesTable extends React.Component {
 	}
   render() {
 		console.log(this.orderList())
-		console.log("Has registered",this.state.data[0].hasRegistered)
     return (
 			<>
 				{
