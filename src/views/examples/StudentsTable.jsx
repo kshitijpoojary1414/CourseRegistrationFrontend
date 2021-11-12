@@ -21,15 +21,15 @@ import client from "../../apis/client";
 
 // reactstrap components
 import {
-  Badge,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  // UncontrolledTooltip
+	Badge,
+	DropdownMenu,
+	DropdownItem,
+	UncontrolledDropdown,
+	DropdownToggle,
+	Media,
+	// UncontrolledTooltip
 } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from 'axios'
 // core components
 
@@ -77,7 +77,7 @@ class StudentsTable extends React.Component {
 		]
 	}
 	orderList = () => {
-		let orderedList = this.state.data.sort((a,b) => {
+		let orderedList = this.state.data.sort((a, b) => {
 			var studentA = a.last_name.toUpperCase()
 			var studentB = b.last_name.toUpperCase()
 			return studentA < studentB ? -1 : studentA > studentB ? 1 : 0
@@ -88,24 +88,24 @@ class StudentsTable extends React.Component {
 	componentDidMount() {
 		// axios.get(`${process.env.REACT_APP_API_PORT}/students`)
 		client({
-			method: 'get' ,
+			method: 'get',
 			url: `/users/roles/student`,
-		  })
+		})
 			.then(res => {
 				const data = res.data.users
-				console.log("D",res)
-				this.setState({data: data})
+				console.log("D", res)
+				this.setState({ data: data })
 			}).catch(err => {
 				console.log(err)
 				console.log("Error")
 			})
 	}
-  render() {
-    return (
+	render() {
+		return (
 			<>
 				{
 					this.orderList().map((student, key) => {
-						return(
+						return (
 							<tr key={key}>
 								<td>
 									<Media className="align-items-center">
@@ -114,7 +114,7 @@ class StudentsTable extends React.Component {
 											className="avatar rounded-circle mr-3"
 										>
 											<img
-											src={require("../../assets/img/theme/team-4-800x800.jpg")} alt="avatar"
+												src={require("../../assets/img/theme/team-4-800x800.jpg")} alt="avatar"
 											/>
 										</Link>
 										<Media>
@@ -127,8 +127,8 @@ class StudentsTable extends React.Component {
 									</Media>
 								</td>
 								<td>{
-									student.courses.map((course, key) => {
-										return(
+									student.courses?.map((course, key) => {
+										return (
 											<div key={key}>
 												<Link to={`course/${course.id}`}>
 													{course.name}
@@ -137,34 +137,34 @@ class StudentsTable extends React.Component {
 										)
 									})
 								}
-							</td>
-							<td>
-								{
-									student.courses.map((course, key) => {
-										return (
-											course.teachers.map((teacher, key) => {
-												return(
-													<div className="avatar-group" key={key}>
-														<Link to={`teacher/${teacher.id}`}>
-															<span className="avatar avatar-sm" >
-																<img
-																	alt="..."
-																	className="rounded-circle"
-																	src={require("../../assets/img/theme/team-4-800x800.jpg")}
-																/>
-															</span>
-															<span>
-																{teacher.first_name} {teacher.last_name}
-															</span>
-														</Link>
-													</div>
-												)
-											})
-										)
-									})
+								</td>
+								<td>
+									{
+										student.courses?.map((course, key) => {
+											return (
+												course.teachers.map((teacher, key) => {
+													return (
+														<div className="avatar-group" key={key}>
+															<Link to={`teacher/${teacher.id}`}>
+																<span className="avatar avatar-sm" >
+																	<img
+																		alt="..."
+																		className="rounded-circle"
+																		src={require("../../assets/img/theme/team-4-800x800.jpg")}
+																	/>
+																</span>
+																<span>
+																	{teacher.first_name} {teacher.last_name}
+																</span>
+															</Link>
+														</div>
+													)
+												})
+											)
+										})
 
-								}
-							</td>
+									}
+								</td>
 
 								<td>
 									<Badge color="" className="badge-dot mr-4">
@@ -211,8 +211,8 @@ class StudentsTable extends React.Component {
 					})
 				}
 			</>
-    );
-  }
+		);
+	}
 }
 
 export default StudentsTable;
