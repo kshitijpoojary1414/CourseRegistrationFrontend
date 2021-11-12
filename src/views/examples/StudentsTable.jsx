@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import client from "../../apis/client";
+
 
 // reactstrap components
 import {
@@ -84,11 +86,17 @@ class StudentsTable extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get(`${process.env.REACT_APP_API_PORT}/students`)
+		// axios.get(`${process.env.REACT_APP_API_PORT}/students`)
+		client({
+			method: 'get' ,
+			url: `/users/roles/student`,
+		  })
 			.then(res => {
-				const data = res.data
+				const data = res.data.users
+				console.log("D",res)
 				this.setState({data: data})
 			}).catch(err => {
+				console.log(err)
 				console.log("Error")
 			})
 	}

@@ -42,6 +42,8 @@ import axios from 'axios'
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
 import TeacherCard from "./TeacherCard.jsx"
 import Schedule from "./Schedule.jsx";
+import client from "../../apis/client";
+
 
 class CourseCreate extends React.Component {
 	state = {
@@ -128,9 +130,17 @@ class CourseCreate extends React.Component {
 	sendInputToState = (e, stateRef, stateObj) => {
 		let data = this.state.data
 		if (stateObj) {
-			data[stateObj][stateRef] = e.target.value
+			if(stateRef == 'limit') {
+				data[stateObj][stateRef] = Math.abs(e.target.value)
+			} else {
+				data[stateObj][stateRef] = e.target.value
+			}
 		} else {
-			data[stateRef] = e.target.value
+			if(stateRef == 'price') {
+				data[stateRef] = Math.abs(e.target.value)
+			} else {
+				data[stateRef] = e.target.value
+			}
 		}
 		this.setState({data})
 	}
@@ -154,11 +164,17 @@ class CourseCreate extends React.Component {
 	}
 	submitUpdates = (e) => {
 		e.preventDefault()
-		axios.post(`${process.env.REACT_APP_API_PORT}/admin/postCourse`, this.state.data)
+		// axios.post(`${process.env.REACT_APP_API_PORT}/admin/postCourse`, this.state.data)
+		console.log("courses",this.state.data)
+		client({
+			method: 'post' ,
+			url: `/courses`,
+			data: this.state.data
+		  })
 			.then(data => {
-					console.log(data.data.id)
+					console.log(data.data.data)
 					this.props.history.push({
-						pathname: `/admin/course/${data.data.id}`
+						pathname: `/admin/course/${data.data.data.id}`
 					})
 			}).catch(err => {
 				console.log("Error")
@@ -182,9 +198,12 @@ class CourseCreate extends React.Component {
 	}
 	toggleTeacherDropdown = (e) => {
 		e.preventDefault()
-		axios.get(`${process.env.REACT_APP_API_PORT}/teachers`)
+		client({
+			method: 'get' ,
+			url: `/users/roles/teacher`,
+		  })
 			.then(res => {
-				const allTeachers = res.data
+				const allTeachers = res.data.users
 				this.setState({
 					dropdownOpen: !this.state.dropdownOpen,
 					allTeachers: allTeachers
