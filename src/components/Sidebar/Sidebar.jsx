@@ -151,7 +151,7 @@ class Sidebar extends React.Component {
               />
             </NavbarBrand>
           ) : null */}
-          <h1 >CourseFill</h1>
+          <h1 >SignMeUp</h1>
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
