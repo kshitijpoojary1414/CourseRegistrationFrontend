@@ -27,6 +27,7 @@ import {
 	UncontrolledDropdown,
 	DropdownToggle,
 	Media,
+	Input
 	// UncontrolledTooltip
 } from "reactstrap";
 import { Link } from "react-router-dom"
@@ -179,11 +180,31 @@ class StudentsTable extends React.Component {
 									</Badge>
 								</td>
 								}
-								<td style={{ paddingLeft: '1.6rem' }}>
-									100
-								</td>
+
+								{this.props.location.pathname === '/teacher/students' ?
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Input style={{ width: '4em' }} />
+									</td> :
+									<td style={{ paddingLeft: '1.6rem' }}>
+										100
+									</td>
+								}
+								{this.props.location.pathname === '/teacher/students' &&
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Button>Submit</Button>
+									</td>
+
+								}
+								{this.props.location.pathname === '/teacher/students' ?
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Input />
+									</td> :
+									<td style={{ paddingLeft: '1.6rem' }}>
+										100
+									</td>
+								}
 								<td className="text-left">
-									<Button>Drop Student</Button>
+									<Button>Drop</Button>
 									{/* <UncontrolledDropdown>
 										<DropdownToggle
 											className="btn-icon-only text-light"

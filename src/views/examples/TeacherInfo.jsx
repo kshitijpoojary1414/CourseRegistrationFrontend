@@ -45,7 +45,7 @@ class TeacherInfo extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log('Teacher Info Mounted ', this.props);
+		console.log('Teacher Info Mounted ', this.props.location.search);
 		axios.get(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`)
 		client({
 			method: 'get',
@@ -54,11 +54,12 @@ class TeacherInfo extends React.Component {
 			.then(res => {
 				this.setState({ teacher: res.data })
 			}).catch(err => {
-				console.log("Error")
+				console.log("Error - ", err);
 			})
 	}
 	componentDidUpdate() {
 		console.log('Teacher Info Mounted update ', this.props);
+
 
 	}
 	renderEditButton = () => {

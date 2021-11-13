@@ -330,7 +330,7 @@ class Tables extends React.Component {
 			return ["Teacher", "Course", "Subject", "Registration", "Schedule"]
 		}
 		else if (this.props.location.pathname === "/teacher/students") {
-			return ["Name", "Grades", "Action"]
+			return ["Name", "Grades", "Confirm", "Comments", "Action"]
 		}
 		else if (this.props.location.pathname === "/admin/subjects") {
 			return ["Subject", "Course", "Teachers", "Registration", "Schedule"]
