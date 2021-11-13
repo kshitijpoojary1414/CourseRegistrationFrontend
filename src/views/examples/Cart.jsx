@@ -79,9 +79,15 @@ class Cart extends React.Component {
 			course_id: this.state.cart.map( course => {return course.id})
 		},
 	}).then(data => {
-
+		alert('Courses has been added')
+		this.props.history.push({
+		pathname: "/student/courses"
+		})
 	}).catch(error => {
-
+		alert('Some courses could not be added. Please refer the courses table')
+		this.props.history.push({
+			pathname: "/student/courses"
+		})
 	})
 	// this.props.history.push({
 	// 	pathname: "/student/courses"

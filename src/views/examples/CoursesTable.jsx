@@ -22,6 +22,7 @@ import client from "../../apis/client";
 // reactstrap components
 import {
   Badge,
+  Dropdown,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
@@ -36,6 +37,7 @@ import axios from 'axios'
 
 class CoursesTable extends React.Component {
 	state = {
+			department_id: this.props.department_id,
 			data: [
 				{
 					schedule: {
@@ -59,11 +61,46 @@ class CoursesTable extends React.Component {
 		})
 		return orderedList
 	}
-	componentDidMount() {
+	// componentDidUpdate() {
+	// 	console.log("Here",this.props.department_id)
+	// 	client({
+	// 		method: 'get',
+	// 		url: '/courses',
+	// 		params: {
+	// 			department_id : this.props.department_id
+	// 		}
+	// 	  }).then(res => {
+	// 					const data = res.data;
+	// 					console.log("og data",data)
+	// 					this.setState({data: data})
+	// 			}).catch(err => {
+	// 				console.log("Error")
+	// 			})
+	// }
+	fetchCourses = (department_id) => {
+		client({
+			method: 'get',
+			url: '/courses',
+			params: {
+				department_id : department_id
+			}
+		  }).then(res => {
+						const data = res.data;
+						console.log("og data",data)
+						this.setState({data: data})
+				}).catch(err => {
+					console.log("Error")
+				})
+	}
+	componentWillMount() {
 	// axios.get(`${process.env.REACT_APP_API_PORT}/courses`)
+	console.log("Here",this.props.department_id)
 	client({
 		method: 'get',
 		url: '/courses',
+		params: {
+			department_id : this.props.department_id
+		}
 	  }).then(res => {
 					const data = res.data;
 					console.log("og data",data)
@@ -83,6 +120,19 @@ class CoursesTable extends React.Component {
 			alert('Course added successfully')
 		}
 		localStorage.setItem('cart', JSON.stringify(cart))
+	}
+
+	dropCourse = (registrationId) => {
+		console.log(registrationId)
+		client({
+			method: 'delete',
+			url: `/course-registrations/${registrationId}`
+		}).then(data => {
+			window.location.reload()
+		}).catch( error => {
+			console.log(error)
+			alert("Some error occured. Please refresh the page")
+		})
 	}
 	addToCartAndCheckout = (courseId, courseName, price) => {
 		let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
@@ -117,11 +167,11 @@ class CoursesTable extends React.Component {
 	renderDropdown = (course) => {
 		if (this.props.location.pathname === "/student/courses") {
 			return(
-				<td className="text-left">
-						{	!this.state.data[0].hasRegistered && 
+				
+				<td  key= {this.props.department_id}className="text-left">
+						{	!course.hasRegistered && 
 
-					<UncontrolledDropdown>
-						
+					<UncontrolledDropdown>			
 						<DropdownToggle
 							className="btn-icon-only text-light"
 							href="#pablo"
@@ -146,8 +196,28 @@ class CoursesTable extends React.Component {
 							</DropdownItem>
 						</DropdownMenu>
 					</UncontrolledDropdown>}
-					{	this.state.data[0].hasRegistered && 
-						<span>Already Registered</span>
+					{	course.hasRegistered && 
+											<UncontrolledDropdown>			
+											<DropdownToggle
+												className="btn-icon-only text-light"
+												href="#pablo"
+												role="button"
+												size="sm"
+												color=""
+												onClick={e => e.preventDefault()}
+											>
+												<i className="fas fa-ellipsis-v" />
+											</DropdownToggle>
+											<DropdownMenu className="dropdown-menu-arrow" right>
+												<DropdownItem
+													onClick={() => this.dropCourse(course.registrationDetails)}
+												>
+													Drop
+												</DropdownItem>
+					
+						
+											</DropdownMenu>
+										</UncontrolledDropdown>
 					}
 				</td>
 			)
@@ -155,13 +225,13 @@ class CoursesTable extends React.Component {
 	}
   render() {
 		console.log(this.orderList())
-		console.log("Has registered",this.state.data[0].hasRegistered)
+		console.log(this.props.department_id,this.props.courses)
     return (
-			<>
+			<> <div key={this.props.department_id}></div>
 				{
-					this.orderList().map((course, key) => {
+					this.props.courses.map((course, key) => {
 						return(
-							<tr key={key}>
+							<tr key={key+this.props.department_id}>
 									<td>
 										<Link to={`course/${course.id}`}>
 											{course.name}
@@ -219,9 +289,19 @@ class CoursesTable extends React.Component {
 											${course.price}
 										</Link>
 									</td>
+	
+									<td>
+									<Link to={`course/${course.id}`}>
+										{course?.department?.name ? course.department.name : "     -"}
+
+										</Link>
+									</td>
+									<td>
 									{
 										this.renderDropdown(course)
 									}
+									</td>
+
 							</tr>
 						)
 					})

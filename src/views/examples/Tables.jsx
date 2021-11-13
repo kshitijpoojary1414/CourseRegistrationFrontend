@@ -16,20 +16,26 @@
 
 */
 import React from "react";
+import client from "../../apis/client";
+
 
 // reactstrap components
 import {
-  Card,
-  CardHeader,
-  CardFooter,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Table,
-  Container,
+	Card,
+	CardHeader,
+	CardFooter,
+	Pagination,
+	PaginationItem,
+	PaginationLink,
+	Table,
+	Container,
 	Row,
 	Col,
-	Button
+	Button,
+	DropdownItem,
+	DropdownToggle,
+	DropdownMenu,
+	Dropdown
 } from "reactstrap";
 // core components
 import Header from "../../components/Headers/Header.jsx";
@@ -41,6 +47,8 @@ import StudentsTable from "./StudentsTable.jsx"
 
 class Tables extends React.Component {
 	state = {
+		dropdownOpen: false,
+		departmentName: "" ,
 		courses: [
 			{
 				img: {
@@ -157,7 +165,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-2-800x800.jpg")
 						},
 						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 					}
 				],
 				courses: [
@@ -183,7 +191,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-1-800x800.jpg")
 						},
 						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
 					}
 				],
 				courses: [
@@ -209,7 +217,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-2-800x800.jpg")
 						},
 						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 					},
 					{
 						name: "Ali",
@@ -220,7 +228,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-1-800x800.jpg")
 						},
 						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
 					}
 				],
 				courses: [
@@ -239,17 +247,17 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"Bowling",
+						name: "Bowling",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Throwing Strikes",
+						name: "Throwing Strikes",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Fashion Style",
+						name: "Fashion Style",
 						subject: "Fashion",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
@@ -266,22 +274,22 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"Ninjitsu",
+						name: "Ninjitsu",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Skateboarding",
+						name: "Skateboarding",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Meditation",
+						name: "Meditation",
 						subject: "Health/Wellbeing",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
 				],
-				students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+				students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 			},
 			{
 				name: "Ali",
@@ -293,24 +301,43 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"One Round Knockouts",
+						name: "One Round Knockouts",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"12 Punch combination",
+						name: "12 Punch combination",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Being The Greatest",
+						name: "Being The Greatest",
 						subject: "Health/Wellbeing",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
 				],
-				students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+				students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
+			}
+		],
+		departments: [],
+		selectedDepartment: "",
+		coursesTableData: [
+			{
+				schedule: {
+					days: []
+				},
+				registration: {
+					registered: 0,
+					limit: 0
+				},
+				students: [{}],
+				teachers: [],
+				hasRegistered: false
 			}
 		]
+	}
+	componentWillMount(){
+		this.fetchDepartments()
 	}
 	renderCardHeader = () => {
 		let headerText = this.props.location.pathname.match("[^/]+$")[0]
@@ -319,7 +346,7 @@ class Tables extends React.Component {
 	}
 	makeTableHeadProps = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price"]
+			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price","Department"]
 		} else if (this.props.location.pathname === "/admin/subjects") {
 			return ["Subject", "Course", "Teachers", "Registration", "Schedule", "Price"]
 		} else if (this.props.location.pathname === "/admin/teachers") {
@@ -327,7 +354,7 @@ class Tables extends React.Component {
 		} else if (this.props.location.pathname === "/admin/students") {
 			return ["Student", "Courses", "Teachers", "Schedule"]
 		} else if (this.props.location.pathname === "/student/courses") {
-			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Register"]
+			return ["Course", "Subject", "Teachers", "Schedule", "Price","Department","Register"]
 		} else if (this.props.location.pathname === "/student/subjects") {
 			return ["Subject", "Course", "Teachers", "Schedule", "Price", "Register"]
 		} else if (this.props.location.pathname === "/student/teachers") {
@@ -336,7 +363,7 @@ class Tables extends React.Component {
 	}
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
-			return <CoursesTable courses={this.state.courses} {...this.props} />
+			return <CoursesTable courses={this.state.coursesTableData} department_id = {this.state.selectedDepartment.id} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
 			return <SubjectsTable courses={this.state.courses} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
@@ -347,7 +374,7 @@ class Tables extends React.Component {
 	}
 	renderAddCourse = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return(
+			return (
 				<Col className="text-right">
 					<Button
 						color="primary"
@@ -368,34 +395,161 @@ class Tables extends React.Component {
 			)
 		}
 	}
-  render() {
-    return (
-      <>
-        <Header />
-        {/* Page content */}
-        <Container className="mt--7" fluid>
-          {/* Table */}
-          <Row>
-            <div className="col">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <h3 className="mb-0">{this.renderCardHeader()}</h3>
-									{
-										this.renderAddCourse()
-									}
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
- 										<TableHead
+
+	toggle = (e) => {
+		e.preventDefault()
+		if (!this.state.dropdownOpen) {
+			this.setState({
+				...this.state,
+				dropdownOpen: !this.state.dropdownOpen
+			})
+		}
+
+	}
+	selectItem = (e) => {
+		console.log(e)
+	}
+	fetchDepartments = () => {
+		client({
+			method: 'get',
+			url: '/departments'
+		}).then(data => {
+			this.setState({
+				...this.state,
+				departments : data.data,
+				departmentName: data.data[0].name,
+				selectedDepartment: data.data[0]
+			})
+			this.fetchCourses(data.data[0].id)
+		}).catch( error => {
+			alert("Some error occured. Please refresh the page")
+		})
+	}
+
+	fetchCourses = (department_id) => {
+		client({
+			method: 'get',
+			url: '/courses',
+			params: {
+				department_id : department_id
+			}
+		  }).then(res => {
+						const data = res.data;
+						console.log("og data",data)
+						this.setState({
+							...this.state,
+							coursesTableData: data
+						})
+				}).catch(err => {
+					console.log("Error")
+				})
+	}
+
+	selectDropdown = (e, department) => {
+		client({
+			method: 'get',
+			url: '/courses',
+			params: {
+				department_id : department.id
+			}
+		  }).then(res => {
+						const data = res.data;
+						console.log("og data",data)
+						this.setState({
+							...this.state,
+							departmentName: department.name,
+							dropdownOpen: false,
+							selectedDepartment: department,
+							coursesTableData: data
+						})
+				}).catch(err => {
+					console.log("Error")
+				})
+		// this.setState({
+		// 	...this.state,
+		// 	departmentName: e.currentTarget.textContent,
+		// 	dropdownOpen: false,
+		// 	selectedDepartment: department,
+		// 	// coursesTableData : this.fetchCourses(department.id)
+			
+		// })
+
+
+
+
+	}
+	renderDropDown = () => {
+		return (
+			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggle(e)}>
+				<DropdownToggle caret>
+					{this.state.departmentName}
+				</DropdownToggle>
+				<DropdownMenu right>
+					{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+					{
+						this.state.departments.map(
+							department => {
+								return (<DropdownItem id ={department.name} ><div onClick={(e) => this.selectDropdown(e,department)}> {department.name}</div> </DropdownItem>)	
+							}
+						)
+					}
+			
+				</DropdownMenu>
+			</Dropdown>
+		)
+	}
+	render() {
+		return (
+			<>{console.log("COURSES",this.props.courses)}
+				<Header />
+
+				{/* Page content */}
+				<Container className="mt--7" fluid>
+					{/* Table */}
+					<Row>
+						<div className="col">
+							<Card className="shadow">
+								<CardHeader className="border-0">
+									<div className="tableHeader" style={{ display: "flex", justifyContent: "space-between" }}>
+
+										<h3 className="mb-0">{this.renderCardHeader()}</h3>
+										{
+											this.renderAddCourse()
+										}
+										<div>
+											{/* {this.renderDropDown()} */}
+										{			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggle(e)}>
+				<DropdownToggle caret>
+					{this.state.departmentName}
+				</DropdownToggle>
+				<DropdownMenu right>
+					{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+					{
+						this.state.departments.map(
+							department => {
+								return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
+							}
+						)
+					}
+			
+				</DropdownMenu>
+			</Dropdown>}
+										</div>
+									</div>
+
+								</CardHeader>
+								<Table className="align-items-center table-flush" responsive>
+									<thead className="thead-light">
+										<TableHead
 											columns={this.makeTableHeadProps()}
 										/>
-                   </thead>
-                  <tbody>
+									</thead>
+									<tbody>
 										{
 											this.renderTableData()
 										}
-                  </tbody>
-                </Table>
+									</tbody>
+								</Table>
 								<CardFooter className="py-4">
 									<nav aria-label="...">
 										<Pagination
@@ -448,13 +602,13 @@ class Tables extends React.Component {
 										</Pagination>
 									</nav>
 								</CardFooter>
-              </Card>
-            </div>
-          </Row>
-        </Container>
-      </>
-    );
-  }
+							</Card>
+						</div>
+					</Row>
+				</Container>
+			</>
+		);
+	}
 }
 
 export default Tables;
