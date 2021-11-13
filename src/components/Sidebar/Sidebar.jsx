@@ -62,6 +62,9 @@ class Sidebar extends React.Component {
     super(props);
     this.activeRoute.bind(this);
   }
+  componentDidMount() {
+    console.log('Props in sidebar - ', this.props);
+  }
   // verifies if routeName is the one active (in browser input)
   activeRoute(routeName) {
     return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
@@ -81,35 +84,49 @@ class Sidebar extends React.Component {
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
     return routes.map((prop, key) => {
-			if (this.props.location.pathname.includes('admin/') && prop.layout === "/admin" && !prop.invisible) {
-				return (
-	        <NavItem key={key}>
-	          <NavLink
-	            to={prop.layout + prop.path}
-	            tag={NavLinkRRD}
-	            onClick={this.closeCollapse}
-	            activeClassName="active"
-	          >
-	            <i className={prop.icon} />
-	            {prop.name}
-	          </NavLink>
-	        </NavItem>
-	      );
-			} else if (this.props.location.pathname.includes('student/') && prop.layout === "/student" && !prop.invisible && !this.props.location.pathname.includes('admin/')) {
-				return (
-	        <NavItem key={key}>
-	          <NavLink
-	            to={prop.layout + prop.path}
-	            tag={NavLinkRRD}
-	            onClick={this.closeCollapse}
-	            activeClassName="active"
-	          >
-	            <i className={prop.icon} />
-	            {prop.name}
-	          </NavLink>
-	        </NavItem>
-	      );
-			}
+      if (this.props.location.pathname.includes('admin/') && prop.layout === "/admin" && !prop.invisible) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={this.closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
+      } else if (this.props.location.pathname.includes('student/') && prop.layout === "/student" && !prop.invisible && !this.props.location.pathname.includes('admin/')) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={this.closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
+      } else if (this.props.location.pathname.includes('teacher/') && prop.layout === "/teacher" && !prop.invisible && !this.props.location.pathname.includes('admin/')) {
+        return (
+          <NavItem key={key}>
+            <NavLink
+              to={prop.layout + prop.path}
+              tag={NavLinkRRD}
+              onClick={this.closeCollapse}
+              activeClassName="active"
+            >
+              <i className={prop.icon} />
+              {prop.name}
+            </NavLink>
+          </NavItem>
+        );
+      }
     });
   };
   render() {

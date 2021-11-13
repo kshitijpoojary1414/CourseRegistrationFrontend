@@ -19,14 +19,14 @@ import React from "react";
 
 // reactstrap components
 import {
-  Card,
-  CardHeader,
-  CardFooter,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Table,
-  Container,
+	Card,
+	CardHeader,
+	CardFooter,
+	Pagination,
+	PaginationItem,
+	PaginationLink,
+	Table,
+	Container,
 	Row,
 	Col,
 	Button
@@ -157,7 +157,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-2-800x800.jpg")
 						},
 						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 					}
 				],
 				courses: [
@@ -183,7 +183,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-1-800x800.jpg")
 						},
 						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
 					}
 				],
 				courses: [
@@ -209,7 +209,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-2-800x800.jpg")
 						},
 						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 					},
 					{
 						name: "Ali",
@@ -220,7 +220,7 @@ class Tables extends React.Component {
 							src: require("../../assets/img/theme/team-1-800x800.jpg")
 						},
 						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
 					}
 				],
 				courses: [
@@ -239,17 +239,17 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"Bowling",
+						name: "Bowling",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Throwing Strikes",
+						name: "Throwing Strikes",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Fashion Style",
+						name: "Fashion Style",
 						subject: "Fashion",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
@@ -266,22 +266,22 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"Ninjitsu",
+						name: "Ninjitsu",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Skateboarding",
+						name: "Skateboarding",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Meditation",
+						name: "Meditation",
 						subject: "Health/Wellbeing",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
 				],
-				students: ["Leonardo","Donatello", "Michaelangelo", "Raphael"]
+				students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
 			},
 			{
 				name: "Ali",
@@ -293,24 +293,27 @@ class Tables extends React.Component {
 				},
 				courses: [
 					{
-						name:"One Round Knockouts",
+						name: "One Round Knockouts",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"12 Punch combination",
+						name: "12 Punch combination",
 						subject: "Sports",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					},
 					{
-						name:"Being The Greatest",
+						name: "Being The Greatest",
 						subject: "Health/Wellbeing",
 						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 					}
 				],
-				students: ["Tyson","Mayweather", "Butterbean", "Holyfield"]
+				students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
 			}
 		]
+	}
+	componentDidMount() {
+		console.log('Table Component mounted - ', this.props);
 	}
 	renderCardHeader = () => {
 		let headerText = this.props.location.pathname.match("[^/]+$")[0]
@@ -319,9 +322,21 @@ class Tables extends React.Component {
 	}
 	makeTableHeadProps = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price"]
-		} else if (this.props.location.pathname === "/admin/subjects") {
-			return ["Subject", "Course", "Teachers", "Registration", "Schedule", "Price"]
+			return ["Course", "Subject", "Teachers", "Registration", "Schedule"]
+		} else if (this.props.location.pathname === "/teacher/courses") {
+			return ["Course", "Name", "Registration", "Schedule"]
+		}
+		else if (this.props.location.pathname === "/teacher/teachers") {
+			return ["Teacher", "Registration", "Schedule"]
+		}
+		else if (this.props.location.pathname === "/teacher/students") {
+			return ["Name", "Action"]
+		}
+		else if (this.props.location.pathname === "/admin/subjects") {
+			return ["Subject", "Course", "Teachers", "Registration", "Schedule"]
+		}
+		else if (this.props.location.pathname === "/admin/subjects") {
+			return ["Subject", "Course", "Teachers", "Registration", "Schedule"]
 		} else if (this.props.location.pathname === "/admin/teachers") {
 			return ["Teacher", "Courses", "Subject", "Students", "Schedule"]
 		} else if (this.props.location.pathname === "/admin/students") {
@@ -335,19 +350,19 @@ class Tables extends React.Component {
 		}
 	}
 	renderTableData = () => {
-		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
+		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses" || this.props.location.pathname === "/teacher/courses") {
 			return <CoursesTable courses={this.state.courses} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
 			return <SubjectsTable courses={this.state.courses} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
+		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers" || this.props.location.pathname === "/teacher/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/students") {
+		} else if (this.props.location.pathname === "/admin/students" || this.props.location.pathname === "/teacher/students") {
 			return <StudentsTable students={this.state.students}  {...this.props} />
 		}
 	}
 	renderAddCourse = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return(
+			return (
 				<Col className="text-right">
 					<Button
 						color="primary"
@@ -368,34 +383,34 @@ class Tables extends React.Component {
 			)
 		}
 	}
-  render() {
-    return (
-      <>
-        <Header />
-        {/* Page content */}
-        <Container className="mt--7" fluid>
-          {/* Table */}
-          <Row>
-            <div className="col">
-              <Card className="shadow">
-                <CardHeader className="border-0">
-                  <h3 className="mb-0">{this.renderCardHeader()}</h3>
+	render() {
+		return (
+			<>
+				<Header />
+				{/* Page content */}
+				<Container className="mt--7" fluid>
+					{/* Table */}
+					<Row>
+						<div className="col">
+							<Card className="shadow">
+								<CardHeader className="border-0">
+									<h3 className="mb-0">{this.renderCardHeader()}</h3>
 									{
 										this.renderAddCourse()
 									}
-                </CardHeader>
-                <Table className="align-items-center table-flush" responsive>
-                  <thead className="thead-light">
- 										<TableHead
+								</CardHeader>
+								<Table className="align-items-center table-flush" responsive>
+									<thead className="thead-light">
+										<TableHead
 											columns={this.makeTableHeadProps()}
 										/>
-                   </thead>
-                  <tbody>
+									</thead>
+									<tbody>
 										{
 											this.renderTableData()
 										}
-                  </tbody>
-                </Table>
+									</tbody>
+								</Table>
 								<CardFooter className="py-4">
 									<nav aria-label="...">
 										<Pagination
@@ -448,13 +463,13 @@ class Tables extends React.Component {
 										</Pagination>
 									</nav>
 								</CardFooter>
-              </Card>
-            </div>
-          </Row>
-        </Container>
-      </>
-    );
-  }
+							</Card>
+						</div>
+					</Row>
+				</Container>
+			</>
+		);
+	}
 }
 
 export default Tables;

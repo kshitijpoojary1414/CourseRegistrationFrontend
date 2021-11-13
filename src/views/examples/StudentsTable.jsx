@@ -126,52 +126,59 @@ class StudentsTable extends React.Component {
 										</Media>
 									</Media>
 								</td>
-								<td>{
-									student.courses?.map((course, key) => {
-										return (
-											<div key={key}>
-												<Link to={`course/${course.id}`}>
-													{course.name}
-												</Link>
-											</div>
-										)
-									})
-								}
-								</td>
-								<td>
-									{
+
+								{this.props.location.pathname !== '/teacher/students' &&
+									<td>{
 										student.courses?.map((course, key) => {
 											return (
-												course.teachers.map((teacher, key) => {
-													return (
-														<div className="avatar-group" key={key}>
-															<Link to={`teacher/${teacher.id}`}>
-																<span className="avatar avatar-sm" >
-																	<img
-																		alt="..."
-																		className="rounded-circle"
-																		src={require("../../assets/img/theme/team-4-800x800.jpg")}
-																	/>
-																</span>
-																<span>
-																	{teacher.first_name} {teacher.last_name}
-																</span>
-															</Link>
-														</div>
-													)
-												})
+												<div key={key}>
+													<Link to={`course/${course.id}`}>
+														{course.name}
+													</Link>
+												</div>
 											)
 										})
-
 									}
-								</td>
+									</td>
+								}
+								{this.props.location.pathname !== '/teacher/students' &&
+									<td>
+										{
+											student.courses?.map((course, key) => {
+												return (
+													course.teachers.map((teacher, key) => {
+														return (
+															<div className="avatar-group" key={key}>
+																<Link to={`teacher/${teacher.id}`}>
+																	<span className="avatar avatar-sm" >
+																		<img
+																			alt="..."
+																			className="rounded-circle"
+																			src={require("../../assets/img/theme/team-4-800x800.jpg")}
+																		/>
+																	</span>
+																	<span>
+																		{teacher.first_name} {teacher.last_name}
+																	</span>
+																</Link>
+															</div>
+														)
+													})
+												)
+											})
 
-								<td>
+										}
+									</td>
+								}
+
+								{this.props.location.pathname !== '/teacher/students' && <td>
 									<Badge color="" className="badge-dot mr-4">
 										<i className="bg-warning" />
 										pending
 									</Badge>
 								</td>
+								}
+
 								<td className="text-right">
 									<UncontrolledDropdown>
 										<DropdownToggle
@@ -189,9 +196,9 @@ class StudentsTable extends React.Component {
 												href="#pablo"
 												onClick={e => e.preventDefault()}
 											>
-												Add to cart
+												Drop Student
 											</DropdownItem>
-											<DropdownItem
+											{/* <DropdownItem
 												href="#pablo"
 												onClick={e => e.preventDefault()}
 											>
@@ -202,7 +209,7 @@ class StudentsTable extends React.Component {
 												onClick={e => e.preventDefault()}
 											>
 												Something else here
-											</DropdownItem>
+											</DropdownItem> */}
 										</DropdownMenu>
 									</UncontrolledDropdown>
 								</td>

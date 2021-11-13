@@ -60,7 +60,7 @@ class CoursesTable extends React.Component {
 		return orderedList
 	}
 	componentDidMount() {
-		console.log('Component has mounted - courstTable');
+		console.log('Component has mounted - courstTable ', this.props);
 		// axios.get(`${process.env.REACT_APP_API_PORT}/courses`)
 		client({
 			method: 'get',
@@ -96,17 +96,17 @@ class CoursesTable extends React.Component {
 		})
 	}
 	renderRegistration = (course) => {
-		console.log('Course in renderreg is ', course.students);
-		if (this.props.location.pathname === "/admin/courses") {
+		console.log('Course in renderreg is ', course);
+		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/teacher/courses") {
 			return (
 				<td>
 					<Link to={`course/${course.id}`}>
 						<div className="d-flex align-items-center">
-							<span className="mr-2">{`${Math.round(course.students?.length / course.registration.limit * 100)}%`}</span>
+							<span className="mr-2">{`${Math.round(course.registration?.registered / course.registration.limit * 100)}%`}</span>
 							<div>
 								<Progress
 									max={course.registration.limit}
-									value={course.students?.length}
+									value={course.registration?.registered}
 									barClassName="bg-danger"
 								/>
 							</div>
@@ -158,6 +158,7 @@ class CoursesTable extends React.Component {
 	render() {
 		console.log(this.orderList())
 		console.log(this.state.data[0]);
+		console.log(this.props.location.pathname);
 		//console.log("Has registered", this.state.data[0].hasRegistered)
 		return (
 			<>
@@ -170,31 +171,36 @@ class CoursesTable extends React.Component {
 										{course.name}
 									</Link>
 								</td>
+
 								<td>
 									<Link to={`course/${course.id}`}>
 										{course.subject}
 									</Link>
 								</td>
-								<td>
-									{
-										course.teachers.map((teacher, key) => {
-											return (
-												<div className="avatar-group" key={key}>
-													<Link to={`teacher/${teacher.id}`}>
-														<span className="avatar avatar-sm" >
-															<img
-																alt="..."
-																className="rounded-circle"
-																src={require("../../assets/img/theme/team-4-800x800.jpg")}
-															/>
-														</span>
-														<span>{teacher.first_name} {teacher.last_name}</span>
-													</Link>
-												</div>
-											)
-										})
-									}
-								</td>
+
+								{this.props.location.pathname !== '/teacher/courses' &&
+									<td>
+										{
+											course.teachers.map((teacher, key) => {
+												return (
+													<div className="avatar-group" key={key}>
+														<Link to={`teacher/${teacher.id}`}>
+															<span className="avatar avatar-sm" >
+																<img
+																	alt="..."
+																	className="rounded-circle"
+																	src={require("../../assets/img/theme/team-4-800x800.jpg")}
+																/>
+															</span>
+															<span>{teacher.first_name} {teacher.last_name}</span>
+														</Link>
+													</div>
+												)
+											})
+										}
+
+									</td>
+								}
 
 								{
 									this.renderRegistration(course)
@@ -217,11 +223,11 @@ class CoursesTable extends React.Component {
 									</Link>
 								</td>
 
-								<td>
+								{/* <td>
 									<Link to={`course/${course.id}`}>
 										${course.price}
 									</Link>
-								</td>
+								</td> */}
 								{
 									this.renderDropdown(course)
 								}

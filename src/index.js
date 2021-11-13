@@ -23,6 +23,7 @@ import "./assets/vendor/nucleo/css/nucleo.css";
 import "./assets/vendor/@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/scss/argon-dashboard-react.scss";
 
+import TeacherLayout from "./layouts/Teacher.jsx";
 import AdminLayout from "./layouts/Admin.jsx";
 import StudentLayout from "./layouts/Student.jsx"
 import AuthLayout from "./layouts/Auth.jsx";
@@ -31,7 +32,8 @@ ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/admin" render={props => <AdminLayout {...props} />} />
-			<Route path="/student" render={props => <StudentLayout {...props} />} />
+      <Route path="/teacher" render={props => <TeacherLayout {...props} />} />
+      <Route path="/student" render={props => <StudentLayout {...props} />} />
       <Route path="/auth" render={props => <AuthLayout {...props} />} />
       <Redirect from="/" to="/auth/login" />
     </Switch>
