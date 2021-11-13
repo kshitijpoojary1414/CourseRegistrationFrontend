@@ -88,7 +88,7 @@ class StudentInfo extends React.Component {
 						editable: !this.state.editable
 					})
 			}).catch(err => {
-				console.log("Error")
+				console.log(err)
 			})
 	}
 	cancelUpdates = (e) => {
