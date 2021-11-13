@@ -68,8 +68,9 @@ class TeachersTable extends React.Component {
 		return orderedList
 	}
 	renderStudents = (teacher) => {
-		console.log(teacher);
-		if (this.props.location.pathname === '/admin/teachers' && teacher.students) {
+		console.log(teacher.students);
+		console.log(this.props.location.pathname);
+		if ((this.props.location.pathname === '/admin/teachers' || this.props.location.pathname === '/teacher/teachers') && teacher.students) {
 			return (
 				<td>
 					<div>
@@ -148,12 +149,12 @@ class TeachersTable extends React.Component {
 								{
 									this.renderStudents(teacher)
 								}
-								<td>
+								{/* <td>
 									<Badge color="" className="badge-dot mr-4">
 										<i className="bg-warning" />
 										pending
 									</Badge>
-								</td>
+								</td> */}
 							</tr>
 						)
 					})

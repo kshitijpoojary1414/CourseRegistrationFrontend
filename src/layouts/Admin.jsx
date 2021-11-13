@@ -48,6 +48,7 @@ class Admin extends React.Component {
           } else {
             let user = res.data
             this.setState({ user })
+            console.log(this.state);
           }
         })
         .catch(err => {
@@ -96,6 +97,7 @@ class Admin extends React.Component {
       <>
         <Sidebar
           {...this.props}
+          user={this.state.user}
           routes={routes}
           logo={{
             innerLink: "/admin/index",

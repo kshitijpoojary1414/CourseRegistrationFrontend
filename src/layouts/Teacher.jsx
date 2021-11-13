@@ -32,6 +32,7 @@ class Admin extends React.Component {
                     } else {
                         let user = res.data
                         this.setState({ user })
+                        console.log('User is - ', user);
                     }
                 })
                 .catch(err => {
@@ -56,6 +57,7 @@ class Admin extends React.Component {
                 console.log('Here in teacher layout');
                 return (
                     <Route
+
                         path={prop.layout + prop.path}
                         component={prop.component}
                         key={key}
@@ -83,6 +85,7 @@ class Admin extends React.Component {
             <>
                 <Sidebar
                     {...this.props}
+                    user={this.state.user}
                     routes={routes}
                     logo={{
                         innerLink: "/admin/index",

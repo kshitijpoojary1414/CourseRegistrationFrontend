@@ -31,6 +31,7 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom"
 import axios from 'axios'
+import Button from "reactstrap/lib/Button";
 // core components
 
 class StudentsTable extends React.Component {
@@ -178,9 +179,12 @@ class StudentsTable extends React.Component {
 									</Badge>
 								</td>
 								}
-
-								<td className="text-right">
-									<UncontrolledDropdown>
+								<td style={{ paddingLeft: '1.6rem' }}>
+									100
+								</td>
+								<td className="text-left">
+									<Button>Drop Student</Button>
+									{/* <UncontrolledDropdown>
 										<DropdownToggle
 											className="btn-icon-only text-light"
 											href="#pablo"
@@ -198,7 +202,7 @@ class StudentsTable extends React.Component {
 											>
 												Drop Student
 											</DropdownItem>
-											{/* <DropdownItem
+											<DropdownItem
 												href="#pablo"
 												onClick={e => e.preventDefault()}
 											>
@@ -209,9 +213,9 @@ class StudentsTable extends React.Component {
 												onClick={e => e.preventDefault()}
 											>
 												Something else here
-											</DropdownItem> */}
+											</DropdownItem> 
 										</DropdownMenu>
-									</UncontrolledDropdown>
+									</UncontrolledDropdown> */}
 								</td>
 							</tr>
 						)

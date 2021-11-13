@@ -59,10 +59,10 @@ var routes = [
 	},
 
 	{
-		path: "/profile",
+		path: "/profile/",
 		name: "Profile",
 		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
+		component: TeacherInfo,
 		layout: "/teacher",
 		invisible: false
 	},
