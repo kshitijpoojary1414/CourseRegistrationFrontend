@@ -128,6 +128,14 @@ var routes = [
     layout: "/student",
 		invisible: false
   },
+  {
+    path: "/majors",
+    name: "Majors",
+    icon: "ni ni-bullet-list-67 text-red",
+    component: Tables,
+    layout: "/student",
+        invisible: false
+  },
 	{
     path: "/teachers",
     name: "Teachers",
