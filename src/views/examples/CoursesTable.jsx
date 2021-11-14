@@ -97,7 +97,7 @@ class CoursesTable extends React.Component {
 	}
 	renderRegistration = (course) => {
 		console.log('Course in renderreg is ', course);
-		// console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
+		console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/teacher/courses") {
 			return (
 				<td>

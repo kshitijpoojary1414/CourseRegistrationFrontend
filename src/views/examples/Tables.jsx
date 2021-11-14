@@ -38,6 +38,7 @@ import CoursesTable from "./CoursesTable.jsx"
 import SubjectsTable from "./SubjectsTable.jsx"
 import TeachersTable from "./TeachersTable.jsx"
 import StudentsTable from "./StudentsTable.jsx"
+import TeachersCoursesTable from "./TeachersCoursesTable"
 
 class Tables extends React.Component {
 	state = {
@@ -350,7 +351,7 @@ class Tables extends React.Component {
 		}
 	}
 	renderTableData = () => {
-		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses" || this.props.location.pathname === "/teacher/courses") {
+		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
 			return <CoursesTable courses={this.state.courses} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
 			return <SubjectsTable courses={this.state.courses} {...this.props} />
@@ -358,6 +359,8 @@ class Tables extends React.Component {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students" || this.props.location.pathname === "/teacher/students") {
 			return <StudentsTable students={this.state.students}  {...this.props} />
+		} else if (this.props.location.pathname === "/teacher/courses") {
+			return <TeachersCoursesTable courses={this.state.courses} {...this.props} />
 		}
 	}
 	renderAddCourse = () => {
