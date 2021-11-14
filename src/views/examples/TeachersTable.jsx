@@ -69,7 +69,9 @@ class TeachersTable extends React.Component {
 	}
 	renderStudents = (teacher) => {
 		console.log(teacher.students);
-		console.log(this.props.location.pathname);
+
+
+
 		if ((this.props.location.pathname === '/admin/teachers' || this.props.location.pathname === '/teacher/teachers') && teacher.students) {
 			return (
 				<td>
@@ -113,7 +115,8 @@ class TeachersTable extends React.Component {
 										</Link>
 										<Media>
 											<span className="mb-0 text-sm">
-												<Link to={`teacher/${teacher.id}`}>
+
+												<Link to={this.props.location.pathname === '/teacher/teachers' ? `profile/${teacher.id}` : `teacher/${teacher.id}`}>
 													{teacher.first_name} {teacher.last_name}
 												</Link>
 											</span>

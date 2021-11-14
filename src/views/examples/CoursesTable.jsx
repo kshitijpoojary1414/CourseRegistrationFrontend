@@ -17,7 +17,7 @@
 */
 import React from "react";
 import client from "../../apis/client";
-
+import CircleProgressBar from './CircularProgressBar';
 
 // reactstrap components
 import {
@@ -97,18 +97,20 @@ class CoursesTable extends React.Component {
 	}
 	renderRegistration = (course) => {
 		console.log('Course in renderreg is ', course);
+		// console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/teacher/courses") {
 			return (
 				<td>
 					<Link to={`course/${course.id}`}>
 						<div className="d-flex align-items-center">
-							<span className="mr-2">{`${Math.round(course.registration?.registered / course.registration.limit * 100)}%`}</span>
+							{/* <span className="mr-2">{`${Math.round(course.registration?.registered / course.registration.limit * 100)}%`}</span> */}
 							<div>
-								<Progress
+								{/* <Progress
 									max={course.registration.limit}
 									value={course.registration?.registered}
 									barClassName="bg-danger"
-								/>
+								/> */}
+								<CircleProgressBar percent={Math.round(course.registration?.registered / course.registration.limit * 100)} />
 							</div>
 						</div>
 					</Link>

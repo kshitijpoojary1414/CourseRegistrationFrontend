@@ -30,7 +30,15 @@ import StudentProfile from "./views/examples/StudentProfile.jsx";
 import Cart from "./views/examples/Cart.jsx"
 
 var routes = [
-	// Teacher Links
+	//Teacher Links
+	// {
+	// 	path: "/student",
+	// 	name: "StudentProfile",
+	// 	icon: "ni ni-bullet-list-67 text-red",
+	// 	component: StudentProfile,
+	// 	layout: "/teacher",
+	// 	invisible: false
+	// },
 	{
 		path: "/courses",
 		name: "Courses",
@@ -59,7 +67,7 @@ var routes = [
 	},
 
 	{
-		path: "/profile/",
+		path: "/profile/:id",
 		name: "Profile",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: TeacherInfo,
@@ -115,6 +123,16 @@ var routes = [
 		layout: "/admin",
 		invisible: true
 	},
+
+	{
+		path: "/course/:id",
+		name: "Course Info",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: CourseInfo,
+		layout: "/teacher",
+		invisible: true
+	},
+
 	{
 		path: "/course-create",
 		name: "Course Create",
@@ -145,6 +163,14 @@ var routes = [
 		icon: "ni ni-bullet-list-67 text-red",
 		component: StudentInfo,
 		layout: "/admin",
+		invisible: true
+	},
+	{
+		path: "/student/:id",
+		name: "Student Info",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: StudentInfo,
+		layout: "/teacher",
 		invisible: true
 	},
 	// Student Links

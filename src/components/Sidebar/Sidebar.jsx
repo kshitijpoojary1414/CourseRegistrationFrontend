@@ -67,11 +67,7 @@ class Sidebar extends React.Component {
   }
   componentDidUpdate() {
     console.log('Props in sidebar update - ', this.props);
-    if (this.state.user === undefined) {
-      this.setState({
-        user: this.props.user
-      });
-    }
+
 
 
   }
@@ -93,7 +89,7 @@ class Sidebar extends React.Component {
   };
   // creates the links that appear in the left menu / Sidebar
   createLinks = routes => {
-
+    console.log("Sidebar JSX", routes);
     return routes.map((prop, key) => {
       if (this.props.location.pathname.includes('admin/') && prop.layout === "/admin" && !prop.invisible) {
         return (
@@ -127,23 +123,27 @@ class Sidebar extends React.Component {
           </NavItem>
         );
       } else if (this.props.location.pathname.includes('teacher/') && prop.layout === "/teacher" && !prop.invisible && !this.props.location.pathname.includes('admin/')) {
+        console.log("Routesss", prop)
+
         return (
           <>
-            <NavItem key={key}>
-              <NavLink
-                to={prop.path === '/profile/' ? prop.layout + prop.path + this.state?.user?.id : prop.layout + prop.path}
-                tag={NavLinkRRD}
-                onClick={this.closeCollapse}
-                activeClassName="active"
-                user={'user here'}
+            {prop.path !== '/profile/:id' &&
+              <NavItem key={key}>
+                <NavLink
+                  to={prop.path === '/profile/' ? prop.layout + prop.path + this.state?.user?.id : prop.layout + prop.path}
+                  tag={NavLinkRRD}
+                  onClick={this.closeCollapse}
+                  activeClassName="active"
+                  user={'user here'}
 
-              >
-                <i className={prop.icon} />
-                {prop.name}
-              </NavLink>
+                >
+                  <i className={prop.icon} />
+                  {prop.name}
+                </NavLink>
 
 
-            </NavItem>
+              </NavItem>
+            }
           </>
         );
       }

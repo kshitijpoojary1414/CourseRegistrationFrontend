@@ -45,7 +45,8 @@ class TeacherInfo extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log('Teacher Info Mounted ', this.props.location.search);
+		console.log('Teacher Info Mounted ', this.props.match);
+		console.log('mounted teacher info', window.location.pathname);
 		axios.get(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`)
 		client({
 			method: 'get',

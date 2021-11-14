@@ -19,17 +19,17 @@ import React from "react";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col
+	Button,
+	Card,
+	CardHeader,
+	CardBody,
+	CardFooter,
+	FormGroup,
+	Form,
+	Input,
+	Container,
+	Row,
+	Col
 } from "reactstrap";
 import { Link } from 'react-router-dom'
 // core components
@@ -37,31 +37,32 @@ import UserHeader from "../../components/Headers/UserHeader.jsx";
 import axios from "axios";
 
 class Profile extends React.Component {
-  state = {
-    user: {
-      courses: [],
-      address: {}
-    }
-  }
-  componentDidMount() {
-    let token = localStorage.getItem('token')
-    axios.post(`${process.env.REACT_APP_API_PORT}/auth`, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(res => {
-      console.log(res.data)
-      let user = res.data
-      this.setState({user})
-    })
-  }
-  submitUpdates = (e) => {
+	state = {
+		user: {
+			courses: [],
+			address: {}
+		}
+	}
+	componentDidMount() {
+		let token = localStorage.getItem('token')
+		axios.post(`${process.env.REACT_APP_API_PORT}/auth`, {}, {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		}).then(res => {
+			console.log(res.data)
+			let user = res.data
+			this.setState({ user })
+		})
+		console.log('Student Profile - ', this.state);
+	}
+	submitUpdates = (e) => {
 		e.preventDefault()
 		axios.patch(`${process.env.REACT_APP_API_PORT}/students/${this.props.match.params.id}`, this.state.user)
 			.then(data => {
-					this.setState({
-						editable: !this.state.editable
-					})
+				this.setState({
+					editable: !this.state.editable
+				})
 			}).catch(err => {
 				console.log("Error")
 			})
@@ -69,12 +70,12 @@ class Profile extends React.Component {
 	cancelUpdates = (e) => {
 		e.preventDefault()
 		axios.get(`${process.env.REACT_APP_API_PORT}/user/${this.props.match.params.id}`)
-				.then(res => {
-						const data = res.data
-						this.setState({data: data})
-				}).catch(err => {
-					console.log("Error")
-				})
+			.then(res => {
+				const data = res.data
+				this.setState({ data: data })
+			}).catch(err => {
+				console.log("Error")
+			})
 		this.setState({
 			editable: !this.state.editable
 		})
@@ -86,7 +87,7 @@ class Profile extends React.Component {
 		} else {
 			user[stateRef] = e.target.value
 		}
-		this.setState({user})
+		this.setState({ user })
 	}
 	getTeachersFromCourses = () => {
 		let teachersArray = []
@@ -107,12 +108,12 @@ class Profile extends React.Component {
 			return null
 		}
 	}
-  render() {
-    return (
-      <>
-        <UserHeader />
-        {/* Page content */}
-        {
+	render() {
+		return (
+			<>
+				<UserHeader />
+				{/* Page content */}
+				{
 					!this.state.editable ? (
 						<Container className="mt--7" fluid>
 							<Row>
@@ -151,19 +152,19 @@ class Profile extends React.Component {
 															<div>
 																<small className="form-control-label">First name</small>
 																<h1>{this.state.user.first_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 														<Col lg="4">
 															<div>
 																<small className="form-control-label">Middle name</small>
 																<h1>{this.state.user.middle_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 														<Col lg="4">
 															<div>
 																<small className="form-control-label">Last name</small>
 																<h1>{this.state.user.last_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 													</Row>
 													<Row>
@@ -171,7 +172,7 @@ class Profile extends React.Component {
 															<div>
 																<small className="form-control-label">About</small>
 																<h3>{this.state.user.about}</h3>
-			                        </div>
+															</div>
 														</Col>
 													</Row>
 												</div>
@@ -186,45 +187,45 @@ class Profile extends React.Component {
 															<div>
 																<small className="form-control-label">Email address</small>
 																<h1>{this.state.user.email}</h1>
-			                        </div>
-		                        </Col>
+															</div>
+														</Col>
 														<Col lg="6">
 															<div>
 																<small className="form-control-label">Phone number</small>
 																<h2>{this.state.user.phone}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
 												{/* Address */}
 												<h6 className="heading-small text-muted mb-4">
 													Address information
 												</h6>
 												<div className="pl-lg-4">
-		                      <Row>
-		                        <Col md="12">
+													<Row>
+														<Col md="12">
 															<div>
 																<small className="form-control-label">Street address</small>
 																<h2>{this.renderAddressInfo("streetAddress")}</h2>
-			                        </div>
-		                        </Col>
-		                      </Row>
-		                      <Row>
-		                        <Col lg="6">
-		                          <FormGroup>
+															</div>
+														</Col>
+													</Row>
+													<Row>
+														<Col lg="6">
+															<FormGroup>
 																<div>
 																	<small className="form-control-label">City</small>
 																	<h2>{this.renderAddressInfo("city")}</h2>
-				                        </div>
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="6">
+																</div>
+															</FormGroup>
+														</Col>
+														<Col lg="6">
 															<div>
 																<small className="form-control-label">State</small>
 																<h2>{this.renderAddressInfo("state")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
 													<Row>
 														<Col lg="6">
@@ -232,15 +233,15 @@ class Profile extends React.Component {
 																<small className="form-control-label">Country</small>
 																<h2>{this.renderAddressInfo("country")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 														<Col lg="6">
 															<div>
 																<small className="form-control-label">Postal code</small>
 																<h2>{this.renderAddressInfo("zipCode")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
 												{/* Courses */}
 												<h6 className="heading-small text-muted mb-4">
@@ -249,8 +250,8 @@ class Profile extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.user.courses.map((course, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../course/${course.id}`}>
 																		<span>{course.name}</span>
 																	</Link>
@@ -270,8 +271,8 @@ class Profile extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.getTeachersFromCourses().map((teacher, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../teacher/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
@@ -324,24 +325,24 @@ class Profile extends React.Component {
 													<h3 className="mb-0">Student information</h3>
 												</Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 										</CardHeader>
 										<CardBody>
@@ -583,8 +584,8 @@ class Profile extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.user.courses.map((course, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../course/${course.id}`}>
 																		<span>{course.name}</span>
 																	</Link>
@@ -604,8 +605,8 @@ class Profile extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.getTeachersFromCourses().map((teacher, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../teacher/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
@@ -627,24 +628,24 @@ class Profile extends React.Component {
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 										</CardFooter>
 									</Card>
@@ -653,9 +654,9 @@ class Profile extends React.Component {
 						</Container>
 					)
 				}
-      </>
-    );
-  }
+			</>
+		);
+	}
 }
 
 export default Profile;

@@ -189,12 +189,7 @@ class StudentsTable extends React.Component {
 										100
 									</td>
 								}
-								{this.props.location.pathname === '/teacher/students' &&
-									<td style={{ paddingLeft: '1.6rem' }}>
-										<Button>Submit</Button>
-									</td>
 
-								}
 								{this.props.location.pathname === '/teacher/students' ?
 									<td style={{ paddingLeft: '1.6rem' }}>
 										<Input />
@@ -202,6 +197,12 @@ class StudentsTable extends React.Component {
 									<td style={{ paddingLeft: '1.6rem' }}>
 										100
 									</td>
+								}
+								{this.props.location.pathname === '/teacher/students' &&
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Button>Submit</Button>
+									</td>
+
 								}
 								<td className="text-left">
 									<Button>Drop</Button>
