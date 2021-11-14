@@ -115,6 +115,7 @@ class Register extends React.Component {
                     <span className="text-success font-weight-700">strong</span>
                   </small>
                 </div>
+        
                 <Row className="my-4">
                   <Col xs="12">
                     <div className="custom-control custom-control-alternative custom-checkbox">

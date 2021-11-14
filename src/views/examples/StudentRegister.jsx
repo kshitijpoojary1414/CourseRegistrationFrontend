@@ -34,7 +34,11 @@ import {
   InputGroupText,
   InputGroup,
   Row,
-  Col
+  Col,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
 } from "reactstrap";
 
 class Register extends React.Component {
@@ -45,7 +49,15 @@ class Register extends React.Component {
     last_name: '',
     avatar: {},
 		email: '',
-		password: ''
+		password: '',
+    departments: [{}],
+    departmentName: "",
+    majorName: "",
+    majors: [{}],
+    majorsDropdown: false,
+    departmentsDropdown: false,
+    selectedMajor: {},
+    selectedDepartment: {}
 	}
 
 	sendDataToState = (event, input) => {
@@ -59,6 +71,9 @@ class Register extends React.Component {
 		this.setState({avatar})
   }
   
+  componentWillMount () {
+    this.fetchDepartments()
+  }
 	submitForm = (e) => {
     e.preventDefault();
     if (this.state.first_name && this.state.last_name && this.state.email && this.state.password) {
@@ -70,6 +85,7 @@ class Register extends React.Component {
       formData.append('email', this.state.email)
       formData.append('password', this.state.password)
 
+
       formData = {
         'avatar': this.state.avatar,
         'first_name': this.state.first_name,
@@ -77,6 +93,8 @@ class Register extends React.Component {
         'last_name': this.state.last_name,
         'email': this.state.email,
         'password': this.state.password,
+        "department_id": this.state.selectedDepartment.id,
+        "major_id": this.state.selectedMajor.id
       }
       console.log(formData)
       client({
@@ -116,7 +134,187 @@ class Register extends React.Component {
     }
 	}
 
+  fetchDepartments = () => {
+    client({
+      method: 'get',
+      url: '/departments'
+    }).then(data => {
+      this.setState({
+        ...this.state,
+        departments : data.data,
+        departmentName: data.data[0].name,
+        selectedDepartment: data.data[0]
+      })
+      this.fetchMajors(data.data[0].id)
+    }).catch( error => {
+      alert("Some error occured. Please refresh the page")
+    })
+  }
+  
+  fetchMajors = (department_id) => {
+    client({
+      method: 'get',
+      url: '/majors/department',
+      params: {
+        department_id : department_id 
+      }
+    }).then(data => {
+      this.setState({
+        ...this.state,
+        majors : data.data,
+        majorName : data.data[0].major_name,
+        selectedMajor: data.data[0]
+      })
+    }).catch( error => {
+      alert("Some error occured. Please refresh the page")
+    })
+  }
+
+  fetchCourses = (department_id) => {
+    client({
+      method: 'get',
+      url: '/courses',
+      params: {
+        department_id : department_id
+      }
+      }).then(res => {
+            const data = res.data;
+            console.log("og data",data)
+            this.setState({
+              ...this.state,
+              coursesTableData: data
+            })
+        }).catch(err => {
+          console.log("Error")
+        })
+  }
+  
+  selectDropdown = (e, department) => {
+    // client({
+    //   method: 'get',
+    //   url: '/courses',
+    //   params: {
+    //     department_id : department.id
+    //   }
+    //   }).then(res => {
+    //         const data = res.data;
+    //         console.log("og data",data)
+    //         this.setState({
+    //           ...this.state,
+    //           departmentName: department.name,
+    //           departmentsDropdown: false,
+    //           selectedDepartment: department,
+    //           coursesTableData: data
+    //         })
+    //     }).catch(err => {
+    //       console.log("Error")
+    //     })
+    // this.setState({
+    // 	...this.state,
+    // 	departmentName: e.currentTarget.textContent,
+    // 	dropdownOpen: false,
+    // 	selectedDepartment: department,
+    // 	// coursesTableData : this.fetchCourses(department.id)
+      
+    // })
+               this.setState({
+              ...this.state,
+              departmentName: department.name,
+              departmentsDropdown: false,
+              selectedDepartment: department,
+            })
+
+            this.fetchMajors(department.id)
+  }
+
+  selectMajorDropdown = (e, major) => {
+    this.setState({
+      ...this.state,
+      majorName: major.major_name,
+      majorsDropdown: false,
+      selectedMajor: major,      
+    })
+  }
+
+
+  departmentToggle = (e) => {
+		e.preventDefault()
+		if (!this.state.departmentsDropdown) {
+			this.setState({
+				...this.state,
+				departmentsDropdown: !this.state.departmentsDropdown
+			})
+		}
+
+	}
+
+  majorsToggle = (e) => {
+		e.preventDefault()
+		if (!this.state.majorsDropdown) {
+			this.setState({
+				...this.state,
+				majorsDropdown: !this.state.majorsDropdown
+			})
+		}
+
+	}
+  renderDropDown = () => {
+    return (
+    
+      <div style ={{display: "flex", justifyContent : "space-between"}}>
+        <div style={{display: "flex" , "flex-direction": "column"}}>
+          <span>Department Name </span> 
+          <Dropdown isOpen={this.state.departmentsDropdown} toggle={(e) => this.departmentToggle(e)}>
+        <DropdownToggle caret>
+          {this.state.departmentName}
+        </DropdownToggle>
+        <DropdownMenu right>
+          {/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+          {
+            this.state.departments.map(
+              department => {
+                return (<DropdownItem id ={department.name} ><div onClick={(e) => this.selectDropdown(e,department)}> {department.name}</div> </DropdownItem>)	
+              }
+            )
+          }
+      
+        </DropdownMenu>
+      </Dropdown>
+          
+          </div>
+
+      <div style={{display: "flex" , "flex-direction": "column"}}>
+        <span>
+          Major Name 
+          </span>
+          
+          <Dropdown isOpen={this.state.majorsDropdown} toggle={(e) => this.majorsToggle(e)}>
+        <DropdownToggle caret>
+          {this.state.majorName}
+        </DropdownToggle>
+        <DropdownMenu right>
+          {/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+          {
+            this.state.majors.map(
+              major => {
+                console.log("MAJOR",major)
+                return (<DropdownItem id ={major.major_name} ><div onClick={(e) => this.selectMajorDropdown(e,major)}> {major.major_name}</div> </DropdownItem>)	
+              }
+            )
+          }
+      
+        </DropdownMenu>
+      </Dropdown>
+          </div>
+
+
+      </div>
+
+    )
+  }
+
   render() {
+  console.log("Majors",this.state.majors)
     return (
       <>
         <Col lg="6" md="8">
@@ -204,6 +402,7 @@ class Register extends React.Component {
                     <span className="text-success font-weight-700">strong</span>
                   </small>
                 </div>
+                {this.renderDropDown()}
                 <Row className="my-4">
                   <Col xs="12">
                     <div className="custom-control custom-control-alternative custom-checkbox">

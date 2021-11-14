@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {StripeProvider, Elements} from 'react-stripe-elements'
-import Checkout from './Checkout'
+
 import client from "../../apis/client";
 
 import {
@@ -79,9 +78,15 @@ class Cart extends React.Component {
 			course_id: this.state.cart.map( course => {return course.id})
 		},
 	}).then(data => {
-
+		alert('Courses has been added')
+		this.props.history.push({
+		pathname: "/student/courses"
+		})
 	}).catch(error => {
-
+		alert('Some courses could not be added. Please refer the courses table')
+		this.props.history.push({
+			pathname: "/student/courses"
+		})
 	})
 	// this.props.history.push({
 	// 	pathname: "/student/courses"

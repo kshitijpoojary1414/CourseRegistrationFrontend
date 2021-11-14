@@ -33,7 +33,6 @@ import {
   DropdownItem,
   Navbar,
   Container,
-  Button
 } from "reactstrap";
 
 class UserNavbar extends React.Component {

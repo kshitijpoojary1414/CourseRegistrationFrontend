@@ -37,7 +37,6 @@ import {
 	DropdownItem
 } from "reactstrap";
 import { Link } from "react-router-dom"
-import axios from 'axios'
 // core components
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
 import TeacherCard from "./TeacherCard.jsx"
@@ -49,6 +48,9 @@ class CourseCreate extends React.Component {
 	state = {
 		editable: false,
 		dropdownOpen: false,
+		departmentDropdown: false,
+		department: {},
+		departments: [{}],
 		allTeachers: [{}],
 		days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 		data: {
@@ -169,7 +171,10 @@ class CourseCreate extends React.Component {
 		client({
 			method: 'post',
 			url: `/courses`,
-			data: this.state.data
+			data: {
+				...this.state.data,
+				department_id: this.state.department.id
+			}
 		})
 			.then(data => {
 				console.log(data.data.data)
@@ -212,6 +217,24 @@ class CourseCreate extends React.Component {
 				console.log("Error")
 			})
 	}
+
+	toggleDepartmentsDropdown = (e) => {
+		e.preventDefault()
+		client({
+			method: 'get',
+			url: `/departments`,
+		})
+			.then(res => {
+				const departments = res.data
+				console.log("Dep", departments)
+				this.setState({
+					departmentDropdown: !this.state.departmentDropdown,
+					departments: departments
+				})
+			}).catch(err => {
+				console.log("Error")
+			})
+	}
 	selectTeacher = (e, teacher) => {
 		e.preventDefault()
 		console.log('teacher info', teacher)
@@ -220,6 +243,25 @@ class CourseCreate extends React.Component {
 		this.setState(data)
 		console.log('teacher id', teacher.id)
 	}
+
+	selectDepartment = (e, department) => {
+		e.preventDefault()
+
+		this.setState({
+			...this.state,
+			department: department
+		})
+	}
+
+	removeDepartment = (e) => {
+		e.preventDefault()
+
+		this.setState({
+			...this.state,
+			department: {}
+		})
+	}
+
 
 
 	render() {
@@ -452,6 +494,65 @@ class CourseCreate extends React.Component {
 														</div>
 													)
 												})
+											}
+										</div>
+										<hr className="my-4" />
+										{/* Teachers */}
+										<h6 className="heading-small text-muted mb-4">
+											Departments
+										</h6>
+
+
+
+										<Dropdown isOpen={this.state.departmentDropdown} toggle={e => this.toggleDepartmentsDropdown(e)}>
+											<DropdownToggle caret>
+												Add department
+											</DropdownToggle>
+											<DropdownMenu>
+												{
+													this.state.departments.map(department => {
+														return (
+															<DropdownItem
+																onClick={(e) => this.selectDepartment(e, department)}
+																key={department.id}
+															>
+																{department.name}
+															</DropdownItem>
+														)
+													})
+												}
+											</DropdownMenu>
+										</Dropdown>
+
+
+
+										<div className="pl-lg-4">
+											{
+												<div className="avatar-group" key={this.state.department.id} style={{ display: "inline-block", padding: '40px' }}>
+													{
+														this.state.department.name && <div>
+															<Button
+																color="danger"
+																href="#pablo"
+																onClick={e => this.removeDepartment(e)}
+																size="sm"
+															>
+																remove
+															</Button>
+															<Link to={`../departments/${this.state.department.id}`}>
+																{/* <span className="avatar avatar-sm" >
+										<img
+											alt="..."
+											className="rounded-circle"
+											src={this.state.department.avatar}
+										/>
+									</span> */}
+																<span>{this.state.department.name}</span>
+															</Link>
+														</div>
+													}
+
+												</div>
 											}
 										</div>
 										<hr className="my-4" />
