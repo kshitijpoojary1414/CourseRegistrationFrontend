@@ -121,8 +121,8 @@ var routes = [
 		invisible: false
   },
 	{
-    path: "/subjects",
-    name: "Departments",
+    path: "/majors",
+    name: "Majors",
     icon: "ni ni-bullet-list-67 text-red",
     component: Tables,
     layout: "/student",

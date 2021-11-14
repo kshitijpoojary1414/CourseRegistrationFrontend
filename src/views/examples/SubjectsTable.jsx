@@ -33,8 +33,8 @@ import { Link } from "react-router-dom"
 class SubjectsTable extends React.Component {
 	orderList = () => {
 		let orderedList = this.props.courses.sort((a,b) => {
-			var subjA = a.subject.toUpperCase()
-			var subjB = b.subject.toUpperCase()
+			var subjA = a.major_name.toUpperCase()
+			var subjB = b.major_name.toUpperCase()
 			return subjA < subjB ? -1 : subjA > subjB ? 1 : 0
 		})
 		return orderedList
@@ -77,7 +77,7 @@ class SubjectsTable extends React.Component {
 		}
 	}
 	renderDropdown = (course) => {
-		if (this.props.location.pathname === "/student/subjects") {
+		if (this.props.location.pathname === "/student/majors") {
 			return(
 				<td className="text-left">
 					<UncontrolledDropdown>
@@ -109,6 +109,7 @@ class SubjectsTable extends React.Component {
 		}
 	}
   render() {
+	  console.log("MAJORS TABLE")
     return (
 			<>
 				{
@@ -117,17 +118,17 @@ class SubjectsTable extends React.Component {
 							<tr key={key}>
 								<td>
 									<Link to={`subject/${course.subject}`}>
-										{course.subject}
+										{course.major_name}
 									</Link>
 								</td>
 
 								<td>
 									<Link to={`course/${course.name}`}>
-										{course.name}
+										{course.major_code}
 									</Link>
 								</td>
 
-								<td>
+								{/* <td>
 									{
 										course.teachers.map((teacher, key) => {
 											return(
@@ -146,29 +147,27 @@ class SubjectsTable extends React.Component {
 											)
 										})
 									}
-								</td>
+								</td> */}
 
 								{
 									this.renderRegistration(course)
 								}
 
-								<td>
+								{/* <td>
 									<Link to={`subject/${course.subject}`}>
 										<Badge color="" className="badge-dot mr-4">
 											<i className="bg-warning" />
 											pending
 										</Badge>
 									</Link>
-								</td>
+								</td> */}
 
 								<td>
 									<Link to={`subject/${course.subject}`}>
 										${course.price}
 									</Link>
 								</td>
-								{
-									this.renderDropdown(course)
-								}
+<td><span>{course.maj_units}</span></td>
 							</tr>
 						)
 					})
