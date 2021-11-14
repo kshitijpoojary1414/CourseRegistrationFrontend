@@ -236,7 +236,7 @@ class Tables extends React.Component {
 				]
 			}
 		],
-		teachers: [
+		teacher: [
 			{
 				name: "The Jesus",
 				href: "#pablo",
