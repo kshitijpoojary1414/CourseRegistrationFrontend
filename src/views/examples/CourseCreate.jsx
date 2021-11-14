@@ -37,7 +37,6 @@ import {
 	DropdownItem
 } from "reactstrap";
 import { Link } from "react-router-dom"
-import axios from 'axios'
 // core components
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
 import TeacherCard from "./TeacherCard.jsx"

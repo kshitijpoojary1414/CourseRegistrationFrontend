@@ -46,7 +46,8 @@ class StudentInfo extends React.Component {
 		editable: false,
 		data: {
 			courses: [],
-			address: {}
+			address: {
+			}
 		}
 	}
 	componentDidMount() {
@@ -56,11 +57,22 @@ class StudentInfo extends React.Component {
 			url: `/users/${this.props.match.params.id}`,
 		  })
 			.then(res => {
-					const data = res.data
+					let data = res.data
 					console.log("Data",data)
-					this.setState({data: data})
+					let {street_address, zip_code, city, country ,state,...remData} = data 
+					remData = {
+						...remData,
+						address : {
+							streetAddress : street_address,
+							zipCode : zip_code,
+							city : city,
+							country : country,
+							state
+						}
+					}
+					this.setState({data: remData})
 			}).catch(err => {
-				console.log("Error")
+				console.log("Error",err)
 			})
 	}
 	uploadAvatar = (e) => {
@@ -82,12 +94,35 @@ class StudentInfo extends React.Component {
 					console.log("Error uploading avatar")
 				})
 		}
-		axios.patch(`${process.env.REACT_APP_API_PORT}/students/${this.props.match.params.id}`, this.state.data)
+		let editBody = {
+			...this.state.data
+		}
+		let {address} = editBody
+		let {streetAddress, city, country, zipCode, state} = address
+
+		editBody = {
+			...editBody,
+			street_address: streetAddress,
+			city,
+			country,
+			zip_code: zipCode,
+			state
+		}
+
+		console.log(editBody)
+
+		// axios.patch(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`, this.state.data)
+		client({
+			method: 'patch',
+			url: `/users/${this.props.match.params.id}`,
+			data: editBody,
+		  })
 			.then(data => {
 					this.setState({
 						editable: !this.state.editable
 					})
 			}).catch(err => {
+				console.log(err)
 				console.log("Error")
 			})
 	}
