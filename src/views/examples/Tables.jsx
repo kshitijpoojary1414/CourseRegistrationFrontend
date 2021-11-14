@@ -29,7 +29,11 @@ import {
 	Container,
 	Row,
 	Col,
-	Button
+	Button,
+	Dropdown,
+	DropdownMenu,
+	DropdownItem
+
 } from "reactstrap";
 // core components
 import Header from "../../components/Headers/Header.jsx";
@@ -38,7 +42,9 @@ import CoursesTable from "./CoursesTable.jsx"
 import SubjectsTable from "./SubjectsTable.jsx"
 import TeachersTable from "./TeachersTable.jsx"
 import StudentsTable from "./StudentsTable.jsx"
-import TeachersCoursesTable from "./TeachersCoursesTable"
+import TeachersCoursesTable from "./Teachers/TeachersCoursesTable";
+import TeachersList from "./Teachers/TeachersList";
+import TeacherStudents from "./Teachers/TeacherStudents";
 
 class Tables extends React.Component {
 	state = {
@@ -355,10 +361,16 @@ class Tables extends React.Component {
 			return <CoursesTable courses={this.state.courses} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
 			return <SubjectsTable courses={this.state.courses} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers" || this.props.location.pathname === "/teacher/teachers") {
+		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/students" || this.props.location.pathname === "/teacher/students") {
+		}
+
+		else if (this.props.location.pathname === "/teacher/teachers") {
+			return <TeachersList teachers={this.state.teachers} {...this.props} />
+		} else if (this.props.location.pathname === "/admin/students") {
 			return <StudentsTable students={this.state.students}  {...this.props} />
+		} else if (this.props.location.pathname === "/teacher/students") {
+			return <TeacherStudents students={this.state.students}  {...this.props} />
 		} else if (this.props.location.pathname === "/teacher/courses") {
 			return <TeachersCoursesTable courses={this.state.courses} {...this.props} />
 		}

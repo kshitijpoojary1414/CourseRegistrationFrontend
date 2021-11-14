@@ -1,23 +1,6 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
-import client from '../../apis/client';
-import CircleProgressBar from '../examples/CircularProgressBar';
+import client from "../../../apis/client";
+import CircleProgressBar from '../CircularProgressBar';
 
 // reactstrap components
 import {
@@ -31,7 +14,7 @@ import {
     // UncontrolledTooltip
 } from "reactstrap";
 import { Link } from "react-router-dom"
-import axios from 'axios'
+
 // core components
 
 class CoursesTable extends React.Component {
@@ -73,31 +56,10 @@ class CoursesTable extends React.Component {
             console.log("Error - ", err)
         })
     }
-    addToCart = (courseId, courseName, price) => {
-        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
-        let data = { id: courseId, name: courseName, price: price }
-        let courseIds = cart.map(course => course.id)
-        if (courseIds.includes(data.id)) {
-            alert('course already selected')
-        } else {
-            cart.push(data)
-            alert('Course added successfully')
-        }
-        localStorage.setItem('cart', JSON.stringify(cart))
-    }
-    addToCartAndCheckout = (courseId, courseName, price) => {
-        let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
-        let data = { id: courseId, name: courseName, price: price }
-        let courseIds = cart.map(course => course.id)
-        if (!courseIds.includes(data.id)) { cart.push(data) }
-        localStorage.setItem('cart', JSON.stringify(cart))
-        this.props.history.push({
-            pathname: "/auth/cart",
-        })
-    }
+
     renderRegistration = (course) => {
-        console.log('Course in renderreg is ', course);
-        console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
+        // console.log('Course in renderreg is ', course);
+        // console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
         if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/teacher/courses") {
             return (
                 <td>
@@ -112,45 +74,7 @@ class CoursesTable extends React.Component {
             )
         }
     }
-    renderDropdown = (course) => {
-        if (this.props.location.pathname === "/student/courses") {
-            return (
-                <td className="text-left">
-                    {!this.state.data[0].hasRegistered &&
 
-                        <UncontrolledDropdown>
-
-                            <DropdownToggle
-                                className="btn-icon-only text-light"
-                                href="#pablo"
-                                role="button"
-                                size="sm"
-                                color=""
-                                onClick={e => e.preventDefault()}
-                            >
-                                <i className="fas fa-ellipsis-v" />
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-arrow" right>
-                                <DropdownItem
-                                    onClick={() => this.addToCart(course.id, course.name, course.price)}
-                                >
-                                    Add to cart
-                                </DropdownItem>
-
-                                <DropdownItem
-                                    onClick={() => this.addToCartAndCheckout(course.id, course.name, course.price)}
-                                >
-                                    Add to cart and register
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>}
-                    {this.state.data[0].hasRegistered &&
-                        <span>Already Registered</span>
-                    }
-                </td>
-            )
-        }
-    }
     render() {
         console.log(this.orderList())
         console.log(this.state.data[0]);
@@ -185,7 +109,7 @@ class CoursesTable extends React.Component {
                                                                 <img
                                                                     alt="..."
                                                                     className="rounded-circle"
-                                                                    src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                                                                    src={require("../../../assets/img/theme/team-4-800x800.jpg")}
                                                                 />
                                                             </span>
                                                             <span>{teacher.first_name} {teacher.last_name}</span>
@@ -205,7 +129,7 @@ class CoursesTable extends React.Component {
                                 <td>
                                     <Link to={`course/${course.id}`}>
                                         <Badge color="" className="badge-dot mr-4">
-                                            {/* <i className="bg-warning" /> */}
+
                                             {
                                                 course.schedule.days.map((day, i) => {
                                                     return (
@@ -219,14 +143,8 @@ class CoursesTable extends React.Component {
                                     </Link>
                                 </td>
 
-                                {/* <td>
-									<Link to={`course/${course.id}`}>
-										${course.price}
-									</Link>
-								</td> */}
-                                {
-                                    this.renderDropdown(course)
-                                }
+
+
                             </tr>
                         )
                     })
