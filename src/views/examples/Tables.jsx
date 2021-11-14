@@ -48,7 +48,10 @@ import StudentsTable from "./StudentsTable.jsx"
 class Tables extends React.Component {
 	state = {
 		dropdownOpen: false,
+		// for open/close
+		dropdownMajor : false,
 		departmentName: "" ,
+		majorName: "",
 		courses: [
 			{
 				img: {
@@ -320,7 +323,9 @@ class Tables extends React.Component {
 			}
 		],
 		departments: [],
+		majors : [],
 		selectedDepartment: "",
+		selectedMajor: "",
 		coursesTableData: [
 			{
 				schedule: {
@@ -398,7 +403,7 @@ class Tables extends React.Component {
 		}
 	}
 
-	toggle = (e) => {
+	toggleDropDownforDept = (e) => {
 		e.preventDefault()
 		if (!this.state.dropdownOpen) {
 			this.setState({
@@ -408,9 +413,36 @@ class Tables extends React.Component {
 		}
 
 	}
+	toggleDropDownforMajor = (e) => {
+		e.preventDefault()
+		if (!this.state.dropdownMajor) {
+			this.setState({
+				...this.state,
+				dropdownMajor: !this.state.dropdownMajor
+			})
+		}
+
+	}
 	selectItem = (e) => {
 		console.log(e)
 	}
+
+	// fetchMajor = () => {
+	// 	client({
+	// 		method: 'get',
+	// 		url: '/majors'
+	// 	}).then(data => {
+	// 		this.setState({
+	// 			...this.state,
+	// 			majors : data.data,
+	// 			majorName: data.data[0].name,
+	// 			selectedMajor: data.data[0]
+	// 		})
+	// 		this.fetchCourses(data.data[0].id)
+	// 	}).catch( error => {
+	// 		alert("Some error occured. Please refresh the page")
+	// 	})
+	// }
 	fetchDepartments = () => {
 		client({
 			method: 'get',
@@ -461,6 +493,7 @@ class Tables extends React.Component {
 							...this.state,
 							departmentName: department.name,
 							dropdownOpen: false,
+							dropdownMajor: false,
 							selectedDepartment: department,
 							coursesTableData: data
 						})
@@ -482,7 +515,7 @@ class Tables extends React.Component {
 	}
 	renderDropDown = () => {
 		return (
-			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggle(e)}>
+			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
 				<DropdownToggle caret>
 					{this.state.departmentName}
 				</DropdownToggle>
@@ -520,22 +553,34 @@ class Tables extends React.Component {
 										}
 										<div>
 											{/* {this.renderDropDown()} */}
-										{			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggle(e)}>
-				<DropdownToggle caret>
-					{this.state.departmentName}
-				</DropdownToggle>
-				<DropdownMenu right>
-					{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-					{
-						this.state.departments.map(
-							department => {
-								return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
-							}
-						)
-					}
-			
-				</DropdownMenu>
-			</Dropdown>}
+										{	<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+												{/* <DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle> */}
+												<DropdownToggle caret>
+													{this.state.departmentName}
+												</DropdownToggle>
+												<DropdownMenu right>
+													{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+													{
+														this.state.departments.map(
+															department => {
+																return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
+															}
+														)
+													}
+											
+												</DropdownMenu>
+											</Dropdown>
+										}
+										{/* New Drop Down for majors */}
+										{
+											<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
+												<DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle>
+											</Dropdown>
+										}
 										</div>
 									</div>
 
