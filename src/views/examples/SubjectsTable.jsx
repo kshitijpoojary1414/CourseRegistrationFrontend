@@ -117,13 +117,13 @@ class SubjectsTable extends React.Component {
 						return(
 							<tr key={key}>
 								<td>
-									<Link to={`subject/${course.subject}`}>
+									<Link to={`major/${course.id}`}>
 										{course.major_name}
 									</Link>
 								</td>
 
 								<td>
-									<Link to={`course/${course.name}`}>
+									<Link to={`major/${course.id}`}>
 										{course.major_code}
 									</Link>
 								</td>

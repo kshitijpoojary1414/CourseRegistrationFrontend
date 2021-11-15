@@ -72,6 +72,7 @@ class UserNavbar extends React.Component {
   }
   logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("cart")
     this.props.history.push({
       pathname: "/auth/login"
     })
