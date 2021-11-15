@@ -41,6 +41,7 @@ class TeacherTables extends React.Component {
         majorName: "",
         courseName: "",
         coursesByTeacher: [],
+        studentsGrades: [],
         courses: [
             {
                 img: {
@@ -354,7 +355,7 @@ class TeacherTables extends React.Component {
     }
     renderTableData = () => {
         if (this.props.location.pathname === "/teacher/students") {
-            return <TeachersStudentsTable students={this.state.students}  {...this.props} />
+            return <TeachersStudentsTable students={this.state.studentsGrades}  {...this.props} />
         }
         else if (this.props.location.pathname === "/teacher/courses") {
             return <TeacherCoursesTable students={this.state.students}  {...this.props} />
@@ -401,22 +402,7 @@ class TeacherTables extends React.Component {
         console.log(e)
     }
 
-    // fetchMajor = () => {
-    // 	client({
-    // 		method: 'get',
-    // 		url: '/majors'
-    // 	}).then(data => {
-    // 		this.setState({
-    // 			...this.state,
-    // 			majors : data.data,
-    // 			majorName: data.data[0].name,
-    // 			selectedMajor: data.data[0]
-    // 		})
-    // 		this.fetchCourses(data.data[0].id)
-    // 	}).catch( error => {
-    // 		alert("Some error occured. Please refresh the page")
-    // 	})
-    // }
+
     fetchDepartments = () => {
         client({
             method: 'get',
@@ -434,26 +420,25 @@ class TeacherTables extends React.Component {
         })
     }
 
-    fetchCourses = (major_id) => {
+    fetchMajors(department_id) {
         client({
             method: 'get',
-            url: '/courses',
+            url: '/majors/department',
             params: {
-                major_id: major_id
+                department_id: department_id
             }
         }).then(res => {
             const data = res.data;
-
+            console.log("OG", data)
             this.setState({
                 ...this.state,
-                courses: data,
-                coursesTableData: data,
-                courseName: data[0].name,
-                selectedCourse: data[0]
+                majors: data,
+                majorName: data[0].major_code,
+                selectedMajor: data[0],
             })
-            console.log("courses data", this.state.courseName);
+            this.fetchCoursesByATeacher(data[0].id)
         }).catch(err => {
-            console.log("Error")
+            console.log("Error", err)
         })
     }
 
@@ -491,71 +476,80 @@ class TeacherTables extends React.Component {
                 coursesByTeacher: data.rows,
                 courseName: data.rows[0].name,
             })
+            //callling the fetch student course
+            console.log('Fetch course students- ', data.rows[0]);
+            this.fetchStudentsByACourseWithGrades(data.rows[0].id);
         }).catch(err => {
             console.log("Error")
         })
     }
 
-    fetchStudentsByACourse = (course_id) => {
+    fetchStudentsByACourseWithGrades = (course_id) => {
+
         client({
             method: 'get',
-            url: '/major/teacher',
+            url: '/grades',
             params: {
                 course_id: course_id
             }
         }).then(res => {
             const data = res.data;
-            console.log("Teachers for major data", data)
+
             this.setState({
                 ...this.state,
-                teachersForMajor: data
+                studentsGrades: data
             })
+            console.log("Students with grades", this.state.studentsGrades);
         }).catch(err => {
-            console.log("Error")
+            // console.log('Called this shit not here')
+            console.log("Error - fetch students grades ", err)
         })
     }
 
-    fetchTeachersForCourse = (course_id) => {
-        client({
-            method: 'get',
-            url: '/courses',
-            params: {
-                course_id: course_id
-            }
-        }).then(res => {
-            const data = res.data;
-            console.log("og data", data)
-            this.setState({
-                ...this.state,
-                coursesTableData: data
-            })
-        }).catch(err => {
-            console.log("Error")
-        })
-    }
+    // fetchCourses = (major_id) => {
+    //     client({
+    //         method: 'get',
+    //         url: '/courses',
+    //         params: {
+    //             major_id: major_id
+    //         }
+    //     }).then(res => {
+    //         const data = res.data;
+
+    //         this.setState({
+    //             ...this.state,
+    //             courses: data,
+    //             coursesTableData: data,
+    //             courseName: data[0].name,
+    //             selectedCourse: data[0]
+    //         })
+    //         console.log("courses data", this.state.courseName);
+    //     }).catch(err => {
+    //         console.log("Error")
+    //     })
+    // }
+
+    // fetchTeachersForCourse = (course_id) => {
+    //     client({
+    //         method: 'get',
+    //         url: '/courses',
+    //         params: {
+    //             course_id: course_id
+    //         }
+    //     }).then(res => {
+    //         const data = res.data;
+    //         console.log("og data", data)
+    //         this.setState({
+    //             ...this.state,
+    //             coursesTableData: data
+    //         })
+    //     }).catch(err => {
+    //         console.log("Error")
+    //     })
+    // }
 
 
-    fetchMajors(department_id) {
-        client({
-            method: 'get',
-            url: '/majors/department',
-            params: {
-                department_id: department_id
-            }
-        }).then(res => {
-            const data = res.data;
-            console.log("OG", data)
-            this.setState({
-                ...this.state,
-                majors: data,
-                majorName: data[0].major_code,
-                selectedMajor: data[0],
-            })
-            this.fetchCoursesByATeacher(data[0].id)
-        }).catch(err => {
-            console.log("Error", err)
-        })
-    }
+
     selectDropdown = (e, department) => {
 
         this.setState({

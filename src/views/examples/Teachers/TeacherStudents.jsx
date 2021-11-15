@@ -16,6 +16,7 @@ import Button from "reactstrap/lib/Button";
 
 class TeacherStudents extends React.Component {
     state = {
+        students: null,
         data: [
             {
                 first_name: '',
@@ -57,6 +58,10 @@ class TeacherStudents extends React.Component {
             }
         ]
     }
+
+
+
+
     orderList = () => {
         let orderedList = this.state.data.sort((a, b) => {
             var studentA = a.last_name.toUpperCase()
@@ -67,6 +72,7 @@ class TeacherStudents extends React.Component {
     }
 
     componentDidMount() {
+        console.log('props in teacher students ', this.props);
         // axios.get(`${process.env.REACT_APP_API_PORT}/students`)
         client({
             method: 'get',
@@ -81,11 +87,25 @@ class TeacherStudents extends React.Component {
                 console.log("Error")
             })
     }
+    componentDidUpdate() {
+        console.log('props in teacher students ', this.props);
+        if (this.props.students.length > 0) {
+
+            if (this.state.students === null) {
+                this.setState({ students: this.props.students })
+            }
+        }
+
+
+
+
+
+    }
     render() {
         return (
             <>
-                {
-                    this.orderList().map((student, key) => {
+                {this.state.students !== null &&
+                    this.state.students.map((student, key) => {
                         return (
                             <tr key={key}>
                                 <td>
@@ -108,13 +128,16 @@ class TeacherStudents extends React.Component {
                                     </Media>
                                 </td>
 
+                                {/* Grade */}
                                 <td style={{ paddingLeft: '1.6rem' }}>
-                                    <Input style={{ width: '4em' }} />
+
+                                    <Input style={{ width: '4em' }} value={student.grades} />
                                 </td>
 
-
+                                {/* Comment */}
                                 <td style={{ paddingLeft: '1.6rem' }}>
-                                    <Input />
+
+                                    <Input value={student.comments} />
                                 </td>
 
                                 <td style={{ paddingLeft: '1.6rem' }}>
