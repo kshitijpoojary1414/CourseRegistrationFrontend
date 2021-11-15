@@ -18,6 +18,7 @@
 import AdminSettings from "./views/examples/AdminSettings.jsx";
 import Login from "./views/examples/Login.jsx";
 import Tables from "./views/examples/Tables.jsx";
+import TeacherTable from "./views/examples/Teachers/TeachersMainTable";
 import Signup from "./views/examples/Signup.jsx";
 import AdminRegister from "./views/examples/AdminRegister.jsx";
 import StudentRegister from "./views/examples/StudentRegister.jsx";
@@ -43,7 +44,7 @@ var routes = [
 		path: "/courses",
 		name: "Courses",
 		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
+		component: TeacherTable,
 		layout: "/teacher",
 		invisible: false
 	},
@@ -52,7 +53,7 @@ var routes = [
 		path: "/teachers",
 		name: "Teachers",
 		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
+		component: TeacherTable,
 		layout: "/teacher",
 		invisible: false
 	},
@@ -61,7 +62,7 @@ var routes = [
 		path: "/students",
 		name: "Students",
 		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
+		component: TeacherTable,
 		layout: "/teacher",
 		invisible: false
 	},
