@@ -405,23 +405,18 @@ class Tables extends React.Component {
 
 	toggleDropDownforDept = (e) => {
 		e.preventDefault()
-		if (!this.state.dropdownOpen) {
-			this.setState({
+		this.setState({
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
-			})
-		}
+		})
 
 	}
 	toggleDropDownforMajor = (e) => {
 		e.preventDefault()
-		if (!this.state.dropdownMajor) {
-			this.setState({
+		this.setState({
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
-			})
-		}
-
+		})
 	}
 	selectItem = (e) => {
 		console.log(e)
