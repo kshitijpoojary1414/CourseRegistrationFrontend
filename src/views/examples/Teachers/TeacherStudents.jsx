@@ -17,6 +17,7 @@ import Button from "reactstrap/lib/Button";
 class TeacherStudents extends React.Component {
     state = {
         students: null,
+        currentCourseID: null,
         data: [
             {
                 first_name: '',
@@ -59,8 +60,74 @@ class TeacherStudents extends React.Component {
         ]
     }
 
+    submitGrade = (course_id, user_id, grades, comments) => {
+        console.log(course_id, user_id, grades, comments);
+        client({
+            method: 'post',
+            url: '/grades',
+            data: {
+                course_id,
+                student_id: user_id,
+                grades,
+                comments
+            }
+        }).then(data => {
+
+            //now set state for only that student...
 
 
+            // this.setState({
+            //     ...this.state,
+            //     course_id: course_id,
+            //     student_id: user_id,
+            //     grades: grades,
+            //     comments: comments,
+
+            // })
+            console.log('Submitted grade ... ', data);
+
+        }).catch(error => {
+            alert("Some error occured. Please refresh the page")
+        })
+
+    }
+
+    handleSubmitGrade = (e) => {
+        e.preventDefault();
+        console.log('Clicked user - ', e.target.id);
+        console.log('Course is - ', this.state.currentCourseID);
+        var grade = document.getElementById(`grade-${e.target.id}`).value;
+        var comment = document.getElementById(`comment-${e.target.id}`).value;
+        console.log('Grades and Comments - ', grade, comment);
+
+        this.submitGrade(this.state.currentCourseID, e.target.id, grade, comment);
+
+    }
+
+    handleChangeGrade = (e) => {
+        var studentID = e.target.className.split(/(\s+)/)[0];
+        console.log(studentID);
+
+        var value = e.target.value;
+        // console.log(e.target.value, e.target.className);
+        let newStudent;
+        let newIndex;
+        console.log(this.state.students);
+        this.state.students.map((student, index) => {
+
+            if (student.id === studentID) {
+                newStudent = student;
+                newStudent.grades = value
+                newIndex = index;
+            }
+
+
+        });
+        console.log(newStudent, newIndex);
+        let updatedStudents = this.state.students;
+        updatedStudents[newIndex] = newStudent;
+        this.setState(updatedStudents);
+    }
 
     orderList = () => {
         let orderedList = this.state.data.sort((a, b) => {
@@ -80,7 +147,7 @@ class TeacherStudents extends React.Component {
         })
             .then(res => {
                 const data = res.data.users
-                console.log("D", res)
+
                 this.setState({ data: data })
             }).catch(err => {
                 console.log(err)
@@ -92,7 +159,10 @@ class TeacherStudents extends React.Component {
         if (this.props.students.length > 0) {
 
             if (this.state.students === null) {
-                this.setState({ students: this.props.students })
+                this.setState({
+                    students: this.props.students,
+                    currentCourseID: this.props.students[0].course_id
+                })
             }
         }
 
@@ -131,17 +201,18 @@ class TeacherStudents extends React.Component {
                                 {/* Grade */}
                                 <td style={{ paddingLeft: '1.6rem' }}>
 
-                                    <Input style={{ width: '4em' }} value={student.grades} />
+                                    <Input style={{ width: '4em' }} value={student.grades} id={`grade-${student.id}`}
+                                        onChange={this.handleChangeGrade} className={student.id} />
                                 </td>
 
                                 {/* Comment */}
                                 <td style={{ paddingLeft: '1.6rem' }}>
 
-                                    <Input value={student.comments} />
+                                    <Input value={student.comments} id={`comment-${student.id}`} className={student.id} />
                                 </td>
 
                                 <td style={{ paddingLeft: '1.6rem' }}>
-                                    <Button>Submit</Button>
+                                    <Button id={student.id} onClick={this.handleSubmitGrade}>Submit</Button>
                                 </td>
 
                                 <td className="text-left">
