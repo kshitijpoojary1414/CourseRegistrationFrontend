@@ -89,7 +89,7 @@ class Tables extends React.Component {
 		} else if (this.props.location.pathname === "/admin/students") {
 			return ["Student", "Courses", "Teachers", "Schedule"]
 		} else if (this.props.location.pathname === "/student/courses") {
-			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Department", "Register"]
+			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Major", "Register"]
 		} else if (this.props.location.pathname === "/student/majors") {
 			return ["Major", "Code", "Advisor", "No of units"]
 		} else if (this.props.location.pathname === "/student/majors") {
@@ -140,6 +140,11 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
 			})
+		} else {
+			this.setState({
+				...this.state,
+				dropdownOpen: false
+			})
 		}
 
 	}
@@ -149,6 +154,11 @@ class Tables extends React.Component {
 			this.setState({
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
+			})
+		} else {
+			this.setState({
+				...this.state,
+				dropdownMajor: false
 			})
 		}
 

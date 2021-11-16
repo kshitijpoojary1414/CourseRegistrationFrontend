@@ -291,8 +291,8 @@ class CoursesTable extends React.Component {
 									</td>
 	
 									<td>
-									<Link to={`course/${course.id}`}>
-										{course?.department?.name ? course.department.name : "     -"}
+									<Link to={`major/${course?.major?.id}`}>
+										{course?.major?.major_name ? course.major.major_code : "     -"}
 
 										</Link>
 									</td>
