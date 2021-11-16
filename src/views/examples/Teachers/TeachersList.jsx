@@ -125,16 +125,27 @@ class TeachersTable extends React.Component {
                                     </Media>
                                 </td>
                                 <td>
-                                    <p>Course</p>
+                                    {teacher.name}
                                 </td>
                                 <td>
-                                    <p>Subject</p>
+                                    {teacher.subject}
                                 </td>
                                 <td>
-                                    <CircleProgressBar percent={Math.round(20 / 100 * 100)} />
+                                    <CircleProgressBar percent={Math.round(teacher.registered / teacher.course_limit * 100)} />
                                 </td>
                                 <td>
-                                    <p>Schedule</p>
+                                    <Badge color="" className="badge-dot mr-4">
+
+                                        {
+                                            teacher.days.map((day, i) => {
+                                                return (
+                                                    <span style={{ display: "block" }} className="pb-2 text-left">
+                                                        {day}s: {teacher.start_time} - {teacher.end_time}
+                                                    </span>
+                                                )
+                                            })
+                                        }
+                                    </Badge>
                                 </td>
                             </tr>
                         )

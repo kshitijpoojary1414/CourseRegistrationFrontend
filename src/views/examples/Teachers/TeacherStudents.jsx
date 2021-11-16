@@ -55,7 +55,8 @@ class TeacherStudents extends React.Component {
                         name: '',
                         subject: ''
                     }
-                ]
+                ],
+
             }
         ]
     }
@@ -96,12 +97,12 @@ class TeacherStudents extends React.Component {
         e.preventDefault();
         console.log('Clicked user - ', e.target.id);
         console.log('Course is - ', this.state.currentCourseID);
+        const student = this.state.students.find(student => student.user_id == e.target.id)
 
-        var grade = document.getElementById(`grade-${e.target.id}`).value;
-        var comment = document.getElementById(`comment-${e.target.id}`).value;
-        console.log('Grades and Comments - ', grade, comment);
-
-        this.submitGrade(this.state.currentCourseID, e.target.id, grade, comment);
+        // var grade = document.getElementById(`grade-${e.target.id}`).value;
+        // var comment = document.getElementById(`comment-${e.target.id}`).value;
+        console.log('Grades and Comments - ', student);
+        this.submitGrade(this.state.currentCourseID, student.user_id, student.grades, student.comments);
 
     }
 
@@ -124,10 +125,14 @@ class TeacherStudents extends React.Component {
 
 
         });
-        console.log(newStudent, newIndex);
         let updatedStudents = this.state.students;
+        console.log("update students are here", updatedStudents, newIndex);
+
         updatedStudents[newIndex] = newStudent;
-        this.setState(updatedStudents);
+        this.setState({
+            ...this.state,
+            students: updatedStudents
+        });
     }
 
     handleChangeComment = (e) => {
@@ -229,7 +234,7 @@ class TeacherStudents extends React.Component {
                                 <td style={{ paddingLeft: '1.6rem' }}>
 
                                     <Input style={{ width: '4em' }} value={student.grades} id={`grade-${student.id}`}
-                                        onChange={this.handleChangeGrade} className={student.id} />
+                                        onChange={(e, student) => this.handleChangeGrade(e, student)} className={student.id} />
                                 </td>
 
                                 {/* Comment */}
@@ -240,7 +245,7 @@ class TeacherStudents extends React.Component {
                                 </td>
 
                                 <td style={{ paddingLeft: '1.6rem' }}>
-                                    <Button id={student.id} onClick={this.handleSubmitGrade}>Submit</Button>
+                                    <Button id={student.user_id} onClick={(e) => this.handleSubmitGrade(e)}>Submit</Button>
                                 </td>
 
                                 <td className="text-left">

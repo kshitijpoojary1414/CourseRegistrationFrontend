@@ -368,16 +368,17 @@ class CourseInfo extends React.Component {
 													{
 														this.state.data.teachers.map((teacher, key) => {
 															return (
-																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
-																	<Link to={`../teacher/${teacher.id}`}>
-																		<span className="avatar avatar-sm" >
+																<div className="avatar-group" key={key}>
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../teacher/${teacher.id}`}>
+																		<div className="avatar avatar-sm" >
 																			<img
+																				style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{teacher.first_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{teacher.first_name}</p>
 																	</Link>
 																</div>
 															)
@@ -395,16 +396,16 @@ class CourseInfo extends React.Component {
 													{
 														this.state.data.students.map((student, key) => {
 															return (
-																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
-																	<Link to={`../student/${student.id}`}>
-																		<span className="avatar avatar-sm" >
-																			<img
+																<div className=" avatar-group" key={key} >
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../student/${student.id}`}>
+																		<div>
+																			<img style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{student.first_name} {student.last_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{student.first_name} {student.last_name}</p>
 																	</Link>
 																</div>
 															)
@@ -433,35 +434,35 @@ class CourseInfo extends React.Component {
 												return <TeacherCard teacher={teacher} key={teacher.id} />
 											})
 										} {
-											window.location.pathname.includes('student') && 	
+											window.location.pathname.includes('student') &&
 											<div>
-																							<Card className="bg-secondary shadow">
-												<CardHeader className="bg-white border-0">
-													<span>Grades</span>
-												</CardHeader>
-												<CardBody>
-													<Row className="mb-3">
-														<Col lg="6">
-															{/* Name */}
-															<div className="pl-lg-4">
-																<small className="form-control-label">Test name</small>
-																<h1>{this.state.data.name}</h1>
-															</div>
-														</Col>
-														<Col lg="6">
-															{/* Subject */}
-															<div className="pl-lg-4">
-																<small className="form-control-label">Grade</small>
-																<h1>{"A"}</h1>
-															</div>
-														</Col>
-													</Row>
-												</CardBody>
-												<CardFooter>
-	
-												</CardFooter>
-											</Card>
-											</div>									
+												<Card className="bg-secondary shadow">
+													<CardHeader className="bg-white border-0">
+														<span>Grades</span>
+													</CardHeader>
+													<CardBody>
+														<Row className="mb-3">
+															<Col lg="6">
+																{/* Name */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Test name</small>
+																	<h1>{this.state.data.name}</h1>
+																</div>
+															</Col>
+															<Col lg="6">
+																{/* Subject */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Grade</small>
+																	<h1>{"A"}</h1>
+																</div>
+															</Col>
+														</Row>
+													</CardBody>
+													<CardFooter>
+
+													</CardFooter>
+												</Card>
+											</div>
 
 										}
 

@@ -11,7 +11,7 @@
 */
 import React from "react";
 import client from "../../apis/client";
-
+import userProfile from "../../assets/img/theme/userProfile.svg";
 
 // reactstrap components
 import {

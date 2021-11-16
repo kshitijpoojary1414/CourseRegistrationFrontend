@@ -334,6 +334,9 @@ class TeacherTables extends React.Component {
             }
         ]
     }
+    componentDidUpdate = () => {
+        console.log('current course name is - ', this.state.courseName);
+    }
     componentWillMount() {
         this.fetchCoursesByATeacher();
         this.fetchDepartments()
@@ -448,7 +451,7 @@ class TeacherTables extends React.Component {
     fetchTeachersForMajor = (major_id) => {
         client({
             method: 'get',
-            url: '/teacherByMajor',
+            url: '/coursesByMajor',
             params: {
                 major_id: major_id
             }
@@ -474,15 +477,15 @@ class TeacherTables extends React.Component {
             }
         }).then(res => {
             const data = res.data;
-            console.log("Teachers for courses data", data.rows)
+            console.log("Teachers for courses data", data)
             this.setState({
                 ...this.state,
-                coursesByTeacher: data.rows,
-                courseName: data.rows[0].name,
+                coursesByTeacher: data,
+                courseName: data[0].name,
             })
             //callling the fetch student course
-            console.log('Fetch course students- ', data.rows[0]);
-            this.fetchStudentsByACourseWithGrades(data.rows[0].id);
+            console.log('Fetch course students- ', data);
+            this.fetchStudentsByACourseWithGrades(data[0].id);
         }).catch(err => {
             console.log("Error")
         })
@@ -524,7 +527,7 @@ class TeacherTables extends React.Component {
                 ...this.state,
                 courses: data,
                 coursesTableData: data,
-                courseName: data[0].name,
+                //courseName: data[0].name,
                 selectedCourse: data[0]
             })
             console.log("courses data for a major", this.state.courses);
