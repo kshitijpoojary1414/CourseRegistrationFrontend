@@ -76,6 +76,7 @@ class UserNavbar extends React.Component {
   }
   logout = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("cart")
     this.props.history.push({
       pathname: "/auth/login"
     })
@@ -85,12 +86,12 @@ class UserNavbar extends React.Component {
       <>
         <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
           <Container fluid>
-            <Link
+            {/* <Link
               className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
               to="/"
             >
               {this.props.brandText}
-            </Link>
+            </Link> */}
             <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
               <FormGroup className="mb-0">
                 <InputGroup className="input-group-alternative">
