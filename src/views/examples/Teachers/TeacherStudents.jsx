@@ -96,6 +96,7 @@ class TeacherStudents extends React.Component {
         e.preventDefault();
         console.log('Clicked user - ', e.target.id);
         console.log('Course is - ', this.state.currentCourseID);
+
         var grade = document.getElementById(`grade-${e.target.id}`).value;
         var comment = document.getElementById(`comment-${e.target.id}`).value;
         console.log('Grades and Comments - ', grade, comment);
@@ -128,6 +129,32 @@ class TeacherStudents extends React.Component {
         updatedStudents[newIndex] = newStudent;
         this.setState(updatedStudents);
     }
+
+    handleChangeComment = (e) => {
+        var studentID = e.target.className.split(/(\s+)/)[0];
+        console.log(studentID);
+
+        var value = e.target.value;
+        // console.log(e.target.value, e.target.className);
+        let newStudent;
+        let newIndex;
+        console.log(this.state.students);
+        this.state.students.map((student, index) => {
+
+            if (student.id === studentID) {
+                newStudent = student;
+                newStudent.comments = value
+                newIndex = index;
+            }
+
+
+        });
+        console.log(newStudent, newIndex);
+        let updatedStudents = this.state.students;
+        updatedStudents[newIndex] = newStudent;
+        this.setState(updatedStudents);
+    }
+
 
     orderList = () => {
         let orderedList = this.state.data.sort((a, b) => {
@@ -208,7 +235,8 @@ class TeacherStudents extends React.Component {
                                 {/* Comment */}
                                 <td style={{ paddingLeft: '1.6rem' }}>
 
-                                    <Input value={student.comments} id={`comment-${student.id}`} className={student.id} />
+                                    <Input value={student.comments} id={`comment-${student.id}`} className={student.id}
+                                        onChange={this.handleChangeComment} />
                                 </td>
 
                                 <td style={{ paddingLeft: '1.6rem' }}>
