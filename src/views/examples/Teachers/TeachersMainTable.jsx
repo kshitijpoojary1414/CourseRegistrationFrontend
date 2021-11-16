@@ -358,10 +358,10 @@ class TeacherTables extends React.Component {
             return <TeachersStudentsTable students={this.state.studentsGrades}  {...this.props} />
         }
         else if (this.props.location.pathname === "/teacher/courses") {
-            return <TeacherCoursesTable students={this.state.students}  {...this.props} />
+            return <TeacherCoursesTable courses={this.state.courses}  {...this.props} />
         }
         else if (this.props.location.pathname === "/teacher/teachers") {
-            return <TeachersTeachersTable students={this.state.students}  {...this.props} />
+            return <TeachersTeachersTable teachersForMajor={this.state.teachersForMajor}  {...this.props} />
         }
     }
 
@@ -436,7 +436,10 @@ class TeacherTables extends React.Component {
                 majorName: data[0].major_code,
                 selectedMajor: data[0],
             })
-            this.fetchCoursesByATeacher(data[0].id)
+            console.log('selectedMajor ', this.state.selectedMajor);
+            this.fetchCourses(data[0].id);
+            //this.fetchCoursesByATeacher(data[0].id)
+            this.fetchTeachersForMajor(data[0].id);
         }).catch(err => {
             console.log("Error", err)
         })
@@ -445,7 +448,7 @@ class TeacherTables extends React.Component {
     fetchTeachersForMajor = (major_id) => {
         client({
             method: 'get',
-            url: '/major/teacher',
+            url: '/teacherByMajor',
             params: {
                 major_id: major_id
             }
@@ -461,6 +464,7 @@ class TeacherTables extends React.Component {
         })
     }
 
+    //need to get courses of a logged in teacher...
     fetchCoursesByATeacher = (teacher_id) => {
         client({
             method: 'get',
@@ -490,7 +494,7 @@ class TeacherTables extends React.Component {
             method: 'get',
             url: '/grades',
             params: {
-                course_id: course_id
+                course_id: "d48a0ddf-dd83-4e42-9b31-ee0e653a3835"
             }
         }).then(res => {
             const data = res.data;
@@ -506,28 +510,28 @@ class TeacherTables extends React.Component {
         })
     }
 
-    // fetchCourses = (major_id) => {
-    //     client({
-    //         method: 'get',
-    //         url: '/courses',
-    //         params: {
-    //             major_id: major_id
-    //         }
-    //     }).then(res => {
-    //         const data = res.data;
+    fetchCourses = (major_id) => {
+        client({
+            method: 'get',
+            url: '/courses',
+            params: {
+                major_id: major_id
+            }
+        }).then(res => {
+            const data = res.data;
 
-    //         this.setState({
-    //             ...this.state,
-    //             courses: data,
-    //             coursesTableData: data,
-    //             courseName: data[0].name,
-    //             selectedCourse: data[0]
-    //         })
-    //         console.log("courses data", this.state.courseName);
-    //     }).catch(err => {
-    //         console.log("Error")
-    //     })
-    // }
+            this.setState({
+                ...this.state,
+                courses: data,
+                coursesTableData: data,
+                courseName: data[0].name,
+                selectedCourse: data[0]
+            })
+            console.log("courses data for a major", this.state.courses);
+        }).catch(err => {
+            console.log("Error")
+        })
+    }
 
     // fetchTeachersForCourse = (course_id) => {
     //     client({
@@ -567,12 +571,13 @@ class TeacherTables extends React.Component {
         this.setState({
             ...this.state,
             dropdownMajor: false,
-            selectedMajor: major,
+            selectedMajor: major.id,
             major: major.name,
             majorName: major.major_code
         })
 
-        // this.fetchCourses(major.id)
+        this.fetchCourses(major.id)
+        this.fetchTeachersForMajor(major.id);
     }
     selectDropdownForCourse = (e, course) => {
         console.log("Selected course", course)
@@ -583,7 +588,7 @@ class TeacherTables extends React.Component {
             courseName: course.name,
 
         })
-
+        this.fetchStudentsByACourseWithGrades(course.id);
 
     }
 
@@ -680,7 +685,7 @@ class TeacherTables extends React.Component {
                                                         {
                                                             this.state.coursesByTeacher.map(
                                                                 course => {
-                                                                    return (<DropdownItem id={course.name} >{course.name}</DropdownItem>)
+                                                                    return (<DropdownItem id={course.name} onClick={(e) => this.selectDropdownForCourse(e, course)}>{course.name}</DropdownItem>)
                                                                 }
                                                             )
                                                         }

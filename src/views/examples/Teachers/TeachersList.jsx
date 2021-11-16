@@ -17,7 +17,7 @@
 */
 import React from "react";
 import client from "../../../apis/client";
-
+import CircleProgressBar from '../../examples/CircularProgressBar';
 
 // reactstrap components
 import {
@@ -98,7 +98,49 @@ class TeachersTable extends React.Component {
 
         return (
             <>
+
                 {
+                    this.props.teachersForMajor?.map((teacher, key) => {
+                        return (
+                            <tr key={key}>
+                                <td>
+                                    <Media className="align-items-center">
+                                        <Link
+                                            to={`teacher/${teacher.id}`}
+                                            className="avatar rounded-circle mr-3"
+                                        >
+                                            <img
+                                                alt="..."
+                                                src={require("../../../assets/img/theme/team-4-800x800.jpg")}
+                                            />
+                                        </Link>
+                                        <Media>
+                                            <span className="mb-0 text-sm">
+
+                                                <Link to={this.props.location.pathname === '/teacher/teachers' ? `profile/${teacher.id}` : `teacher/${teacher.id}`}>
+                                                    {teacher.first_name} {teacher.last_name}
+                                                </Link>
+                                            </span>
+                                        </Media>
+                                    </Media>
+                                </td>
+                                <td>
+                                    <p>Course</p>
+                                </td>
+                                <td>
+                                    <p>Subject</p>
+                                </td>
+                                <td>
+                                    <CircleProgressBar percent={Math.round(20 / 100 * 100)} />
+                                </td>
+                                <td>
+                                    <p>Schedule</p>
+                                </td>
+                            </tr>
+                        )
+                    })
+                }
+                {null === true &&
                     this.orderList().map((teacher, key) => {
                         return (
                             <tr key={key}>
@@ -162,6 +204,7 @@ class TeachersTable extends React.Component {
                         )
                     })
                 }
+
             </>
         );
     }
