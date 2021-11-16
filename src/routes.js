@@ -190,7 +190,6 @@ var routes = [
 		component: Tables,
 		layout: "/student",
 		invisible: false
-<<<<<<< HEAD
   },
   {
     path: "/majors",
@@ -200,9 +199,6 @@ var routes = [
     layout: "/student",
         invisible: false
   },
-=======
-	},
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 	{
 		path: "/teachers",
 		name: "Teachers",

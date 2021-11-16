@@ -54,13 +54,9 @@ class Tables extends React.Component {
 	state = {
 		dropdownOpen: false,
 		// for open/close
-<<<<<<< HEAD
 		dropdownMajor : false,
 		departmentName: "" ,
-=======
-		dropdownMajor: false,
-		departmentName: "",
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
+
 		majorName: "",
 		courses: [
 			{
@@ -514,7 +510,6 @@ class Tables extends React.Component {
 			params: {
 				department_id: department_id
 			}
-<<<<<<< HEAD
 		  }).then(res => {
 						const data = res.data;
 						console.log("og data",data)
@@ -537,7 +532,6 @@ class Tables extends React.Component {
 		// 	// coursesTableData : this.fetchCourses(department.id)
 			
 		// })
-=======
 		}).then(res => {
 			const data = res.data;
 			console.log("OG", data)
@@ -553,7 +547,6 @@ class Tables extends React.Component {
 		})
 	}
 	selectDropdown = (e, department) => {
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 
 		this.setState({
 			...this.state,

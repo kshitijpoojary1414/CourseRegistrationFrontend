@@ -123,10 +123,8 @@ class StudentInfo extends React.Component {
 					})
 			}).catch(err => {
 				console.log(err)
-<<<<<<< HEAD
-=======
+
 				console.log("Error")
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 			})
 	}
 	cancelUpdates = (e) => {

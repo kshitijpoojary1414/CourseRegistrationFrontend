@@ -188,11 +188,11 @@ class Sidebar extends React.Component {
               />
             </NavbarBrand>
           ) : null */}
-<<<<<<< HEAD
+
           <h1 >SignMeUp</h1>
-=======
+
           <h1 >Course Registration</h1>
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
+
           {/* User */}
           <Nav className="align-items-center d-md-none">
             <UncontrolledDropdown nav>
