@@ -82,11 +82,15 @@ class Cart extends React.Component {
 		this.props.history.push({
 		pathname: "/student/courses"
 		})
+		localStorage.removeItem("cart")
+
 	}).catch(error => {
 		alert('Some courses could not be added. Please refer the courses table')
 		this.props.history.push({
 			pathname: "/student/courses"
 		})
+		localStorage.removeItem("cart")
+
 	})
 	// this.props.history.push({
 	// 	pathname: "/student/courses"
