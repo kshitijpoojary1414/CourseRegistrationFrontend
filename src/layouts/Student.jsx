@@ -39,25 +39,25 @@ class Student extends React.Component {
           Authorization: `Bearer ${token}`
         }
       })
-      .then(res => {
-        if (res.data.role !== "student") {
-          this.props.history.push({
-            pathname: `/admin/${this.props.location.pathname.split('/')[2]}`
-          })
-        } else {
-          let user = res.data
-          this.setState({user})
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then(res => {
+          if (res.data.role !== "student") {
+            this.props.history.push({
+              pathname: `/admin/${this.props.location.pathname.split('/')[2]}`
+            })
+          } else {
+            let user = res.data
+            this.setState({ user })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } else {
       this.props.history.push({
         pathname: "/auth/login"
       })
     }
-    
+
   }
   componentDidUpdate(e) {
     document.documentElement.scrollTop = 0;
@@ -101,8 +101,8 @@ class Student extends React.Component {
             innerLink: "/student/index",
             imgSrc: require("../assets/img/brand/argon-react.png"),
             imgAlt: "...",
-						width: 400,
-						height: 400,
+            width: 400,
+            height: 400,
           }}
         />
         <div className="main-content" ref="mainContent">

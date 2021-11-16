@@ -45,6 +45,11 @@ import SubjectsTable from "./SubjectsTable.jsx"
 import TeachersTable from "./TeachersTable.jsx"
 import StudentsTable from "./StudentsTable.jsx"
 
+//Teachers Tables here.
+import TeacherCoursesTable from "./Teachers/TeachersCoursesTable";
+import TeachersTeachersTable from "./Teachers/TeachersList";
+import TeachersStudentsTable from "./Teachers/TeacherStudents";
+
 class Tables extends React.Component {
 	state = {
 		dropdownOpen: false,
@@ -107,6 +112,17 @@ class Tables extends React.Component {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
 			return <StudentsTable students={this.state.students}  {...this.props} />
+		}
+
+		//Teachers Routes
+		else if (this.props.location.pathname === "/teacher/students") {
+			return <TeachersStudentsTable students={this.state.students}  {...this.props} />
+		}
+		else if (this.props.location.pathname === "/teacher/courses") {
+			return <TeacherCoursesTable students={this.state.students}  {...this.props} />
+		}
+		else if (this.props.location.pathname === "/teacher/teachers") {
+			return <TeachersTeachersTable students={this.state.students}  {...this.props} />
 		}
 	}
 	renderAddCourse = () => {

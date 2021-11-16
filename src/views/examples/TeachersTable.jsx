@@ -21,10 +21,10 @@ import client from "../../apis/client";
 
 // reactstrap components
 import {
-  Badge,
-  Media
+	Badge,
+	Media
 } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from 'axios'
 
 class TeachersTable extends React.Component {
@@ -50,17 +50,17 @@ class TeachersTable extends React.Component {
 		client({
 			method: 'get',
 			url: '/users/roles/teacher',
-		  })
+		})
 			.then(res => {
 				const teachers = res.data.users
 				console.log(teachers)
-				this.setState({teachers})
+				this.setState({ teachers })
 			}).catch(err => {
-				console.log("Error")
+				console.log("Error - ", err)
 			})
 	}
 	orderList = () => {
-		let orderedList = this.state.teachers.sort((a,b) => {
+		let orderedList = this.state.teachers.sort((a, b) => {
 			var teacherA = a.last_name.toUpperCase()
 			var teacherB = b.last_name.toUpperCase()
 			return teacherA < teacherB ? -1 : teacherA > teacherB ? 1 : 0
@@ -68,8 +68,12 @@ class TeachersTable extends React.Component {
 		return orderedList
 	}
 	renderStudents = (teacher) => {
-		if (this.props.location.pathname === '/admin/teachers' && teacher.students) {
-			return(
+		console.log(teacher.students);
+
+
+
+		if ((this.props.location.pathname === '/admin/teachers' || this.props.location.pathname === '/teacher/teachers') && teacher.students) {
+			return (
 				<td>
 					<div>
 						<Link to={`teacher/${teacher.id}`}>
@@ -79,7 +83,7 @@ class TeachersTable extends React.Component {
 				</td>
 			)
 		} else if (this.props.location.pathname === '/admin/teachers') {
-			return(
+			return (
 				<td>
 					<div>
 						<Link to={`teacher/${teacher.id}`}>
@@ -90,13 +94,13 @@ class TeachersTable extends React.Component {
 			)
 		}
 	}
-  render() {
+	render() {
 		console.log(this.state)
-    return (
+		return (
 			<>
 				{
 					this.orderList().map((teacher, key) => {
-						return(
+						return (
 							<tr key={key}>
 								<td>
 									<Media className="align-items-center">
@@ -111,7 +115,8 @@ class TeachersTable extends React.Component {
 										</Link>
 										<Media>
 											<span className="mb-0 text-sm">
-												<Link to={`teacher/${teacher.id}`}>
+
+												<Link to={this.props.location.pathname === '/teacher/teachers' ? `profile/${teacher.id}` : `teacher/${teacher.id}`}>
 													{teacher.first_name} {teacher.last_name}
 												</Link>
 											</span>
@@ -120,8 +125,8 @@ class TeachersTable extends React.Component {
 								</td>
 								<td>
 									{
-										teacher.courses.map((course, key) => {
-											return(
+										teacher.courses?.map((course, key) => {
+											return (
 												<div key={key}>
 													<Link to={`course/${course.id}`}>
 														{course.name}
@@ -133,10 +138,10 @@ class TeachersTable extends React.Component {
 								</td>
 								<td>
 									{
-										teacher.courses.map((course, key) => {
-											return(
+										teacher.courses?.map((course, key) => {
+											return (
 												<div key={key}>
-													<Link to={`course/${course.id}`} onClick={e => {e.stopPropagation()}}>
+													<Link to={`course/${course.id}`} onClick={e => { e.stopPropagation() }}>
 														{course.subject}
 													</Link>
 												</div>
@@ -147,19 +152,19 @@ class TeachersTable extends React.Component {
 								{
 									this.renderStudents(teacher)
 								}
-								<td>
+								{/* <td>
 									<Badge color="" className="badge-dot mr-4">
 										<i className="bg-warning" />
 										pending
 									</Badge>
-								</td>
+								</td> */}
 							</tr>
 						)
 					})
 				}
 			</>
-    );
-  }
+		);
+	}
 }
 
 export default TeachersTable;

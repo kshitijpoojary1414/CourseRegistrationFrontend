@@ -32,6 +32,7 @@ class Admin extends React.Component {
     user: {}
   }
   componentDidMount() {
+    console.log('In Admin Component...');
     let token = localStorage.getItem("token")
     if (token) {
       axios.post(`${process.env.REACT_APP_API_PORT}/auth`, {}, {
@@ -39,19 +40,20 @@ class Admin extends React.Component {
           Authorization: `Bearer ${token}`
         }
       })
-      .then(res => {
-        if (res.data.role === "student") {
-          this.props.history.push({
-            pathname: `/student/${this.props.location.pathname.split('/')[2]}`
-          })
-        } else {
-          let user = res.data
-          this.setState({user})
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      }) 
+        .then(res => {
+          if (res.data.role === "student") {
+            this.props.history.push({
+              pathname: `/student/${this.props.location.pathname.split('/')[2]}`
+            })
+          } else {
+            let user = res.data
+            this.setState({ user })
+            console.log(this.state);
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
     } else {
       this.props.history.push({
         pathname: `/student/${this.props.location.pathname.split('/')[2]}`
@@ -95,6 +97,7 @@ class Admin extends React.Component {
       <>
         <Sidebar
           {...this.props}
+          user={this.state.user}
           routes={routes}
           logo={{
             innerLink: "/admin/index",
