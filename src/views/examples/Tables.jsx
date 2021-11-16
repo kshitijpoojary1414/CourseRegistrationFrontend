@@ -49,281 +49,11 @@ class Tables extends React.Component {
 	state = {
 		dropdownOpen: false,
 		// for open/close
-		dropdownMajor : false,
-		departmentName: "" ,
+		dropdownMajor: false,
+		departmentName: "",
 		majorName: "",
-		courses: [
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/bootstrap.jpg")
-				},
-				name: "English 1",
-				subject: "English",
-				shortDescription: "First level of English.  Prepares students for English 2.",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Zach",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 12
-				},
-				schedule: "pending",
-				price: 350,
-			},
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/angular.jpg")
-				},
-				name: "Spanish 1",
-				subject: "Spanish",
-				shortDescription: "First level of Spanish.  Prepares students for Spanish 2",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Aaron",
-						href: "#pablo",
-						id: "tooltip804044742",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-3-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 5
-				},
-				schedule: "",
-				price: 300,
-			},
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/vue.jpg")
-				},
-				name: "English 3",
-				subject: "English",
-				shortDescription: "Third level of English.  Prepares student for intermediate level English.",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Mary",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 15
-				},
-				schedule: "",
-				price: 500,
-			}
-		],
-		students: [
-			{
-				name: "John",
-				href: "#pablo",
-				id: "tooltip804044742",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-3-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "The Jesus",
-						href: "#pablo",
-						id: "tooltip804044742",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-3-800x800.jpg")
-						},
-						courses: ["Bowling", "Throwing Strikes", "Fashion Style"],
-						students: ["The Dude", "Walter", "Donnie"]
-					},
-					{
-						name: "Splinter",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						},
-						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-					}
-				],
-				courses: [
-					"Spanish 1",
-					"Spanish 2"
-				]
-			},
-			{
-				name: "Chris",
-				href: "#pablo",
-				id: "tooltip941738690",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-1-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "Ali",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						},
-						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-					}
-				],
-				courses: [
-					"English 1",
-					"English 2"
-				]
-			},
-			{
-				name: "Sarah",
-				href: "#pablo",
-				id: "tooltip742438047",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-2-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "Splinter",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						},
-						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-					},
-					{
-						name: "Ali",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						},
-						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-					}
-				],
-				courses: [
-					"Mandarin 3"
-				]
-			}
-		],
-		teachers: [
-			{
-				name: "The Jesus",
-				href: "#pablo",
-				id: "tooltip804044742",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-3-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "Bowling",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Throwing Strikes",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Fashion Style",
-						subject: "Fashion",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["The Dude", "Walter", "Donnie"]
-			},
-			{
-				name: "Splinter",
-				href: "#pablo",
-				id: "tooltip742438047",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-2-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "Ninjitsu",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Skateboarding",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Meditation",
-						subject: "Health/Wellbeing",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-			},
-			{
-				name: "Ali",
-				href: "#pablo",
-				id: "tooltip941738690",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-1-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "One Round Knockouts",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "12 Punch combination",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Being The Greatest",
-						subject: "Health/Wellbeing",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-			}
-		],
 		departments: [],
-		majors : [],
+		majors: [],
 		selectedDepartment: "",
 		selectedMajor: "",
 		coursesTableData: [
@@ -341,7 +71,7 @@ class Tables extends React.Component {
 			}
 		]
 	}
-	componentWillMount(){
+	componentWillMount() {
 		this.fetchDepartments()
 	}
 	renderCardHeader = () => {
@@ -351,28 +81,28 @@ class Tables extends React.Component {
 	}
 	makeTableHeadProps = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price","Department"]
-		} else if (this.props.location.pathname === "/admin/subjects") {
-			return ["Subject", "Course", "Teachers", "Registration", "Schedule", "Price"]
+			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price", "Department"]
+		} else if (this.props.location.pathname === "/admin/majors") {
+			return ["Major", "Code", "Advisor", "No of units"]
 		} else if (this.props.location.pathname === "/admin/teachers") {
 			return ["Teacher", "Courses", "Subject", "Students", "Schedule"]
 		} else if (this.props.location.pathname === "/admin/students") {
 			return ["Student", "Courses", "Teachers", "Schedule"]
 		} else if (this.props.location.pathname === "/student/courses") {
-			return ["Course", "Subject", "Teachers", "Schedule", "Price","Department","Register"]
-		} else if (this.props.location.pathname === "/student/subjects") {
-			return ["Subject", "Course", "Teachers", "Schedule", "Price", "Register"]
+			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Major", "Register"]
 		} else if (this.props.location.pathname === "/student/majors") {
-            return ["Major", "Number of Units", "Grad advisor", "Department"]
+			return ["Major", "Code", "Advisor", "No of units"]
+		} else if (this.props.location.pathname === "/student/majors") {
+			return ["Major", "Number of Units", "Grad advisor", "Department"]
 		} else if (this.props.location.pathname === "/student/teachers") {
 			return ["Teacher", "Course", "Subject", "Schedule"]
 		}
 	}
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
-			return <CoursesTable courses={this.state.coursesTableData} department_id = {this.state.selectedDepartment.id} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
-			return <SubjectsTable courses={this.state.courses} {...this.props} />
+			return <CoursesTable courses={this.state.coursesTableData} department_id={this.state.selectedDepartment.id} {...this.props} />
+		} else if (this.props.location.pathname === "/admin/majors" || this.props.location.pathname === "/student/majors") {
+			return <SubjectsTable courses={this.state.majors} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
@@ -410,6 +140,11 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
 			})
+		} else {
+			this.setState({
+				...this.state,
+				dropdownOpen: false
+			})
 		}
 	}
 	toggleDropDownforMajor = (e) => {
@@ -418,6 +153,11 @@ class Tables extends React.Component {
 			this.setState({
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
+			})
+		} else {
+			this.setState({
+				...this.state,
+				dropdownMajor: false
 			})
 		}
 
@@ -449,12 +189,12 @@ class Tables extends React.Component {
 		}).then(data => {
 			this.setState({
 				...this.state,
-				departments : data.data,
+				departments: data.data,
 				departmentName: data.data[0].name,
 				selectedDepartment: data.data[0]
 			})
 			this.fetchMajors(data.data[0].id)
-		}).catch( error => {
+		}).catch(error => {
 			alert("Some error occured. Please refresh the page")
 		})
 	}
@@ -464,54 +204,54 @@ class Tables extends React.Component {
 			method: 'get',
 			url: '/courses',
 			params: {
-				major_id : major_id
+				major_id: major_id
 			}
-		  }).then(res => {
-						const data = res.data;
-						console.log("og data",data)
-						this.setState({
-							...this.state,
-							coursesTableData: data
-						})
-				}).catch(err => {
-					console.log("Error")
-				})
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				coursesTableData: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
 	}
 	fetchMajors(department_id) {
 		client({
 			method: 'get',
 			url: '/majors/department',
 			params: {
-				department_id : department_id
+				department_id: department_id
 			}
-		  }).then(res => {
-						const data = res.data;
-						console.log("OG",data)
-						this.setState({
-							...this.state,
-							majors: data,
-							majorName: data[0].major_code,
-							selectedMajor: data[0],
-						})
-					this.fetchCourses(data[0].id)
-				}).catch(err => {
-					console.log("Error",err)
-				})
+		}).then(res => {
+			const data = res.data;
+			console.log("OG", data)
+			this.setState({
+				...this.state,
+				majors: data,
+				majorName: data[0].major_code,
+				selectedMajor: data[0],
+			})
+			this.fetchCourses(data[0].id)
+		}).catch(err => {
+			console.log("Error", err)
+		})
 	}
 	selectDropdown = (e, department) => {
 
-			this.setState({
-				...this.state,
-				dropdownOpen: false,
-				selectedDepartment: department,
-				departmentName: department.name
-			})
+		this.setState({
+			...this.state,
+			dropdownOpen: false,
+			selectedDepartment: department,
+			departmentName: department.name
+		})
 
-			this.fetchMajors(department.id)
+		this.fetchMajors(department.id)
 	}
 
 	selectDropdownForMajor = (e, major) => {
-	console.log("Selected major",major)
+		console.log("Selected major", major)
 		this.setState({
 			...this.state,
 			dropdownMajor: false,
@@ -521,30 +261,99 @@ class Tables extends React.Component {
 		})
 
 		this.fetchCourses(major.id)
-}
+	}
 	renderDropDown = () => {
 		return (
-			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
-				<DropdownToggle caret>
-					{this.state.departmentName}
-				</DropdownToggle>
-				<DropdownMenu right>
-					{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+			<div style={{display: "flex", justifyContent: "space-between"}}>
+				<div>
+				<span style ={{paddingLeft: "12px"}}> Department</span>
+				<div style ={{paddingLeft: "12px"}}>
+
+				{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+					{/* <DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle> */}
+					<DropdownToggle caret>
+						{this.state.departmentName}
+					</DropdownToggle>
+					<DropdownMenu right>
+						{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+						{
+							this.state.departments.map(
+								department => {
+									return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
+								}
+							)
+						}
+
+					</DropdownMenu>
+				</Dropdown>
+				}
+				</div>
+
+				</div>
+
+				{/* New Drop Down for majors */}
+				<div>
+					<span style ={{paddingLeft: "12px"}}>Majors</span>
+					<div style ={{paddingLeft: "12px"}} >
 					{
-						this.state.departments.map(
-							department => {
-								return (<DropdownItem id ={department.name} ><div onClick={(e) => this.selectDropdown(e,department)}> {department.name}</div> </DropdownItem>)	
+					<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
+						<DropdownToggle caret>
+							{this.state.majorName}
+						</DropdownToggle>
+						<DropdownMenu right>
+							{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+							{
+								this.state.majors.map(
+									major => {
+										return (<DropdownItem id={major.major_code} onClick={(e) => this.selectDropdownForMajor(e, major)}>{major.major_code}</DropdownItem>)
+									}
+								)
 							}
-						)
-					}
-			
-				</DropdownMenu>
-			</Dropdown>
+
+						</DropdownMenu>
+					</Dropdown>
+				}
+					</div>
+
+				</div>
+
+			</div>
+		)
+	}
+
+	renderDepartmentDropdown = () => {
+		return (
+			<div>
+				{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+					{/* <DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle> */}
+					<DropdownToggle caret>
+						{this.state.departmentName}
+					</DropdownToggle>
+					<DropdownMenu right>
+						{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+						{
+							this.state.departments.map(
+								department => {
+									return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
+								}
+							)
+						}
+
+					</DropdownMenu>
+				</Dropdown>
+				}
+
+			</div>
 		)
 	}
 	render() {
+		console.log("window", window.location)
 		return (
-			<>{console.log("COURSES",this.props.courses)}
+			<>{console.log("COURSES", this.props.courses)}
 				<Header />
 
 				{/* Page content */}
@@ -561,46 +370,7 @@ class Tables extends React.Component {
 											this.renderAddCourse()
 										}
 										<div>
-											{/* {this.renderDropDown()} */}
-										{	<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
-												{/* <DropdownToggle caret>
-													{this.state.majorName}
-												</DropdownToggle> */}
-												<DropdownToggle caret>
-													{this.state.departmentName}
-												</DropdownToggle>
-												<DropdownMenu right>
-													{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-													{
-														this.state.departments.map(
-															department => {
-																return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
-															}
-														)
-													}
-											
-												</DropdownMenu>
-											</Dropdown>
-										}
-										{/* New Drop Down for majors */}
-										{
-											<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
-												<DropdownToggle caret>
-													{this.state.majorName}
-												</DropdownToggle>
-												<DropdownMenu right>
-													{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-													{
-														this.state.majors.map(
-															major => {
-																return (<DropdownItem id ={major.major_code} onClick={(e) => this.selectDropdownForMajor(e,major)}>{major.major_code}</DropdownItem>)	
-															}
-														)
-													}
-											
-												</DropdownMenu>
-											</Dropdown>
-										}
+											{!window.location.pathname.includes('majors') ? this.renderDropDown() : this.renderDepartmentDropdown()}
 										</div>
 									</div>
 
