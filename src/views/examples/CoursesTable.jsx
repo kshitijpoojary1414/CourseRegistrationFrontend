@@ -267,32 +267,15 @@ class CoursesTable extends React.Component {
 									this.renderRegistration(course)
 								}
 
-								<td>
-									<Link to={`course/${course.id}`}>
-										<Badge color="" className="badge-dot mr-4">
-											{/* <i className="bg-warning" /> */}
-											{
-												course.schedule.days.map((day, i) => {
-													return (
-														<span style={{ display: "block" }} className="pb-2 text-left">
-															{day}s: {course.schedule.startTime} - {course.schedule.endTime}
-														</span>
-													)
-												})
-											}
-										</Badge>
-									</Link>
-								</td>
-
-								<td>
-									<Link to={`course/${course.id}`}>
-										${course.price}
-									</Link>
-								</td>
-
-								<td>
-									<Link to={`course/${course.id}`}>
-										{course?.department?.name ? course.department.name : "     -"}
+									<td>
+										<Link to={`course/${course.id}`}>
+											${course.price}
+										</Link>
+									</td>
+	
+									<td>
+									<Link to={`major/${course?.major?.id}`}>
+										{course?.major?.major_name ? course.major.major_code : "     -"}
 
 									</Link>
 								</td>

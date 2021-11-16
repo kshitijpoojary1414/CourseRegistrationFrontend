@@ -184,19 +184,19 @@ var routes = [
 		invisible: false
 	},
 	{
-		path: "/subjects",
-		name: "Departments",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/student",
+    path: "/majors",
+    name: "Majors",
+    icon: "ni ni-badge text-red",
+    component: Tables,
+    layout: "/student",
 		invisible: false
 	},
 	{
-		path: "/teachers",
-		name: "Teachers",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/student",
+    path: "/teachers",
+    name: "Teachers",
+    icon: "ni ni-badge text-red",
+    component: Tables,
+    layout: "/student",
 		invisible: false
 	},
 	{
@@ -216,8 +216,8 @@ var routes = [
 		invisible: true
 	},
 	{
-		path: "/subject/:id",
-		name: "Subject Info",
+		path: "/major/:id",
+		name: "Major Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: SubjectInfo,
 		layout: "/student",
