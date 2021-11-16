@@ -229,7 +229,8 @@ class Register extends React.Component {
 
   selectMajorDropdown = (e, major) => {
     this.setState({
-      majorName: major.name,
+      ...this.state,
+      majorName: major.major_name,
       majorsDropdown: false,
       selectedMajor: major,      
     })
@@ -296,7 +297,8 @@ class Register extends React.Component {
           {
             this.state.majors.map(
               major => {
-                return (<DropdownItem id ={major.name} ><div onClick={(e) => this.selectMajorDropdown(e,major)}> {major.name}</div> </DropdownItem>)	
+                console.log("MAJOR",major)
+                return (<DropdownItem id ={major.major_name} ><div onClick={(e) => this.selectMajorDropdown(e,major)}> {major.major_name}</div> </DropdownItem>)	
               }
             )
           }
@@ -312,6 +314,7 @@ class Register extends React.Component {
   }
 
   render() {
+  console.log("Majors",this.state.majors)
     return (
       <>
         <Col lg="6" md="8">

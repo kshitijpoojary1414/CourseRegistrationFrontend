@@ -37,66 +37,70 @@ import {
 } from "reactstrap";
 
 class Login extends React.Component {
-	state = {
-		email: '',
-		password: ''
-	}
+  state = {
+    email: '',
+    password: ''
+  }
 
-	sendDataToState = (event, input) => {
-		 let state = this.state
-		 state[input] = event.target.value
-		 this.setState({state})
-	 	}
+  sendDataToState = (event, input) => {
+    let state = this.state
+    state[input] = event.target.value
+    this.setState({ state })
+  }
 
-		submitForm = (e) => {
-	  e.preventDefault();
-    
+  submitForm = (e) => {
+    e.preventDefault();
+
     client({
       method: 'post',
       url: '/users/login',
       data: {
         email: this.state.email,
-			  password: this.state.password
+        password: this.state.password
       },
     }).then(res => {
-	    if (res.status === 200) {
-      localStorage.setItem('token', res.data.token)
+      if (res.status === 200) {
+        localStorage.setItem('token', res.data.token)
+        console.log('role is - ', res.data.data);
         if (res.data.data === "student") {
           this.props.history.push('/student/courses')
-        } else {
+        } else if (res.data.data === "admin") {
           this.props.history.push('/admin/courses')
-        }
-	    } else {
-			  alert('Error logging in please try again');
-	    }
-	  })
-	  .catch(err => {
-	    console.error(err);
-	    alert('Error logging in please try again');
-	  });
+        } else {
+          this.props.history.push('/teacher/courses')
 
-    
-	  // axios.post(`${process.env.REACT_APP_API_PORT}/users/login`, {
-		// 	email: this.state.email,
-		// 	password: this.state.password
-		// })
-	  // .then(res => {
-	  //   if (res.status === 200) {
+        }
+      } else {
+        alert('Error logging in please try again');
+      }
+    })
+      .catch(err => {
+        console.error(err);
+        alert('Error logging in please try again');
+      });
+
+
+    // axios.post(`${process.env.REACT_APP_API_PORT}/users/login`, {
+    // 	email: this.state.email,
+    // 	password: this.state.password
+    // })
+    // .then(res => {
+    //   if (res.status === 200) {
     //   localStorage.setItem('token', res.data.token)
     //     if (res.data.data === "student") {
     //       this.props.history.push('/student/courses')
     //     } else {
     //       this.props.history.push('/admin/courses')
     //     }
-	  //   } else {
-		// 	  alert('Error logging in please try again');
-	  //   }
-	  // })
-	  // .catch(err => {
-	  //   console.error(err);
-	  //   alert('Error logging in please try again');
-	  // });
-	}
+    //   } else {
+    // 	  alert('Error logging in please try again');
+    //   }
+    // })
+    // .catch(err => {
+    //   console.error(err);
+    //   alert('Error logging in please try again');
+    // });
+  }
 
   render() {
     return (
@@ -131,7 +135,7 @@ class Login extends React.Component {
                         <i className="ni ni-lock-circle-open" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Password" type="password" onChange={(e) => this.sendDataToState(e, 'password')}/>
+                    <Input placeholder="Password" type="password" onChange={(e) => this.sendDataToState(e, 'password')} />
                   </InputGroup>
                 </FormGroup>
                 <div className="custom-control custom-control-alternative custom-checkbox">
@@ -170,10 +174,10 @@ class Login extends React.Component {
                 className="text-light"
                 href="#pablo"
                 onClick={e => {
-									e.preventDefault()
-									this.props.history.push('/auth/student-register')
-									}}
-	              >
+                  e.preventDefault()
+                  this.props.history.push('/auth/student-register')
+                }}
+              >
                 <span>Create new account</span>
               </a>
             </Col>

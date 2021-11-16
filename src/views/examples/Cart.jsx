@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import {StripeProvider, Elements} from 'react-stripe-elements'
-import Checkout from './Checkout'
+
 import client from "../../apis/client";
 
 import {

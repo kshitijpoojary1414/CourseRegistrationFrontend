@@ -18,6 +18,7 @@
 import AdminSettings from "./views/examples/AdminSettings.jsx";
 import Login from "./views/examples/Login.jsx";
 import Tables from "./views/examples/Tables.jsx";
+import TeacherTable from "./views/examples/Teachers/TeachersMainTable";
 import Signup from "./views/examples/Signup.jsx";
 import AdminRegister from "./views/examples/AdminRegister.jsx";
 import StudentRegister from "./views/examples/StudentRegister.jsx";
@@ -30,39 +31,83 @@ import StudentProfile from "./views/examples/StudentProfile.jsx";
 import Cart from "./views/examples/Cart.jsx"
 
 var routes = [
-	// Teacher Links
-  {
-    path: "/courses",
-    name: "Courses",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
-		invisible: false
-  },
+	//Teacher Links
+	// {
+	// 	path: "/student",
+	// 	name: "StudentProfile",
+	// 	icon: "ni ni-bullet-list-67 text-red",
+	// 	component: StudentProfile,
+	// 	layout: "/teacher",
+	// 	invisible: false
+	// },
 	{
-    path: "/subjects",
-    name: "Subjects",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
+		path: "/courses",
+		name: "Courses",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: TeacherTable,
+		layout: "/teacher",
 		invisible: false
-  },
+	},
+
 	{
-    path: "/teachers",
-    name: "Teachers",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
+		path: "/teachers",
+		name: "Teachers",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: TeacherTable,
+		layout: "/teacher",
 		invisible: false
-  },
+	},
+
 	{
-    path: "/students",
-    name: "Students",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/admin",
+		path: "/students",
+		name: "Students",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: TeacherTable,
+		layout: "/teacher",
 		invisible: false
-  },
+	},
+
+	{
+		path: "/profile/:id",
+		name: "Profile",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: TeacherInfo,
+		layout: "/teacher",
+		invisible: false
+	},
+
+	{
+		path: "/courses",
+		name: "Courses",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/admin",
+		invisible: false
+	},
+	{
+		path: "/subjects",
+		name: "Subjects",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/admin",
+		invisible: false
+	},
+	{
+		path: "/teachers",
+		name: "Teachers",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/admin",
+		invisible: false
+	},
+	{
+		path: "/students",
+		name: "Students",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/admin",
+		invisible: false
+	},
 	{
 		path: "/settings",
 		name: "Settings",
@@ -79,6 +124,16 @@ var routes = [
 		layout: "/admin",
 		invisible: true
 	},
+
+	{
+		path: "/course/:id",
+		name: "Course Info",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: CourseInfo,
+		layout: "/teacher",
+		invisible: true
+	},
+
 	{
 		path: "/course-create",
 		name: "Course Create",
@@ -111,22 +166,31 @@ var routes = [
 		layout: "/admin",
 		invisible: true
 	},
+	{
+		path: "/student/:id",
+		name: "Student Info",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: StudentInfo,
+		layout: "/teacher",
+		invisible: true
+	},
 	// Student Links
 	{
-    path: "/courses",
-    name: "Courses",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/student",
+		path: "/courses",
+		name: "Courses",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/student",
 		invisible: false
-  },
+	},
 	{
-    path: "/subjects",
-    name: "Departments",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/student",
+		path: "/subjects",
+		name: "Departments",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/student",
 		invisible: false
+<<<<<<< HEAD
   },
   {
     path: "/majors",
@@ -136,14 +200,17 @@ var routes = [
     layout: "/student",
         invisible: false
   },
+=======
+	},
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 	{
-    path: "/teachers",
-    name: "Teachers",
-    icon: "ni ni-bullet-list-67 text-red",
-    component: Tables,
-    layout: "/student",
+		path: "/teachers",
+		name: "Teachers",
+		icon: "ni ni-bullet-list-67 text-red",
+		component: Tables,
+		layout: "/student",
 		invisible: false
-  },
+	},
 	{
 		path: "/profile/:id",
 		name: "Student Info",
@@ -177,36 +244,36 @@ var routes = [
 		invisible: true
 	},
 	// Auth Links
-  {
-    path: "/login",
-    name: "Login",
-    icon: "ni ni-key-25 text-info",
-    component: Login,
-    layout: "/auth",
+	{
+		path: "/login",
+		name: "Login",
+		icon: "ni ni-key-25 text-info",
+		component: Login,
+		layout: "/auth",
 		invisible: true
-  },
-  {
-    path: "/signup",
-    name: "Signup",
-    icon: "ni ni-circle-08 text-pink",
-    component: Signup,
-    layout: "/auth",
+	},
+	{
+		path: "/signup",
+		name: "Signup",
+		icon: "ni ni-circle-08 text-pink",
+		component: Signup,
+		layout: "/auth",
 		invisible: true
-  },
-  {
-    path: "/admin-register",
-    name: "Admin Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: AdminRegister,
-    layout: "/auth",
+	},
+	{
+		path: "/admin-register",
+		name: "Admin Register",
+		icon: "ni ni-circle-08 text-pink",
+		component: AdminRegister,
+		layout: "/auth",
 		invisible: true
-  },
-  {
-    path: "/student-register",
-    name: "Student Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: StudentRegister,
-    layout: "/auth",
+	},
+	{
+		path: "/student-register",
+		name: "Student Register",
+		icon: "ni ni-circle-08 text-pink",
+		component: StudentRegister,
+		layout: "/auth",
 		invisible: true
 	},
 	{

@@ -20,15 +20,15 @@ import React from "react";
 // reactstrap components
 import {
 	Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col,
+	Card,
+	CardHeader,
+	CardBody,
+	FormGroup,
+	Form,
+	Input,
+	Container,
+	Row,
+	Col,
 	Progress,
 	CardFooter,
 	Dropdown,
@@ -37,7 +37,6 @@ import {
 	DropdownItem
 } from "reactstrap";
 import { Link } from "react-router-dom"
-import axios from 'axios'
 // core components
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
 import TeacherCard from "./TeacherCard.jsx"
@@ -84,15 +83,15 @@ class CourseCreate extends React.Component {
 	// 		})
 	// }
 
-// 	addToCart = () => {
-// 	let cart = localStorage.getItem('cart')
-// 		? JSON.parse(localStorage.getItem('cart')) : []
-// 	let data = {name: this.state.data.name, price: this.state.data.price}
-// 	cart.push(data)
-// 	localStorage.setItem('cart', JSON.stringify(cart))
-// 	alert("Course added succesfully")
+	// 	addToCart = () => {
+	// 	let cart = localStorage.getItem('cart')
+	// 		? JSON.parse(localStorage.getItem('cart')) : []
+	// 	let data = {name: this.state.data.name, price: this.state.data.price}
+	// 	cart.push(data)
+	// 	localStorage.setItem('cart', JSON.stringify(cart))
+	// 	alert("Course added succesfully")
 
-// }
+	// }
 
 	// renderEditButton = () => {
 	// 	let courseId = this.state.data.id
@@ -133,57 +132,57 @@ class CourseCreate extends React.Component {
 	sendInputToState = (e, stateRef, stateObj) => {
 		let data = this.state.data
 		if (stateObj) {
-			if(stateRef == 'limit') {
+			if (stateRef == 'limit') {
 				data[stateObj][stateRef] = Math.abs(e.target.value)
 			} else {
 				data[stateObj][stateRef] = e.target.value
 			}
 		} else {
-			if(stateRef == 'price') {
+			if (stateRef == 'price') {
 				data[stateRef] = Math.abs(e.target.value)
 			} else {
 				data[stateRef] = e.target.value
 			}
 		}
-		this.setState({data})
+		this.setState({ data })
 	}
 	updateDays = (e, i, day) => {
 		if (e.target.checked) {
 			let state = this.state
 			state.data.schedule.days.push(day)
 			const sortDays = (a, b) => {
-			  a = this.state.days.indexOf(a);
-			  b = this.state.days.indexOf(b);
-			  return a < b ? 0 : 1;
+				a = this.state.days.indexOf(a);
+				b = this.state.days.indexOf(b);
+				return a < b ? 0 : 1;
 			}
 			state.data.schedule.days.sort(sortDays)
-			this.setState({state})
+			this.setState({ state })
 		} else if (!e.target.checked) {
 			let index = this.state.data.schedule.days.indexOf(day)
 			let state = this.state
 			state.data.schedule.days.splice(index, 1)
-			this.setState({state})
+			this.setState({ state })
 		}
 	}
 	submitUpdates = (e) => {
 		e.preventDefault()
 		// axios.post(`${process.env.REACT_APP_API_PORT}/admin/postCourse`, this.state.data)
-		console.log("courses",this.state.data)
+		console.log("courses", this.state.data)
 		client({
-			method: 'post' ,
+			method: 'post',
 			url: `/courses`,
 			data: {
 				...this.state.data,
-				department_id : this.state.department.id
+				department_id: this.state.department.id
 			}
-		  })
+		})
 			.then(data => {
-					console.log(data.data.data)
-					this.props.history.push({
-						pathname: `/admin/course/${data.data.data.id}`
-					})
+				console.log(data.data.data)
+				this.props.history.push({
+					pathname: `/admin/course/${data.data.data.id}`
+				})
 			}).catch(err => {
-				console.log("Error")
+				console.log("Error - ", err)
 			})
 	}
 
@@ -200,14 +199,14 @@ class CourseCreate extends React.Component {
 		teachersArr.splice(index, 1)
 		let data = this.state.data
 		data.teachers = teachersArr
-		this.setState({data})
+		this.setState({ data })
 	}
 	toggleTeacherDropdown = (e) => {
 		e.preventDefault()
 		client({
-			method: 'get' ,
+			method: 'get',
 			url: `/users/roles/teacher`,
-		  })
+		})
 			.then(res => {
 				const allTeachers = res.data.users
 				this.setState({
@@ -222,12 +221,12 @@ class CourseCreate extends React.Component {
 	toggleDepartmentsDropdown = (e) => {
 		e.preventDefault()
 		client({
-			method: 'get' ,
+			method: 'get',
 			url: `/departments`,
-		  })
+		})
 			.then(res => {
 				const departments = res.data
-				console.log("Dep",departments)
+				console.log("Dep", departments)
 				this.setState({
 					departmentDropdown: !this.state.departmentDropdown,
 					departments: departments
@@ -247,7 +246,7 @@ class CourseCreate extends React.Component {
 
 	selectDepartment = (e, department) => {
 		e.preventDefault()
-	
+
 		this.setState({
 			...this.state,
 			department: department
@@ -256,7 +255,7 @@ class CourseCreate extends React.Component {
 
 	removeDepartment = (e) => {
 		e.preventDefault()
-	
+
 		this.setState({
 			...this.state,
 			department: {}
@@ -265,12 +264,12 @@ class CourseCreate extends React.Component {
 
 
 
-  render() {
+	render() {
 		console.log(this.state)
 		console.log(this.props)
-    return (
-      <>
-        <DetailsHeader title={this.state.data.name} subtitle={this.state.data.subject} info={this.state.data.description} />
+		return (
+			<>
+				<DetailsHeader title={this.state.data.name} subtitle={this.state.data.subject} info={this.state.data.description} />
 				{/* Page content */}
 				<Container className="mt--7" fluid>
 					<Row>
@@ -454,7 +453,7 @@ class CourseCreate extends React.Component {
 											<DropdownMenu>
 												{
 													this.state.allTeachers.map(teacher => {
-														return(
+														return (
 															<DropdownItem
 																onClick={(e) => this.selectTeacher(e, teacher)}
 																key={teacher.id}
@@ -472,16 +471,16 @@ class CourseCreate extends React.Component {
 										<div className="pl-lg-4">
 											{
 												this.state.data.teachers.map(teacher => {
-													return(
-														<div className="avatar-group" key={teacher.id} style={{display: "inline-block", padding: '40px'}}>
-														<Button
-															color="danger"
-															href="#pablo"
-															onClick={e => this.removeTeacher(e, teacher.id)}
-															size="sm"
-														>
-															remove
-														</Button>
+													return (
+														<div className="avatar-group" key={teacher.id} style={{ display: "inline-block", padding: '40px' }}>
+															<Button
+																color="danger"
+																href="#pablo"
+																onClick={e => this.removeTeacher(e, teacher.id)}
+																size="sm"
+															>
+																remove
+															</Button>
 															<Link to={`../teacher/${teacher.id}`}>
 																<span className="avatar avatar-sm" >
 																	<img
@@ -503,7 +502,7 @@ class CourseCreate extends React.Component {
 											Departments
 										</h6>
 
-			
+
 
 										<Dropdown isOpen={this.state.departmentDropdown} toggle={e => this.toggleDepartmentsDropdown(e)}>
 											<DropdownToggle caret>
@@ -512,7 +511,7 @@ class CourseCreate extends React.Component {
 											<DropdownMenu>
 												{
 													this.state.departments.map(department => {
-														return(
+														return (
 															<DropdownItem
 																onClick={(e) => this.selectDepartment(e, department)}
 																key={department.id}
@@ -529,30 +528,30 @@ class CourseCreate extends React.Component {
 
 										<div className="pl-lg-4">
 											{
-												<div className="avatar-group" key={this.state.department.id} style={{display: "inline-block", padding: '40px'}}>
-												{
-													this.state.department.name && <div>
-													<Button
-								color="danger"
-								href="#pablo"
-								onClick={e => this.removeDepartment(e)}
-								size="sm"
-							>
-								remove
-							</Button>
-								<Link to={`../departments/${this.state.department.id}`}>
-									{/* <span className="avatar avatar-sm" >
+												<div className="avatar-group" key={this.state.department.id} style={{ display: "inline-block", padding: '40px' }}>
+													{
+														this.state.department.name && <div>
+															<Button
+																color="danger"
+																href="#pablo"
+																onClick={e => this.removeDepartment(e)}
+																size="sm"
+															>
+																remove
+															</Button>
+															<Link to={`../departments/${this.state.department.id}`}>
+																{/* <span className="avatar avatar-sm" >
 										<img
 											alt="..."
 											className="rounded-circle"
 											src={this.state.department.avatar}
 										/>
 									</span> */}
-									<span>{this.state.department.name}</span>
-								</Link>
-							</div>
-												}
-							
+																<span>{this.state.department.name}</span>
+															</Link>
+														</div>
+													}
+
 												</div>
 											}
 										</div>
@@ -562,10 +561,10 @@ class CourseCreate extends React.Component {
 											Students
 										</h6>
 										<div className="pl-lg-4">
-										{
+											{
 												this.state.data.students.map((student, key) => {
-													return(
-														<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+													return (
+														<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 															<Link to={`../student/${student.id}`}>
 																<span className="avatar avatar-sm" >
 																	<img
@@ -620,9 +619,9 @@ class CourseCreate extends React.Component {
 						</Col>
 					</Row>
 				</Container>
-      </>
-    );
-  }
+			</>
+		);
+	}
 }
 
 export default CourseCreate;

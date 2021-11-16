@@ -45,12 +45,22 @@ import SubjectsTable from "./SubjectsTable.jsx"
 import TeachersTable from "./TeachersTable.jsx"
 import StudentsTable from "./StudentsTable.jsx"
 
+//Teachers Tables here.
+import TeacherCoursesTable from "./Teachers/TeachersCoursesTable";
+import TeachersTeachersTable from "./Teachers/TeachersList";
+import TeachersStudentsTable from "./Teachers/TeacherStudents";
+
 class Tables extends React.Component {
 	state = {
 		dropdownOpen: false,
 		// for open/close
+<<<<<<< HEAD
 		dropdownMajor : false,
 		departmentName: "" ,
+=======
+		dropdownMajor: false,
+		departmentName: "",
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 		majorName: "",
 		courses: [
 			{
@@ -323,7 +333,11 @@ class Tables extends React.Component {
 			}
 		],
 		departments: [],
+<<<<<<< HEAD
 		majors : [],
+=======
+		majors: [],
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 		selectedDepartment: "",
 		selectedMajor: "",
 		coursesTableData: [
@@ -341,7 +355,7 @@ class Tables extends React.Component {
 			}
 		]
 	}
-	componentWillMount(){
+	componentWillMount() {
 		this.fetchDepartments()
 	}
 	renderCardHeader = () => {
@@ -351,7 +365,7 @@ class Tables extends React.Component {
 	}
 	makeTableHeadProps = () => {
 		if (this.props.location.pathname === "/admin/courses") {
-			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price","Department"]
+			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price", "Department"]
 		} else if (this.props.location.pathname === "/admin/subjects") {
 			return ["Subject", "Course", "Teachers", "Registration", "Schedule", "Price"]
 		} else if (this.props.location.pathname === "/admin/teachers") {
@@ -359,24 +373,39 @@ class Tables extends React.Component {
 		} else if (this.props.location.pathname === "/admin/students") {
 			return ["Student", "Courses", "Teachers", "Schedule"]
 		} else if (this.props.location.pathname === "/student/courses") {
-			return ["Course", "Subject", "Teachers", "Schedule", "Price","Department","Register"]
+			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Department", "Register"]
 		} else if (this.props.location.pathname === "/student/subjects") {
 			return ["Subject", "Course", "Teachers", "Schedule", "Price", "Register"]
 		} else if (this.props.location.pathname === "/student/majors") {
+<<<<<<< HEAD
             return ["Major", "Number of Units", "Grad advisor", "Department"]
+=======
+			return ["Major", "Number of Units", "Grad advisor", "Department"]
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 		} else if (this.props.location.pathname === "/student/teachers") {
 			return ["Teacher", "Course", "Subject", "Schedule"]
 		}
 	}
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
-			return <CoursesTable courses={this.state.coursesTableData} department_id = {this.state.selectedDepartment.id} {...this.props} />
+			return <CoursesTable courses={this.state.coursesTableData} department_id={this.state.selectedDepartment.id} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
 			return <SubjectsTable courses={this.state.courses} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
 			return <StudentsTable students={this.state.students}  {...this.props} />
+		}
+
+		//Teachers Routes
+		else if (this.props.location.pathname === "/teacher/students") {
+			return <TeachersStudentsTable students={this.state.students}  {...this.props} />
+		}
+		else if (this.props.location.pathname === "/teacher/courses") {
+			return <TeacherCoursesTable students={this.state.students}  {...this.props} />
+		}
+		else if (this.props.location.pathname === "/teacher/teachers") {
+			return <TeachersTeachersTable students={this.state.students}  {...this.props} />
 		}
 	}
 	renderAddCourse = () => {
@@ -450,42 +479,42 @@ class Tables extends React.Component {
 		}).then(data => {
 			this.setState({
 				...this.state,
-				departments : data.data,
+				departments: data.data,
 				departmentName: data.data[0].name,
 				selectedDepartment: data.data[0]
 			})
-			this.fetchCourses(data.data[0].id)
-		}).catch( error => {
+			this.fetchMajors(data.data[0].id)
+		}).catch(error => {
 			alert("Some error occured. Please refresh the page")
 		})
 	}
 
-	fetchCourses = (department_id) => {
+	fetchCourses = (major_id) => {
 		client({
 			method: 'get',
 			url: '/courses',
 			params: {
-				department_id : department_id
+				major_id: major_id
 			}
-		  }).then(res => {
-						const data = res.data;
-						console.log("og data",data)
-						this.setState({
-							...this.state,
-							coursesTableData: data
-						})
-				}).catch(err => {
-					console.log("Error")
-				})
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				coursesTableData: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
 	}
-
-	selectDropdown = (e, department) => {
+	fetchMajors(department_id) {
 		client({
 			method: 'get',
-			url: '/courses',
+			url: '/majors/department',
 			params: {
-				department_id : department.id
+				department_id: department_id
 			}
+<<<<<<< HEAD
 		  }).then(res => {
 						const data = res.data;
 						console.log("og data",data)
@@ -508,10 +537,45 @@ class Tables extends React.Component {
 		// 	// coursesTableData : this.fetchCourses(department.id)
 			
 		// })
+=======
+		}).then(res => {
+			const data = res.data;
+			console.log("OG", data)
+			this.setState({
+				...this.state,
+				majors: data,
+				majorName: data[0].major_code,
+				selectedMajor: data[0],
+			})
+			this.fetchCourses(data[0].id)
+		}).catch(err => {
+			console.log("Error", err)
+		})
+	}
+	selectDropdown = (e, department) => {
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 
+		this.setState({
+			...this.state,
+			dropdownOpen: false,
+			selectedDepartment: department,
+			departmentName: department.name
+		})
 
+		this.fetchMajors(department.id)
+	}
 
+	selectDropdownForMajor = (e, major) => {
+		console.log("Selected major", major)
+		this.setState({
+			...this.state,
+			dropdownMajor: false,
+			selectedMajor: major,
+			major: major.name,
+			majorName: major.major_code
+		})
 
+		this.fetchCourses(major.id)
 	}
 	renderDropDown = () => {
 		return (
@@ -524,18 +588,18 @@ class Tables extends React.Component {
 					{
 						this.state.departments.map(
 							department => {
-								return (<DropdownItem id ={department.name} ><div onClick={(e) => this.selectDropdown(e,department)}> {department.name}</div> </DropdownItem>)	
+								return (<DropdownItem id={department.name} ><div onClick={(e) => this.selectDropdown(e, department)}> {department.name}</div> </DropdownItem>)
 							}
 						)
 					}
-			
+
 				</DropdownMenu>
 			</Dropdown>
 		)
 	}
 	render() {
 		return (
-			<>{console.log("COURSES",this.props.courses)}
+			<>{console.log("COURSES", this.props.courses)}
 				<Header />
 
 				{/* Page content */}
@@ -553,7 +617,11 @@ class Tables extends React.Component {
 										}
 										<div>
 											{/* {this.renderDropDown()} */}
+<<<<<<< HEAD
 										{	<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+=======
+											{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 												{/* <DropdownToggle caret>
 													{this.state.majorName}
 												</DropdownToggle> */}
@@ -565,6 +633,7 @@ class Tables extends React.Component {
 													{
 														this.state.departments.map(
 															department => {
+<<<<<<< HEAD
 																return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
 															}
 														)
@@ -581,6 +650,35 @@ class Tables extends React.Component {
 												</DropdownToggle>
 											</Dropdown>
 										}
+=======
+																return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
+															}
+														)
+													}
+
+												</DropdownMenu>
+											</Dropdown>
+											}
+											{/* New Drop Down for majors */}
+											{
+												<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
+													<DropdownToggle caret>
+														{this.state.majorName}
+													</DropdownToggle>
+													<DropdownMenu right>
+														{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+														{
+															this.state.majors.map(
+																major => {
+																	return (<DropdownItem id={major.major_code} onClick={(e) => this.selectDropdownForMajor(e, major)}>{major.major_code}</DropdownItem>)
+																}
+															)
+														}
+
+													</DropdownMenu>
+												</Dropdown>
+											}
+>>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 										</div>
 									</div>
 

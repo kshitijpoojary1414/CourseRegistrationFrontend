@@ -33,37 +33,40 @@ import {
   DropdownItem,
   Navbar,
   Container,
-  Button
 } from "reactstrap";
 
 class UserNavbar extends React.Component {
   renderCart = () => {
     if (this.props.match.path === "/student") {
-      return(
+      return (
         <Link to="../../auth/cart">
-          <i className="fas fa-shopping-cart fa-3x ml-4" style={{color: "white"}}></i>
+          <i className="fas fa-shopping-cart fa-3x ml-4" style={{ color: "white" }}></i>
         </Link>
       )
     }
   }
   renderProfileLink = () => {
-    console.log(this.props.user)
+    console.log('render profile link - ', this.props.user.role);
     if (this.props.user.role === "student") {
       return `/student/profile/${this.props.user.id}`
-    } else {
+    } else if (this.props.user.role === "teacher") {
+
+      return `/teacher/profile/${this.props.user.id}`
+    }
+    else {
       return `/admin/teacher/${this.props.user.id}`
     }
   }
   renderDropDownOption = () => {
     if (this.props.match.path === "/student") {
-      return(
+      return (
         <DropdownItem to="../../auth/cart" tag={Link}>
           <i className="ni ni-cart" />
           <span>Cart</span>
         </DropdownItem>
       )
     } else if (this.props.user.role === "admin") {
-      return(
+      return (
         <DropdownItem to="/admin/user-profile" tag={Link}>
           <i className="ni ni-settings-gear-65" />
           <span>Settings</span>

@@ -21,16 +21,18 @@ import client from "../../apis/client";
 
 // reactstrap components
 import {
-  Badge,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  // UncontrolledTooltip
+	Badge,
+	DropdownMenu,
+	DropdownItem,
+	UncontrolledDropdown,
+	DropdownToggle,
+	Media,
+	Input
+	// UncontrolledTooltip
 } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import axios from 'axios'
+import Button from "reactstrap/lib/Button";
 // core components
 
 class StudentsTable extends React.Component {
@@ -77,7 +79,7 @@ class StudentsTable extends React.Component {
 		]
 	}
 	orderList = () => {
-		let orderedList = this.state.data.sort((a,b) => {
+		let orderedList = this.state.data.sort((a, b) => {
 			var studentA = a.last_name.toUpperCase()
 			var studentB = b.last_name.toUpperCase()
 			return studentA < studentB ? -1 : studentA > studentB ? 1 : 0
@@ -88,24 +90,24 @@ class StudentsTable extends React.Component {
 	componentDidMount() {
 		// axios.get(`${process.env.REACT_APP_API_PORT}/students`)
 		client({
-			method: 'get' ,
+			method: 'get',
 			url: `/users/roles/student`,
-		  })
+		})
 			.then(res => {
 				const data = res.data.users
-				console.log("D",res)
-				this.setState({data: data})
+				console.log("D", res)
+				this.setState({ data: data })
 			}).catch(err => {
 				console.log(err)
 				console.log("Error")
 			})
 	}
-  render() {
-    return (
+	render() {
+		return (
 			<>
 				{
 					this.orderList().map((student, key) => {
-						return(
+						return (
 							<tr key={key}>
 								<td>
 									<Media className="align-items-center">
@@ -114,7 +116,7 @@ class StudentsTable extends React.Component {
 											className="avatar rounded-circle mr-3"
 										>
 											<img
-											src={require("../../assets/img/theme/team-4-800x800.jpg")} alt="avatar"
+												src={require("../../assets/img/theme/team-4-800x800.jpg")} alt="avatar"
 											/>
 										</Link>
 										<Media>
@@ -126,54 +128,85 @@ class StudentsTable extends React.Component {
 										</Media>
 									</Media>
 								</td>
-								<td>{
-									student.courses.map((course, key) => {
-										return(
-											<div key={key}>
-												<Link to={`course/${course.id}`}>
-													{course.name}
-												</Link>
-											</div>
-										)
-									})
+
+								{this.props.location.pathname !== '/teacher/students' &&
+									<td>{
+										student.courses?.map((course, key) => {
+											return (
+												<div key={key}>
+													<Link to={`course/${course.id}`}>
+														{course.name}
+													</Link>
+												</div>
+											)
+										})
+									}
+									</td>
 								}
-							</td>
-							<td>
-								{
-									student.courses.map((course, key) => {
-										return (
-											course.teachers.map((teacher, key) => {
-												return(
-													<div className="avatar-group" key={key}>
-														<Link to={`teacher/${teacher.id}`}>
-															<span className="avatar avatar-sm" >
-																<img
-																	alt="..."
-																	className="rounded-circle"
-																	src={require("../../assets/img/theme/team-4-800x800.jpg")}
-																/>
-															</span>
-															<span>
-																{teacher.first_name} {teacher.last_name}
-															</span>
-														</Link>
-													</div>
+								{this.props.location.pathname !== '/teacher/students' &&
+									<td>
+										{
+											student.courses?.map((course, key) => {
+												return (
+													course.teachers.map((teacher, key) => {
+														return (
+															<div className="avatar-group" key={key}>
+																<Link to={`teacher/${teacher.id}`}>
+																	<span className="avatar avatar-sm" >
+																		<img
+																			alt="..."
+																			className="rounded-circle"
+																			src={require("../../assets/img/theme/team-4-800x800.jpg")}
+																		/>
+																	</span>
+																	<span>
+																		{teacher.first_name} {teacher.last_name}
+																	</span>
+																</Link>
+															</div>
+														)
+													})
 												)
 											})
-										)
-									})
 
+										}
+									</td>
 								}
-							</td>
 
-								<td>
+								{this.props.location.pathname !== '/teacher/students' && <td>
 									<Badge color="" className="badge-dot mr-4">
 										<i className="bg-warning" />
 										pending
 									</Badge>
 								</td>
-								<td className="text-right">
-									<UncontrolledDropdown>
+								}
+
+								{this.props.location.pathname === '/teacher/students' ?
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Input style={{ width: '4em' }} />
+									</td> :
+									<td style={{ paddingLeft: '1.6rem' }}>
+										100
+									</td>
+								}
+
+								{this.props.location.pathname === '/teacher/students' ?
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Input />
+									</td> :
+									<td style={{ paddingLeft: '1.6rem' }}>
+										100
+									</td>
+								}
+								{this.props.location.pathname === '/teacher/students' &&
+									<td style={{ paddingLeft: '1.6rem' }}>
+										<Button>Submit</Button>
+									</td>
+
+								}
+								<td className="text-left">
+									<Button>Drop</Button>
+									{/* <UncontrolledDropdown>
 										<DropdownToggle
 											className="btn-icon-only text-light"
 											href="#pablo"
@@ -189,7 +222,7 @@ class StudentsTable extends React.Component {
 												href="#pablo"
 												onClick={e => e.preventDefault()}
 											>
-												Add to cart
+												Drop Student
 											</DropdownItem>
 											<DropdownItem
 												href="#pablo"
@@ -202,17 +235,17 @@ class StudentsTable extends React.Component {
 												onClick={e => e.preventDefault()}
 											>
 												Something else here
-											</DropdownItem>
+											</DropdownItem> 
 										</DropdownMenu>
-									</UncontrolledDropdown>
+									</UncontrolledDropdown> */}
 								</td>
 							</tr>
 						)
 					})
 				}
 			</>
-    );
-  }
+		);
+	}
 }
 
 export default StudentsTable;
