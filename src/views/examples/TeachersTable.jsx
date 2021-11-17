@@ -122,7 +122,7 @@ class TeachersTable extends React.Component {
 										<Media>
 											<span className="mb-0 text-sm">
 
-												<Link to={this.props.location.pathname === '/teacher/teachers' ? `profile/${teacher.id}` : `teacher/${teacher.id}`}>
+												<Link to={this.props.location.pathname === '/teacher/teachers' ? `profile/${teacher.id}` : `teacher-student/${teacher.id}`}>
 													{teacher.first_name} {teacher.last_name}
 												</Link>
 											</span>

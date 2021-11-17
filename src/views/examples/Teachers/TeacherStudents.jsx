@@ -206,8 +206,8 @@ class TeacherStudents extends React.Component {
     render() {
         return (
             <>
-                {this.state.students !== null &&
-                    this.state.students.map((student, key) => {
+                {this.props.students !== null &&
+                    this.props.students.map((student, key) => {
                         return (
                             <tr key={key}>
                                 <td>
