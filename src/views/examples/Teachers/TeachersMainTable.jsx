@@ -332,7 +332,8 @@ class TeacherTables extends React.Component {
                 teachers: [],
                 hasRegistered: false
             }
-        ]
+        ],
+        selectedCourse : {}
     }
     componentDidUpdate = () => {
         console.log('current course name is - ', this.state.courseName);
@@ -393,11 +394,12 @@ class TeacherTables extends React.Component {
         e.preventDefault()
         console.log('dropdown value - ', this.state.dropdownCourse)
 
-        this.setState({
-            ...this.state,
-            dropdownCourse: !this.state.dropdownCourse
-        })
-
+        if (!this.state.dropdownCourse) {
+            this.setState({
+                ...this.state,
+                dropdownCourse: !this.state.dropdownCourse
+            })
+        }
 
     }
 
@@ -473,7 +475,7 @@ class TeacherTables extends React.Component {
             method: 'get',
             url: '/teacher',
             params: {
-                teacher_id: '6098bcb9-26e6-479d-8ebb-89edfbe2e395'
+                teacher_id: teacher_id
             }
         }).then(res => {
             const data = res.data;
@@ -587,7 +589,7 @@ class TeacherTables extends React.Component {
         this.setState({
             ...this.state,
             dropdownCourse: false,
-            selectedCourse: course,
+            // selectedCourse: course,
             courseName: course.name,
 
         })
