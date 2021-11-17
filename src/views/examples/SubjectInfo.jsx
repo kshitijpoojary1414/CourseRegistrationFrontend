@@ -16,6 +16,8 @@
 
 */
 import React from "react";
+import client from "../../apis/client";
+
 
 // reactstrap components
 import {
@@ -31,6 +33,8 @@ import {
   Row,
   Col
 } from "reactstrap";
+import { Link } from "react-router-dom"
+
 // core components
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
 
@@ -40,7 +44,28 @@ class SubjectInfo extends React.Component {
 		data: {
 			name: 'English',
 			description: 'This subject is for ESL students of all levels.  The curriculum starts at English 101 and goes up to the most advanced level of English 510.  Level exam can be completed for non-beginners to determine the proper level.'
+		},
+		major: {
+			teachers: [],
+			courses: []
 		}
+	}
+	componentWillMount() {
+		console.log(this.props.match.params.id)
+		client({
+			method: 'get',
+			url: `/majors/${this.props.match.params.id}`
+		}).then(data => {
+			this.setState({
+				...this.state,
+				major: data.data,
+
+			})
+
+		}).catch(error => {
+			alert("Some error occured. Please refresh the page")
+		})
+
 	}
 	renderEditButton = () => {
 		let subjectId = this.props.match.params.id
@@ -99,9 +124,10 @@ class SubjectInfo extends React.Component {
 			// })
 	}
   render() {
+
     return (
       <>
-        <DetailsHeader title={this.state.data.name} info={this.state.data.description} />
+        <DetailsHeader title={this.state.major.major_name} info={this.state.major.description} />
         {/* Page content */}
 				{
 					!this.state.editable ? (
@@ -112,7 +138,7 @@ class SubjectInfo extends React.Component {
 		                <CardHeader className="bg-white border-0">
 		                  <Row className="align-items-center">
 		                    <Col xs="8">
-		                      <h3 className="mb-0">Subject</h3>
+		                      <h3 className="mb-0">Major</h3>
 		                    </Col>
 												{
 													this.renderEditButton()
@@ -128,8 +154,13 @@ class SubjectInfo extends React.Component {
 		                      <Row>
 		                        <Col lg="6">
 															<div>
-																<small className="form-control-label">Subject name</small>
-																<h1>{this.state.data.name}</h1>
+																<small className="form-control-label">Major name</small>
+																<h1>{this.state.major.major_name}</h1>
+			                        </div>
+
+									<div>
+																<small className="form-control-label">Major code</small>
+																<h1>{this.state.major.major_code}</h1>
 			                        </div>
 		                        </Col>
 		                      </Row>
@@ -140,53 +171,53 @@ class SubjectInfo extends React.Component {
 													<div className="pl-lg-4">
 														<small className="form-control-label">Information</small>
 														<h2>
-															{this.state.data.description}
+															{this.state.major.description}
 														</h2>
 				                  </div>
 												<hr className="my-4" />
 		                    {/* Students */}
 		                    <h6 className="heading-small text-muted mb-4">
-		                      Teachers of this subject
+		                      Teachers for this major
 		                    </h6>
-												{/*
+												
 		                    <div className="pl-lg-4">
 													{
-														this.state.teachers.map((teacher, key) => {
+														this.state.major.teachers.map((teacher, key) => {
 															return(
 																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
-																	<Link to={teacher.name}>
+																	<Link to={`../teacher/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."
 																				className="rounded-circle"
-																				src={teacher.img.src}
+																				// src={teacher.img.src}
 																			/>
 																		</span>
-																		<span>{teacher.name}</span>
+																		<span>{teacher.first_name + ' ' + teacher.last_name}</span>
 																	</Link>
 																</div>
 															)
 														})
 													}
 		                    </div>
-												*/}
+												
 												<hr className="my-4" />
 		                    {/* Students */}
 		                    <h6 className="heading-small text-muted mb-4">
 		                      Courses in this subject
 		                    </h6>
-												{/*
+												
 		                    <div className="pl-lg-4">
 													{
-														this.state.teachers.map((teacher, key) => {
+														this.state.major.courses.map((teacher, key) => {
 															return(
 																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
-																	<Link to={teacher.name}>
+																	<Link to={`../course/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."
 																				className="rounded-circle"
-																				src={teacher.img.src}
+																				// src={teacher.img.src}
 																			/>
 																		</span>
 																		<span>{teacher.name}</span>
@@ -196,7 +227,7 @@ class SubjectInfo extends React.Component {
 														})
 													}
 		                    </div>
-												*/}
+												
 		                  </Form>
 		                </CardBody>
 										<CardFooter>
@@ -290,10 +321,10 @@ class SubjectInfo extends React.Component {
 		                    <h6 className="heading-small text-muted mb-4">
 		                      Teachers of this subject
 		                    </h6>
-												{/*
+												
 		                    <div className="pl-lg-4">
 													{
-														this.state.teachers.map((teacher, key) => {
+														this.state.major.teachers.map((teacher, key) => {
 															return(
 																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
 																	<Link to={teacher.name}>
@@ -311,7 +342,7 @@ class SubjectInfo extends React.Component {
 														})
 													}
 		                    </div>
-												*/}
+												
 												<hr className="my-4" />
 		                    {/* Students */}
 		                    <h6 className="heading-small text-muted mb-4">

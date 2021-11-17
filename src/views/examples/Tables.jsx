@@ -58,282 +58,8 @@ class Tables extends React.Component {
 		departmentName: "" ,
 
 		majorName: "",
-		courses: [
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/bootstrap.jpg")
-				},
-				name: "English 1",
-				subject: "English",
-				shortDescription: "First level of English.  Prepares students for English 2.",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Zach",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 12
-				},
-				schedule: "pending",
-				price: 350,
-			},
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/angular.jpg")
-				},
-				name: "Spanish 1",
-				subject: "Spanish",
-				shortDescription: "First level of Spanish.  Prepares students for Spanish 2",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Aaron",
-						href: "#pablo",
-						id: "tooltip804044742",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-3-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 5
-				},
-				schedule: "",
-				price: 300,
-			},
-			{
-				img: {
-					href: "#pablo",
-					alt: "...",
-					src: require("../../assets/img/theme/vue.jpg")
-				},
-				name: "English 3",
-				subject: "English",
-				shortDescription: "Third level of English.  Prepares student for intermediate level English.",
-				fullDescription: "",
-				teachers: [
-					{
-						name: "Mary",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						}
-					}
-				],
-				registration: {
-					limit: 20,
-					registered: 15
-				},
-				schedule: "",
-				price: 500,
-			}
-		],
-		students: [
-			{
-				name: "John",
-				href: "#pablo",
-				id: "tooltip804044742",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-3-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "The Jesus",
-						href: "#pablo",
-						id: "tooltip804044742",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-3-800x800.jpg")
-						},
-						courses: ["Bowling", "Throwing Strikes", "Fashion Style"],
-						students: ["The Dude", "Walter", "Donnie"]
-					},
-					{
-						name: "Splinter",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						},
-						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-					}
-				],
-				courses: [
-					"Spanish 1",
-					"Spanish 2"
-				]
-			},
-			{
-				name: "Chris",
-				href: "#pablo",
-				id: "tooltip941738690",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-1-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "Ali",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						},
-						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-					}
-				],
-				courses: [
-					"English 1",
-					"English 2"
-				]
-			},
-			{
-				name: "Sarah",
-				href: "#pablo",
-				id: "tooltip742438047",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-2-800x800.jpg")
-				},
-				teachers: [
-					{
-						name: "Splinter",
-						href: "#pablo",
-						id: "tooltip742438047",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-2-800x800.jpg")
-						},
-						courses: ["Ninjitsu", "Skateboarding", "Meditation"],
-						students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-					},
-					{
-						name: "Ali",
-						href: "#pablo",
-						id: "tooltip941738690",
-						img: {
-							alt: "...",
-							src: require("../../assets/img/theme/team-1-800x800.jpg")
-						},
-						courses: ["One Round Knockouts", "12 Punch combination", "Being The Greatest"],
-						students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-					}
-				],
-				courses: [
-					"Mandarin 3"
-				]
-			}
-		],
-		teachers: [
-			{
-				name: "The Jesus",
-				href: "#pablo",
-				id: "tooltip804044742",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-3-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "Bowling",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Throwing Strikes",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Fashion Style",
-						subject: "Fashion",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["The Dude", "Walter", "Donnie"]
-			},
-			{
-				name: "Splinter",
-				href: "#pablo",
-				id: "tooltip742438047",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-2-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "Ninjitsu",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Skateboarding",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Meditation",
-						subject: "Health/Wellbeing",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["Leonardo", "Donatello", "Michaelangelo", "Raphael"]
-			},
-			{
-				name: "Ali",
-				href: "#pablo",
-				id: "tooltip941738690",
-				img: {
-					alt: "...",
-					src: require("../../assets/img/theme/team-1-800x800.jpg")
-				},
-				courses: [
-					{
-						name: "One Round Knockouts",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "12 Punch combination",
-						subject: "Sports",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					},
-					{
-						name: "Being The Greatest",
-						subject: "Health/Wellbeing",
-						description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-					}
-				],
-				students: ["Tyson", "Mayweather", "Butterbean", "Holyfield"]
-			}
-		],
 		departments: [],
-<<<<<<< HEAD
-		majors : [],
-=======
 		majors: [],
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 		selectedDepartment: "",
 		selectedMajor: "",
 		coursesTableData: [
@@ -348,6 +74,21 @@ class Tables extends React.Component {
 				students: [{}],
 				teachers: [],
 				hasRegistered: false
+			}
+		],
+		teachers: [
+			{
+				students: [{}],
+				courses: [
+					{
+						schedule: [
+							{
+								days: [],
+							}
+						],
+						registration: {},
+					}
+				]
 			}
 		]
 	}
@@ -373,11 +114,7 @@ class Tables extends React.Component {
 		} else if (this.props.location.pathname === "/student/subjects") {
 			return ["Subject", "Course", "Teachers", "Schedule", "Price", "Register"]
 		} else if (this.props.location.pathname === "/student/majors") {
-<<<<<<< HEAD
-            return ["Major", "Number of Units", "Grad advisor", "Department"]
-=======
 			return ["Major", "Number of Units", "Grad advisor", "Department"]
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 		} else if (this.props.location.pathname === "/student/teachers") {
 			return ["Teacher", "Course", "Subject", "Schedule"]
 		}
@@ -385,8 +122,8 @@ class Tables extends React.Component {
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
 			return <CoursesTable courses={this.state.coursesTableData} department_id={this.state.selectedDepartment.id} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
-			return <SubjectsTable courses={this.state.courses} {...this.props} />
+		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/majors") {
+			return <SubjectsTable majors={this.state.majors} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
@@ -435,8 +172,14 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
 			})
-		}
+		} 
 
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownOpen: false
+		// 	})
+		// }
 	}
 	toggleDropDownforMajor = (e) => {
 		e.preventDefault()
@@ -445,8 +188,14 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
 			})
-		}
-
+		} 
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownMajor: false
+		// 	})
+		// }
+		console.log('teachers infof', this.state);
 	}
 	selectItem = (e) => {
 		console.log(e)
@@ -503,6 +252,25 @@ class Tables extends React.Component {
 			console.log("Error")
 		})
 	}
+
+	fetchTeachers = (major_id) => {
+		client({
+			method: 'get',
+			url: '/teacherByMajor',
+			params: {
+				major_id: major_id
+			}
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				teachers: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
+	}
 	fetchMajors(department_id) {
 		client({
 			method: 'get',
@@ -511,28 +279,6 @@ class Tables extends React.Component {
 				department_id: department_id
 			}
 		  }).then(res => {
-						const data = res.data;
-						console.log("og data",data)
-						this.setState({
-							...this.state,
-							departmentName: department.name,
-							dropdownOpen: false,
-							dropdownMajor: false,
-							selectedDepartment: department,
-							coursesTableData: data
-						})
-				}).catch(err => {
-					console.log("Error")
-				})
-		// this.setState({
-		// 	...this.state,
-		// 	departmentName: e.currentTarget.textContent,
-		// 	dropdownOpen: false,
-		// 	selectedDepartment: department,
-		// 	// coursesTableData : this.fetchCourses(department.id)
-			
-		// })
-		}).then(res => {
 			const data = res.data;
 			console.log("OG", data)
 			this.setState({
@@ -542,12 +288,14 @@ class Tables extends React.Component {
 				selectedMajor: data[0],
 			})
 			this.fetchCourses(data[0].id)
+		this.fetchTeachers(data[0].id)
+
 		}).catch(err => {
 			console.log("Error", err)
 		})
 	}
 	selectDropdown = (e, department) => {
-
+		console.log('Selected DropDown', this.state)
 		this.setState({
 			...this.state,
 			dropdownOpen: false,
@@ -559,7 +307,7 @@ class Tables extends React.Component {
 	}
 
 	selectDropdownForMajor = (e, major) => {
-		console.log("Selected major", major)
+		console.log("Selected major", major.major_code)
 		this.setState({
 			...this.state,
 			dropdownMajor: false,
@@ -569,6 +317,7 @@ class Tables extends React.Component {
 		})
 
 		this.fetchCourses(major.id)
+		this.fetchTeachers(major.id)
 	}
 	renderDropDown = () => {
 		return (
@@ -610,11 +359,7 @@ class Tables extends React.Component {
 										}
 										<div>
 											{/* {this.renderDropDown()} */}
-<<<<<<< HEAD
-										{	<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
-=======
 											{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 												{/* <DropdownToggle caret>
 													{this.state.majorName}
 												</DropdownToggle> */}
@@ -626,24 +371,6 @@ class Tables extends React.Component {
 													{
 														this.state.departments.map(
 															department => {
-<<<<<<< HEAD
-																return (<DropdownItem id ={department.name} onClick={(e) => this.selectDropdown(e,department)}>{department.name}</DropdownItem>)	
-															}
-														)
-													}
-											
-												</DropdownMenu>
-											</Dropdown>
-										}
-										{/* New Drop Down for majors */}
-										{
-											<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
-												<DropdownToggle caret>
-													{this.state.majorName}
-												</DropdownToggle>
-											</Dropdown>
-										}
-=======
 																return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
 															}
 														)
@@ -653,7 +380,7 @@ class Tables extends React.Component {
 											</Dropdown>
 											}
 											{/* New Drop Down for majors */}
-											{
+											{ !window.location.pathname.includes('majors') &&
 												<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
 													<DropdownToggle caret>
 														{this.state.majorName}
@@ -671,7 +398,6 @@ class Tables extends React.Component {
 													</DropdownMenu>
 												</Dropdown>
 											}
->>>>>>> d5b25139c0f6161c9b49fdebd9317d08095356c4
 										</div>
 									</div>
 

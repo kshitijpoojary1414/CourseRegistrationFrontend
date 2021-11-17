@@ -44,20 +44,26 @@ class TeachersTable extends React.Component {
 				]
 			}
 		]
+		// teachers : this.props.teachers
 	}
-	componentDidMount() {
+	componentWillMount() {
 		// axios.get(`${process.env.REACT_APP_API_PORT}/users/teacher`)
-		client({
-			method: 'get',
-			url: '/users/roles/teacher',
-		})
-			.then(res => {
-				const teachers = res.data.users
-				console.log(teachers)
-				this.setState({ teachers })
-			}).catch(err => {
-				console.log("Error - ", err)
-			})
+		// client({
+		// 	method: 'get',
+		// 	url: '/users/roles/teacher',
+		// })
+		// 	.then(res => {
+		// 		const teachers = res.data.users
+		// 		console.log(teachers)
+		// 		this.setState({ teachers })
+		// 	}).catch(err => {
+		// 		console.log("Error - ", err)
+		// 	})
+		// console.log("OG PROPS RECIEVED", this.props)
+		// this.setState( {
+		// 	...this.state,
+		// 	teachers : this.props.teachers
+		// })
 	}
 	orderList = () => {
 		let orderedList = this.state.teachers.sort((a, b) => {
@@ -95,11 +101,11 @@ class TeachersTable extends React.Component {
 		}
 	}
 	render() {
-		console.log(this.state)
+		console.log("propsabsdbja",(this.props.teachers))
 		return (
 			<>
 				{
-					this.orderList().map((teacher, key) => {
+					this.props.teachers.map((teacher, key) => {
 						return (
 							<tr key={key}>
 								<td>

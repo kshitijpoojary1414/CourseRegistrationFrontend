@@ -13,7 +13,7 @@ $white:    #fff !default;
 $gray-100: #f6f9fc !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
+$gray-400: #000000 !default;
 $gray-500: #adb5bd !default;
 $gray-600: #8898aa !default;   // Line footer color
 $gray-700: #525f7f !default;   // Line p color
@@ -42,8 +42,8 @@ $red:     #f5365c !default;
 $orange:  #fb6340 !default;
 $yellow:  #ffd600 !default;
 $green:   #2dce89 !default;
-$teal:    #11efe4 !default;
-$cyan:    #2bffc6 !default;
+$teal:    #6610f2 !default;
+$cyan:    #115ac7 !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -64,7 +64,7 @@ $colors: map-merge((
   "gray-dark":  $gray-800
 ), $colors);
 
-$default:       #59a6acee !default;
+$default:       #edeeeecc !default;
 $primary:       #2887daef !default;
 $secondary:     #f7fafc !default;
 $success:       $green !default;
@@ -974,3 +974,4 @@ $footer-heading-font-size: $font-size-sm !default;
 // Import Bootstrap variable defaults
 
 @import "../bootstrap/variables";
+

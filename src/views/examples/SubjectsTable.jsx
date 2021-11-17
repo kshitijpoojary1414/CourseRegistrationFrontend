@@ -19,22 +19,22 @@ import React from "react";
 
 // reactstrap components
 import {
-  Badge,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Progress,
-  // UncontrolledTooltip
+	Badge,
+	DropdownMenu,
+	DropdownItem,
+	UncontrolledDropdown,
+	DropdownToggle,
+	Progress,
+	// UncontrolledTooltip
 } from "reactstrap";
 import { Link } from "react-router-dom"
 // core components
 
 class SubjectsTable extends React.Component {
 	orderList = () => {
-		let orderedList = this.props.courses.sort((a,b) => {
-			var subjA = a.subject.toUpperCase()
-			var subjB = b.subject.toUpperCase()
+		let orderedList = this.props.courses.sort((a, b) => {
+			var subjA = a.major_name.toUpperCase()
+			var subjB = b.major_name.toUpperCase()
 			return subjA < subjB ? -1 : subjA > subjB ? 1 : 0
 		})
 		return orderedList
@@ -42,14 +42,14 @@ class SubjectsTable extends React.Component {
 	addToCart = (courseName, price) => {
 		let cart = localStorage.getItem('cart')
 			? JSON.parse(localStorage.getItem('cart')) : []
-		let data = {name: courseName, price: price}
+		let data = { name: courseName, price: price }
 		cart.push(data)
 		localStorage.setItem('cart', JSON.stringify(cart))
 	}
 	addToCartAndCheckout = (courseName, price) => {
 		let cart = localStorage.getItem('cart')
 			? JSON.parse(localStorage.getItem('cart')) : []
-		let data = {name: courseName, price: price}
+		let data = { name: courseName, price: price }
 		cart.push(data)
 		localStorage.setItem('cart', JSON.stringify(cart))
 		this.props.history.push({
@@ -77,8 +77,8 @@ class SubjectsTable extends React.Component {
 		}
 	}
 	renderDropdown = (course) => {
-		if (this.props.location.pathname === "/student/subjects") {
-			return(
+		if (this.props.location.pathname === "/student/majors") {
+			return (
 				<td className="text-left">
 					<UncontrolledDropdown>
 						<DropdownToggle
@@ -108,26 +108,27 @@ class SubjectsTable extends React.Component {
 			)
 		}
 	}
-  render() {
-    return (
+	render() {
+		console.log("MAJORS TABLE", this.props.majors)
+		return (
 			<>
 				{
-					this.orderList().map((course, key) => {
-						return(
+					this.props.majors.map((course, key) => {
+						return (
 							<tr key={key}>
 								<td>
-									<Link to={`subject/${course.subject}`}>
-										{course.subject}
+									<Link to={`major/${course.id}`}>
+										{course.major_name}
 									</Link>
 								</td>
 
 								<td>
-									<Link to={`course/${course.name}`}>
-										{course.name}
+									<Link to={`major/${course.id}`}>
+										{course.major_code}
 									</Link>
 								</td>
 
-								<td>
+								{/* <td>
 									{
 										course.teachers.map((teacher, key) => {
 											return(
@@ -146,36 +147,48 @@ class SubjectsTable extends React.Component {
 											)
 										})
 									}
-								</td>
+								</td> */}
 
 								{
 									this.renderRegistration(course)
 								}
 
-								<td>
+								{/* <td>
 									<Link to={`subject/${course.subject}`}>
 										<Badge color="" className="badge-dot mr-4">
 											<i className="bg-warning" />
 											pending
 										</Badge>
 									</Link>
+								</td> */}
+								<td>
+
+									{course?.advisor?.first_name ? 
+									<Link to={`teacher-student/${course?.advisor.id}`}> 
+																								<span className="avatar avatar-sm" >
+																<img
+																	alt="..."
+																	className="rounded-circle"
+																	src={require("../../assets/img/theme/team-4-800x800.jpg")}
+																/>
+															</span>
+									{course?.advisor?.first_name + ' ' + course?.advisor?.last_name} 
+									
+									</Link> : "-"}
+
+
+
 								</td>
 
-								<td>
-									<Link to={`subject/${course.subject}`}>
-										${course.price}
-									</Link>
-								</td>
-								{
-									this.renderDropdown(course)
-								}
+
+								<td><span>{course.maj_units}</span></td>
 							</tr>
 						)
 					})
 				}
 			</>
-    );
-  }
+		);
+	}
 }
 
 export default SubjectsTable;

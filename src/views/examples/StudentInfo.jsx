@@ -21,16 +21,16 @@ import client from "../../apis/client";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
+	Button,
+	Card,
+	CardHeader,
+	CardBody,
 	CardFooter,
-  FormGroup,
-  Form,
+	FormGroup,
+	Form,
 	Input,
-  Container,
-  Row,
+	Container,
+	Row,
 	Col,
 	InputGroup,
 	InputGroupAddon,
@@ -40,6 +40,7 @@ import { Link } from 'react-router-dom'
 // core components
 import axios from 'axios'
 import DetailsHeader from "../../components/Headers/DetailsHeader.jsx";
+import userProfile from "../../assets/img/theme/userProfile.svg";
 
 class StudentInfo extends React.Component {
 	state = {
@@ -55,30 +56,33 @@ class StudentInfo extends React.Component {
 		client({
 			method: 'get',
 			url: `/users/${this.props.match.params.id}`,
-		  })
+		})
 			.then(res => {
-					let data = res.data
-					console.log("Data",data)
-					let {street_address, zip_code, city, country ,state,...remData} = data 
-					remData = {
-						...remData,
-						address : {
-							streetAddress : street_address,
-							zipCode : zip_code,
-							city : city,
-							country : country,
-							state
-						}
+				let data = res.data
+				console.log("Data", data)
+				let { street_address, zip_code, city, country, state, ...remData } = data
+				remData = {
+					...remData,
+					address: {
+						streetAddress: street_address,
+						zipCode: zip_code,
+						city: city,
+						country: country,
+						state
 					}
-					this.setState({data: remData})
+				}
+				this.setState({ data: remData })
 			}).catch(err => {
-				console.log("Error",err)
+				console.log("Error", err)
 			})
+	}
+	componentDidUpdate = () => {
+		console.log('state in student profile - ', this.state);
 	}
 	uploadAvatar = (e) => {
 		let newAvatar = e.target.files[0]
-		this.setState({newAvatar})
-  }
+		this.setState({ newAvatar })
+	}
 	submitUpdates = (e) => {
 		e.preventDefault()
 		if (this.state.newAvatar) {
@@ -88,7 +92,7 @@ class StudentInfo extends React.Component {
 				.then(res => {
 					let data = this.state.data
 					data.avatar = res.data.avatar
-					this.setState({data})
+					this.setState({ data })
 				})
 				.catch(err => {
 					console.log("Error uploading avatar")
@@ -97,8 +101,8 @@ class StudentInfo extends React.Component {
 		let editBody = {
 			...this.state.data
 		}
-		let {address} = editBody
-		let {streetAddress, city, country, zipCode, state} = address
+		let { address } = editBody
+		let { streetAddress, city, country, zipCode, state } = address
 
 		editBody = {
 			...editBody,
@@ -116,11 +120,11 @@ class StudentInfo extends React.Component {
 			method: 'patch',
 			url: `/users/${this.props.match.params.id}`,
 			data: editBody,
-		  })
+		})
 			.then(data => {
-					this.setState({
-						editable: !this.state.editable
-					})
+				this.setState({
+					editable: !this.state.editable
+				})
 			}).catch(err => {
 				console.log(err)
 
@@ -130,12 +134,12 @@ class StudentInfo extends React.Component {
 	cancelUpdates = (e) => {
 		e.preventDefault()
 		axios.get(`${process.env.REACT_APP_API_PORT}/user/${this.props.match.params.id}`)
-				.then(res => {
-						const data = res.data
-						this.setState({data: data})
-				}).catch(err => {
-					console.log("Error")
-				})
+			.then(res => {
+				const data = res.data
+				this.setState({ data: data })
+			}).catch(err => {
+				console.log("Error")
+			})
 		this.setState({
 			editable: !this.state.editable
 		})
@@ -147,7 +151,7 @@ class StudentInfo extends React.Component {
 		} else {
 			data[stateRef] = e.target.value
 		}
-		this.setState({data})
+		this.setState({ data })
 	}
 	getTeachersFromCourses = () => {
 		let teachersArray = []
@@ -168,9 +172,9 @@ class StudentInfo extends React.Component {
 			return null
 		}
 	}
-  render() {
-    return (
-      <>
+	render() {
+		return (
+			<>
 				<DetailsHeader title={`${this.state.data.first_name} ${this.state.data.last_name}`} info={this.state.data.about} />
 				{/* Page content */}
 				{
@@ -184,8 +188,11 @@ class StudentInfo extends React.Component {
 												<Col xs="8">
 													<span className="avatar avatar-sm rounded-circle">
 														<img
-															alt="..."
-															src={this.state.data.avatar}
+															alt="User Profile"
+															src={require("../../assets/img/theme/team-4-800x800.jpg")}
+															// src={userProfile}
+															// src={`abcdadfadf`}
+															style={{ width: "50" }}
 														/>
 													</span>
 													<h3 className="mb-0">Student information</h3>
@@ -218,19 +225,19 @@ class StudentInfo extends React.Component {
 															<div>
 																<small className="form-control-label">First name</small>
 																<h1>{this.state.data.first_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 														<Col lg="4">
 															<div>
 																<small className="form-control-label">Middle name</small>
 																<h1>{this.state.data.middle_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 														<Col lg="4">
 															<div>
 																<small className="form-control-label">Last name</small>
 																<h1>{this.state.data.last_name}</h1>
-			                        </div>
+															</div>
 														</Col>
 													</Row>
 													<Row>
@@ -238,7 +245,7 @@ class StudentInfo extends React.Component {
 															<div>
 																<small className="form-control-label">About</small>
 																<h3>{this.state.data.about}</h3>
-			                        </div>
+															</div>
 														</Col>
 													</Row>
 												</div>
@@ -253,45 +260,45 @@ class StudentInfo extends React.Component {
 															<div>
 																<small className="form-control-label">Email address</small>
 																<h1>{this.state.data.email}</h1>
-			                        </div>
-		                        </Col>
+															</div>
+														</Col>
 														<Col lg="6">
 															<div>
 																<small className="form-control-label">Phone number</small>
 																<h2>{this.state.data.phone}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
 												{/* Address */}
 												<h6 className="heading-small text-muted mb-4">
 													Address information
 												</h6>
 												<div className="pl-lg-4">
-		                      <Row>
-		                        <Col md="12">
+													<Row>
+														<Col md="12">
 															<div>
 																<small className="form-control-label">Street address</small>
 																<h2>{this.renderAddressInfo("streetAddress")}</h2>
-			                        </div>
-		                        </Col>
-		                      </Row>
-		                      <Row>
-		                        <Col lg="6">
-		                          <FormGroup>
+															</div>
+														</Col>
+													</Row>
+													<Row>
+														<Col lg="6">
+															<FormGroup>
 																<div>
 																	<small className="form-control-label">City</small>
 																	<h2>{this.renderAddressInfo("city")}</h2>
-				                        </div>
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="6">
+																</div>
+															</FormGroup>
+														</Col>
+														<Col lg="6">
 															<div>
 																<small className="form-control-label">State</small>
 																<h2>{this.renderAddressInfo("state")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
 													<Row>
 														<Col lg="6">
@@ -299,15 +306,15 @@ class StudentInfo extends React.Component {
 																<small className="form-control-label">Country</small>
 																<h2>{this.renderAddressInfo("country")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 														<Col lg="6">
 															<div>
 																<small className="form-control-label">Postal code</small>
 																<h2>{this.renderAddressInfo("zipCode")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
 												{/* Courses */}
 												<h6 className="heading-small text-muted mb-4">
@@ -316,10 +323,10 @@ class StudentInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.data.courses.map((course, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
 																	<Link to={`../course/${course.id}`}>
-																		<span>{course.name}</span>
+																		<h1>{course.name}</h1>
 																	</Link>
 																</div>
 															)
@@ -337,14 +344,14 @@ class StudentInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.getTeachersFromCourses().map((teacher, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
-																	<Link to={`../teacher/${teacher.id}`}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
+																	<Link to={`../teacher-student/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."
 																				className="rounded-circle"
-																				src={teacher.avatar}
+																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
 																		</span>
 																		<span>{teacher.first_name} {teacher.last_name}</span>
@@ -401,31 +408,31 @@ class StudentInfo extends React.Component {
 																	<i className="ni ni-single-02" />
 																</InputGroupText>
 															</InputGroupAddon>
-															<small style={{paddingTop: "10px", paddingLeft: "10px"}}>Profile Picture</small>
+															<small style={{ paddingTop: "10px", paddingLeft: "10px" }}>Profile Picture</small>
 															<Input type="file" onChange={this.uploadAvatar} />
 														</InputGroup>
-													</FormGroup>	
+													</FormGroup>
 													<h3 className="mb-0">Student information</h3>
 												</Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 										</CardHeader>
 										<CardBody>
@@ -667,8 +674,8 @@ class StudentInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.data.courses.map((course, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../course/${course.id}`}>
 																		<span>{course.name}</span>
 																	</Link>
@@ -688,8 +695,8 @@ class StudentInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.getTeachersFromCourses().map((teacher, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../teacher/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
@@ -711,24 +718,24 @@ class StudentInfo extends React.Component {
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 										</CardFooter>
 									</Card>
@@ -738,9 +745,9 @@ class StudentInfo extends React.Component {
 					)
 				}
 
-      </>
-    );
-  }
+			</>
+		);
+	}
 }
 
 export default StudentInfo;

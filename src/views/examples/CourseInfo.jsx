@@ -22,15 +22,15 @@ import client from "../../apis/client";
 // reactstrap components
 import {
 	Button,
-  Card,
-  CardHeader,
-  CardBody,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
-  Col,
+	Card,
+	CardHeader,
+	CardBody,
+	FormGroup,
+	Form,
+	Input,
+	Container,
+	Row,
+	Col,
 	Progress,
 	CardFooter,
 	Dropdown,
@@ -58,8 +58,13 @@ class CourseInfo extends React.Component {
 			students: [{}],
 			teachers: [{}],
 			registration: {},
-			hasRegistered: false
-		}
+			hasRegistered: false,
+			grades : {
+				grades: "",
+				comments : ""
+			}
+		},
+
 	}
 	componentDidMount() {
 		// axios.get(`${process.env.REACT_APP_API_PORT}/courses/${this.props.match.params.id}`)
@@ -67,32 +72,32 @@ class CourseInfo extends React.Component {
 			method: 'get',
 			url: `courses/${this.props.match.params.id}`,
 		}).then(res => {
-				const data = res.data
-				console.log("Data", data)
-				this.setState({data: data})
-			}).catch(err => {
-				console.log("Error")
-			})
+			const data = res.data
+			console.log("Data", data)
+			this.setState({ data: data })
+		}).catch(err => {
+			console.log("Error")
+		})
 	}
 
 	addToCart = () => {
-	let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
-	let data = {id: this.state.data.id, name: this.state.data.name, price: this.state.data.price}
-	let courseIds = cart.map(course => course.id)
-	if (courseIds.includes(data.id)) {
-		alert('course already selected, click on the cart to complete registration')
-	} else {
-		cart.push(data)
-		alert('Course added successfully')
+		let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []
+		let data = { id: this.state.data.id, name: this.state.data.name, price: this.state.data.price }
+		let courseIds = cart.map(course => course.id)
+		if (courseIds.includes(data.id)) {
+			alert('course already selected, click on the cart to complete registration')
+		} else {
+			cart.push(data)
+			alert('Course added successfully')
+		}
+		localStorage.setItem('cart', JSON.stringify(cart))
 	}
-	localStorage.setItem('cart', JSON.stringify(cart))
-}
 
 	renderEditButton = () => {
 		let courseId = this.state.data.id
 		// MAKE THIS IF STATEMENT CHECK THAT USER IS ADMIN (NOT TEACHER OR STUDENT)
 		if (this.props.location.pathname === `/admin/course/${courseId}`) {
-			return(
+			return (
 				<Col className="text-right" xs="4">
 					<Button
 						color="primary"
@@ -110,25 +115,25 @@ class CourseInfo extends React.Component {
 				</Col>
 			)
 		} else {
-				return (
-					<Col className="text-right" xs="4">
-						<Button
-							color="primary"
-							data-toggle="modal"
-							data-target="#exampleModal"
-							size="sm"
-							disabled={this.state.data.hasRegistered}
-							onClick={this.addToCart}>Add to cart
-						</Button>
-					</Col>
+			return (
+				<Col className="text-right" xs="4">
+					<Button
+						color="primary"
+						data-toggle="modal"
+						data-target="#exampleModal"
+						size="sm"
+						disabled={this.state.data.hasRegistered}
+						onClick={this.addToCart}>Add to cart
+					</Button>
+				</Col>
 
-				)
+			)
 		}
 	}
 	renderDeleteButton = () => {
 		let courseId = this.state.data.id
 		if (this.props.location.pathname === `/admin/course/${courseId}`) {
-			return(
+			return (
 				<Row className="align-items-center">
 					<Col className="text-center" xs="1">
 						<Button
@@ -150,33 +155,33 @@ class CourseInfo extends React.Component {
 		} else {
 			data[stateRef] = e.target.value
 		}
-		this.setState({data})
+		this.setState({ data })
 	}
 	updateDays = (e, i, day) => {
 		if (e.target.checked) {
 			let state = this.state
 			state.data.schedule.days.push(day)
 			const sortDays = (a, b) => {
-			  a = this.state.days.indexOf(a);
-			  b = this.state.days.indexOf(b);
-			  return a < b ? 0 : 1;
+				a = this.state.days.indexOf(a);
+				b = this.state.days.indexOf(b);
+				return a < b ? 0 : 1;
 			}
 			state.data.schedule.days.sort(sortDays)
-			this.setState({state})
+			this.setState({ state })
 		} else if (!e.target.checked) {
 			let index = this.state.data.schedule.days.indexOf(day)
 			let state = this.state
 			state.data.schedule.days.splice(index, 1)
-			this.setState({state})
+			this.setState({ state })
 		}
 	}
 	submitUpdates = (e) => {
 		e.preventDefault()
 		axios.patch(`${process.env.REACT_APP_API_PORT}/courses/${this.props.match.params.id}`, this.state.data)
 			.then(data => {
-					this.setState({
-						editable: !this.state.editable
-					})
+				this.setState({
+					editable: !this.state.editable
+				})
 			}).catch(err => {
 				console.log("Error")
 			})
@@ -213,7 +218,7 @@ class CourseInfo extends React.Component {
 		teachersArr.splice(index, 1)
 		let data = this.state.data
 		data.teachers = teachersArr
-		this.setState({data})
+		this.setState({ data })
 	}
 	toggleTeacherDropdown = (e) => {
 		e.preventDefault()
@@ -236,86 +241,86 @@ class CourseInfo extends React.Component {
 		this.setState(data)
 		console.log('teacher id', teacher.id)
 	}
-  render() {
-    return (
-      <>
-        <DetailsHeader title={this.state.data.name} subtitle={this.state.data.subject} info={this.state.data.description} />
+	render() {
+		return (
+			<>
+				<DetailsHeader title={this.state.data.name} subtitle={this.state.data.subject} info={this.state.data.description} />
 				{/* Page content */}
 				{
 					!this.state.editable ? (
 						<Container className="mt--7" fluid>
-		          <Row>
-		            <Col className="order-xl-1 mb-6" xl="8">
-		              <Card className="bg-secondary shadow">
-		                <CardHeader className="bg-white border-0">
-		                  <Row className="align-items-center">
-		                    <Col xs="8">
-		                      <h3 className="mb-0">COURSE INFORMATION</h3>
-		                    </Col>
+							<Row>
+								<Col className="order-xl-1 mb-6" xl="8">
+									<Card className="bg-secondary shadow">
+										<CardHeader className="bg-white border-0">
+											<Row className="align-items-center">
+												<Col xs="8">
+													<h3 className="mb-0">COURSE INFORMATION</h3>
+												</Col>
 												{
 													this.renderEditButton()
 												}
-		                  </Row>
-		                </CardHeader>
-		                <CardBody>
-		                  <div className="pl-lg-4">
+											</Row>
+										</CardHeader>
+										<CardBody>
+											<div className="pl-lg-4">
 												<h6 className="heading-small text-muted mb-4">General information</h6>
-		                    <Row className="mb-3">
-		                      <Col lg="6">
+												<Row className="mb-3">
+													<Col lg="6">
 														{/* Name */}
-		                        <div className="pl-lg-4">
+														<div className="pl-lg-4">
 															<small className="form-control-label">Course name</small>
 															<h1>{this.state.data.name}</h1>
-		                        </div>
-		                      </Col>
-		                      <Col lg="6">
+														</div>
+													</Col>
+													<Col lg="6">
 														{/* Subject */}
 														<div className="pl-lg-4">
 															<small className="form-control-label">Subject</small>
 															<h1>{this.state.data.subject}</h1>
-		                        </div>
-		                      </Col>
-		                    </Row>
+														</div>
+													</Col>
+												</Row>
 												{/* Description */}
 												<Row>
 													<Col lg="6">
 														<div className="pl-lg-4">
 															<small className="form-control-label">Description</small>
 															<h2>{this.state.data.description}</h2>
-					                  </div>
+														</div>
 													</Col>
 												</Row>
-		                  </div>
+											</div>
 											<hr className="my-4" />
-		                  {/* Schedule */}
+											{/* Schedule */}
 											<div className="pl-lg-4">
-			                  <h6 className="heading-small text-muted mb-4">Schedule</h6>
+												<h6 className="heading-small text-muted mb-4">Schedule</h6>
 												<Row>
 													<Col>
 														<div className="pl-lg-4">
 															<small className="form-control-label">Hours</small>
 															<h2>{this.state.data.schedule.startTime} - {this.state.data.schedule.endTime}</h2>
-					                  </div>
+														</div>
 													</Col>
 													<Col>
 														<div className="pl-lg-4">
 															<small className="form-control-label">Days of week</small>
-																{
-																	this.state.data.schedule.days.map((day, key) => <h2 key={key}>{day}</h2>)
-																}
-					                  </div>
+															{
+																this.state.data.schedule.days.map((day, key) => <h2 key={key}>{day}</h2>)
+															}
+														</div>
 													</Col>
 													<Col>
 														<div className="pl-lg-4">
 															<small className="form-control-label">Dates</small>
 															<h2>{this.state.data.schedule.startDate} - {this.state.data.schedule.endDate}</h2>
-					                  </div>
+														</div>
 													</Col>
 												</Row>
 											</div>
 
 											<hr className="my-4" />
-		                  {/* Registration */}
+											{/* Registration */}
 											<div className="pl-lg-4">
 												<h6 className="heading-small text-muted mb-4">Registration</h6>
 												<Row>
@@ -328,16 +333,16 @@ class CourseInfo extends React.Component {
 													<Col lg="4">
 														<div className="pl-lg-4">
 															<small className="form-control-label">Currently registered</small>
-															<h2>{this.state.data.students.length}</h2>
+															<h2>{this.state.data.registration.registered}</h2>
 														</div>
 													</Col>
 													<Col lg="4">
 														<div className="pl-lg-4">
 															<small className="form-control-label">Availability</small>
-															<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+															<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 															<Progress
 																max={this.state.data.registration.limit}
-																value={this.state.data.students.length}
+																value={this.state.data.registration.registered}
 																barClassName="bg-danger"
 															/>
 														</div>
@@ -367,17 +372,18 @@ class CourseInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.data.teachers.map((teacher, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
-																	<Link to={`../teacher/${teacher.id}`}>
-																		<span className="avatar avatar-sm" >
+															return (
+																<div className="avatar-group" key={key}>
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../teacher/${teacher.id}`}>
+																		<div className="avatar avatar-sm" >
 																			<img
+																				style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{teacher.first_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{teacher.first_name}</p>
 																	</Link>
 																</div>
 															)
@@ -394,17 +400,17 @@ class CourseInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.data.students.map((student, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
-																	<Link to={`../student/${student.id}`}>
-																		<span className="avatar avatar-sm" >
-																			<img
+															return (
+																<div className=" avatar-group" key={key} >
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../student/${student.id}`}>
+																		<div>
+																			<img style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{student.first_name} {student.last_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{student.first_name} {student.last_name}</p>
 																	</Link>
 																</div>
 															)
@@ -412,7 +418,7 @@ class CourseInfo extends React.Component {
 													}
 												</div>
 											</div>
-		                </CardBody>
+										</CardBody>
 										<CardFooter>
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
@@ -424,153 +430,190 @@ class CourseInfo extends React.Component {
 												this.renderDeleteButton()
 											}
 										</CardFooter>
-		              </Card>
-		            </Col>
+									</Card>
+								</Col>
 								<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-									{
-										this.state.data.teachers.map(teacher => {
-											return <TeacherCard teacher={teacher} key={teacher.id} />
-										})
-									}
-		            </Col>
-		          </Row>
-		        </Container>
+									<div>
+										{
+											this.state.data.teachers.map(teacher => {
+												return <TeacherCard teacher={teacher} key={teacher.id} />
+											})
+										} {
+											window.location.pathname.includes('student') &&
+											<div>
+												<Card className="bg-secondary shadow">
+													<CardHeader className="bg-white border-0">
+														<span>Grades</span>
+													</CardHeader>
+													<CardBody>
+														<Row className="mb-3">
+															<Col lg="6">
+																{/* Name */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Test name</small>
+																	<h1>{this.state.data.name}</h1>
+																</div>
+															</Col>
+															<Col lg="6">
+																{/* Subject */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Grade</small>
+																	<h1>{this.state.data.grades.grades}</h1>
+																</div>
+															</Col>
+														</Row>
+													</CardBody>
+													<CardFooter>
+
+													</CardFooter>
+												</Card>
+											</div>
+
+										}
+
+									</div>
+
+
+								</Col>
+
+							</Row>
+						</Container>
 					) : (
 						<Container className="mt--7" fluid>
-		          <Row>
-		            <Col className="order-xl-1 mb-6" xl="8">
-		              <Card className="bg-secondary shadow">
-		                <CardHeader className="bg-white border-0">
-		                  <Row className="align-items-center">
-		                    <Col xs="8">
-		                      <h3 className="mb-0">COURSE INFORMATION</h3>
-		                    </Col>
+							<Row>
+								<Col className="order-xl-1 mb-6" xl="8">
+									<Card className="bg-secondary shadow">
+										<CardHeader className="bg-white border-0">
+											<Row className="align-items-center">
+												<Col xs="8">
+													<h3 className="mb-0">COURSE INFORMATION</h3>
+												</Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
-		                  </Row>
-		                </CardHeader>
-		                <CardBody>
-		                  <Form id="course-edit" onSubmit={this.submitForm}>
-		                    <h6 className="heading-small text-muted mb-4">
-		                      General information
-		                    </h6>
-		                    <div className="pl-lg-4">
-		                      <Row>
-		                        <Col lg="6">
-		                          <FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-course-name"
-		                            >
-		                              Course name
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
-		                              defaultValue={this.state.data.name}
-		                              id="input-course-name"
-		                              placeholder={this.state.data.name}
-		                              type="text"
+													>
+														Save changes
+													</Button>
+												</Col>
+											</Row>
+										</CardHeader>
+										<CardBody>
+											<Form id="course-edit" onSubmit={this.submitForm}>
+												<h6 className="heading-small text-muted mb-4">
+													General information
+												</h6>
+												<div className="pl-lg-4">
+													<Row>
+														<Col lg="6">
+															<FormGroup>
+																<label
+																	className="form-control-label"
+																	htmlFor="input-course-name"
+																>
+																	Course name
+																</label>
+																<Input
+																	className="form-control-alternative"
+																	defaultValue={this.state.data.name}
+																	id="input-course-name"
+																	placeholder={this.state.data.name}
+																	type="text"
 																	onChange={e => this.sendInputToState(e, 'name')}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="6">
-		                          <FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-subject"
-		                            >
-		                              Subject
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
+																/>
+															</FormGroup>
+														</Col>
+														<Col lg="6">
+															<FormGroup>
+																<label
+																	className="form-control-label"
+																	htmlFor="input-subject"
+																>
+																	Subject
+																</label>
+																<Input
+																	className="form-control-alternative"
 																	defaultValue={this.state.data.subject}
-		                              id="input-subject"
-		                              placeholder={this.state.data.subject}
-		                              type="text"
+																	id="input-subject"
+																	placeholder={this.state.data.subject}
+																	type="text"
 																	onChange={(e) => this.sendInputToState(e, 'subject')}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                      </Row>
+																/>
+															</FormGroup>
+														</Col>
+													</Row>
 													<Row>
 														<Col>
 															<FormGroup>
 																<label
-		                              className="form-control-label"
-		                              htmlFor="input-description"
-		                            >
+																	className="form-control-label"
+																	htmlFor="input-description"
+																>
 																	Description
 																</label>
-				                        <Input
-				                          className="form-control-alternative"
+																<Input
+																	className="form-control-alternative"
 																	defaultValue={this.state.data.description}
 																	id="input-description"
-				                          rows="4"
-				                          type="textarea"
+																	rows="4"
+																	type="textarea"
 																	onChange={(e) => this.sendInputToState(e, 'description')}
-				                        />
-				                      </FormGroup>
+																/>
+															</FormGroup>
 														</Col>
 													</Row>
-		                    </div>
+												</div>
 
 												<Schedule data={this.state.data} sendInputToState={this.sendInputToState} updateDays={this.updateDays} days={this.state.days} />
 
 												<hr className="my-4" />
 												<h6 className="heading-small text-muted mb-4">
-		                      Registration
-		                    </h6>
-		                    <div className="pl-lg-4">
+													Registration
+												</h6>
+												<div className="pl-lg-4">
 													<Row>
 														<Col lg="4">
 															<FormGroup>
 																<label
-		                              className="form-control-label"
-		                              htmlFor="input-reg-limit"
-		                            >
-		                              Registration limit
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
+																	className="form-control-label"
+																	htmlFor="input-reg-limit"
+																>
+																	Registration limit
+																</label>
+																<Input
+																	className="form-control-alternative"
 																	defaultValue={this.state.data.registration.limit}
-		                              id="input-reg-limit"
-		                              placeholder="# of students"
-		                              type="number"
+																	id="input-reg-limit"
+																	placeholder="# of students"
+																	type="number"
 																	onChange={(e) => this.sendInputToState(e, 'limit', 'registration')}
-		                            />
+																/>
 															</FormGroup>
 														</Col>
 														<Col lg="4">
 															<div className="pl-lg-4">
 																<small className="form-control-label">Currently registered</small>
-																<h2>{this.state.data.students.length}</h2>
+																<h2>{this.state.data.registration.registered}</h2>
 															</div>
 														</Col>
 														<Col lg="4">
 															<div className="pl-lg-4">
 																<small className="form-control-label">Availability</small>
-																<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+																<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 																<Progress
 																	max={this.state.data.registration.limit}
-																	value={this.state.data.students.length}
+																	value={this.state.data.registration.registered}
 																	barClassName="bg-danger"
 																/>
 															</div>
@@ -618,7 +661,7 @@ class CourseInfo extends React.Component {
 													<DropdownMenu>
 														{
 															this.state.allTeachers.map(teacher => {
-																return(
+																return (
 																	<DropdownItem
 																		onClick={(e) => this.selectTeacher(e, teacher)}
 																		key={teacher.id}
@@ -634,17 +677,17 @@ class CourseInfo extends React.Component {
 												<div className="pl-lg-4">
 													{
 														this.state.data.teachers.map(teacher => {
-															return(
-																<div className="avatar-group" key={teacher.id} style={{display: "inline-block", padding: '40px'}}>
-																<Button
-																	color="danger"
-																	href="#pablo"
-																	onClick={e => this.removeTeacher(e, teacher.id)}
-																	size="sm"
-																>
-																	remove
-																</Button>
-																	<Link to={`../teacher/${teacher.id}`}>
+															return (
+																<div className="avatar-group" key={teacher.id} style={{ display: "inline-block", padding: '40px' }}>
+																	<Button
+																		color="danger"
+																		href="#pablo"
+																		onClick={e => this.removeTeacher(e, teacher.id)}
+																		size="sm"
+																	>
+																		remove
+																	</Button>
+																	<Link to={`../teacher-student/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."
@@ -660,15 +703,15 @@ class CourseInfo extends React.Component {
 													}
 												</div>
 												<hr className="my-4" />
-		                    {/* Students */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Students
-		                    </h6>
-		                    <div className="pl-lg-4">
-												{
+												{/* Students */}
+												<h6 className="heading-small text-muted mb-4">
+													Students
+												</h6>
+												<div className="pl-lg-4">
+													{
 														this.state.data.students.map((student, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../student/${student.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
@@ -683,54 +726,54 @@ class CourseInfo extends React.Component {
 															)
 														})
 													}
-		                    </div>
-		                  </Form>
-		                </CardBody>
+												</div>
+											</Form>
+										</CardBody>
 										<CardFooter>
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 											{
 												this.renderDeleteButton()
 											}
 										</CardFooter>
-		              </Card>
-		            </Col>
+									</Card>
+								</Col>
 								<Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
 									{
 										this.state.data.teachers.map((teacher, key) => {
 											return <TeacherCard teacher={teacher} key={key} />
 										})
 									}
-		            </Col>
-		          </Row>
-		        </Container>
+								</Col>
+							</Row>
+						</Container>
 					)
 				}
 
 
-      </>
-    );
-  }
+			</>
+		);
+	}
 }
 
 export default CourseInfo;

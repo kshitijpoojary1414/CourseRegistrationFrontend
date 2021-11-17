@@ -84,14 +84,14 @@ var routes = [
 		layout: "/admin",
 		invisible: false
 	},
-	{
-		path: "/subjects",
-		name: "Subjects",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/admin",
-		invisible: false
-	},
+	// {
+	// 	path: "/subjects",
+	// 	name: "Subjects",
+	// 	icon: "ni ni-bullet-list-67 text-red",
+	// 	component: Tables,
+	// 	layout: "/admin",
+	// 	invisible: false
+	// },
 	{
 		path: "/teachers",
 		name: "Teachers",
@@ -108,14 +108,14 @@ var routes = [
 		layout: "/admin",
 		invisible: false
 	},
-	{
-		path: "/settings",
-		name: "Settings",
-		icon: "ni ni-single-02 text-yellow",
-		component: AdminSettings,
-		layout: "/admin",
-		invisible: false
-	},
+	// {
+	// 	path: "/settings",
+	// 	name: "Settings",
+	// 	icon: "ni ni-single-02 text-yellow",
+	// 	component: AdminSettings,
+	// 	layout: "/admin",
+	// 	invisible: false
+	// },
 	{
 		path: "/course/:id",
 		name: "Course Info",
@@ -167,7 +167,7 @@ var routes = [
 		invisible: true
 	},
 	{
-		path: "/student/:id",
+		path: "/student-teacher/:id",
 		name: "Student Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: StudentInfo,
@@ -184,11 +184,11 @@ var routes = [
 		invisible: false
 	},
 	{
-		path: "/subjects",
-		name: "Departments",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/student",
+    path: "/majors",
+    name: "Majors",
+    icon: "ni ni-badge text-red",
+    component: Tables,
+    layout: "/student",
 		invisible: false
   },
   {
@@ -200,11 +200,11 @@ var routes = [
         invisible: false
   },
 	{
-		path: "/teachers",
-		name: "Teachers",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/student",
+    path: "/teachers",
+    name: "Teachers",
+    icon: "ni ni-badge text-red",
+    component: Tables,
+    layout: "/student",
 		invisible: false
 	},
 	{
@@ -224,15 +224,15 @@ var routes = [
 		invisible: true
 	},
 	{
-		path: "/subject/:id",
-		name: "Subject Info",
+		path: "/major/:id",
+		name: "Major Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: SubjectInfo,
 		layout: "/student",
 		invisible: true
 	},
 	{
-		path: "/teacher/:id",
+		path: "/teacher-student/:id",
 		name: "Teacher Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: TeacherInfo,

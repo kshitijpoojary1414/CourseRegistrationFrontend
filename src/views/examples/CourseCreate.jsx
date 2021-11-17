@@ -48,9 +48,15 @@ class CourseCreate extends React.Component {
 	state = {
 		editable: false,
 		dropdownOpen: false,
-		departmentDropdown: false,
-		department: {},
-		departments: [{}],
+		dropdownOpenForDept: false,
+		// for open/close
+		dropdownMajor: false,
+		departmentName: "",
+		majorName: "",
+		departments: [],
+		majors: [],
+		selectedDepartment: "",
+		selectedMajor: "",
 		allTeachers: [{}],
 		days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 		data: {
@@ -129,6 +135,9 @@ class CourseCreate extends React.Component {
 	// 			)
 	// 	}
 	// }
+	componentWillMount() {
+		this.fetchDepartments()
+	}
 	sendInputToState = (e, stateRef, stateObj) => {
 		let data = this.state.data
 		if (stateObj) {
@@ -173,7 +182,8 @@ class CourseCreate extends React.Component {
 			url: `/courses`,
 			data: {
 				...this.state.data,
-				department_id: this.state.department.id
+				department_id : this.state.selectedDepartment.id,
+				major_id: this.state.selectedMajor.id
 			}
 		})
 			.then(data => {
@@ -253,16 +263,195 @@ class CourseCreate extends React.Component {
 		})
 	}
 
-	removeDepartment = (e) => {
+	removeMajor = (e) => {
 		e.preventDefault()
 
 		this.setState({
 			...this.state,
-			department: {}
+			selectedMajor: {}
 		})
 	}
 
 
+	toggleDropDownforDept = (e) => {
+		e.preventDefault()
+		if (!this.state.dropdownOpenForDept) {
+			this.setState({
+				...this.state,
+				dropdownOpenForDept: !this.state.dropdownOpenForDept
+			})
+		}
+
+	}
+	toggleDropDownforMajor = (e) => {
+		e.preventDefault()
+		if (!this.state.dropdownMajor) {
+			this.setState({
+				...this.state,
+				dropdownMajor: !this.state.dropdownMajor
+			})
+		}
+
+	}
+	selectItem = (e) => {
+		console.log(e)
+	}
+
+	// fetchMajor = () => {
+	// 	client({
+	// 		method: 'get',
+	// 		url: '/majors'
+	// 	}).then(data => {
+	// 		this.setState({
+	// 			...this.state,
+	// 			majors : data.data,
+	// 			majorName: data.data[0].name,
+	// 			selectedMajor: data.data[0]
+	// 		})
+	// 		this.fetchCourses(data.data[0].id)
+	// 	}).catch( error => {
+	// 		alert("Some error occured. Please refresh the page")
+	// 	})
+	// }
+	fetchDepartments = () => {
+		client({
+			method: 'get',
+			url: '/departments'
+		}).then(data => {
+			this.setState({
+				...this.state,
+				departments: data.data,
+				departmentName: data.data[0].name,
+			})
+			this.fetchMajors(data.data[0].id)
+		}).catch(error => {
+			alert("Some error occured. Please refresh the page")
+		})
+	}
+
+	fetchCourses = (major_id) => {
+		client({
+			method: 'get',
+			url: '/courses',
+			params: {
+				major_id: major_id
+			}
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				coursesTableData: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
+	}
+	fetchMajors(department_id) {
+		client({
+			method: 'get',
+			url: '/majors/department',
+			params: {
+				department_id: department_id
+			}
+		}).then(res => {
+			const data = res.data;
+			console.log("OG", data)
+			this.setState({
+				...this.state,
+				majors: data,
+				majorName: data[0].major_code,
+			})
+			this.fetchCourses(data[0].id)
+		}).catch(err => {
+			console.log("Error", err)
+		})
+	}
+	selectDropdown = (e, department) => {
+
+		this.setState({
+			...this.state,
+			dropdownOpenForDept: false,
+			selectedDepartment: department,
+			departmentName: department.name
+		})
+
+		this.fetchMajors(department.id)
+	}
+
+	selectDropdownForMajor = (e, major) => {
+		console.log("Selected major", major)
+		this.setState({
+			...this.state,
+			dropdownMajor: false,
+			selectedMajor: major,
+			major: major.name,
+			majorName: major.major_code
+		})
+
+		this.fetchCourses(major.id)
+	}
+	renderDropDown = () => {
+		console.log(this.state)
+		return (
+			<div style={{display: "flex", justifyContent: "space-between"}}>
+				<div>
+				<span style ={{paddingLeft: "12px"}}> Department</span>
+				<div style ={{paddingLeft: "12px"}}>
+
+				{<Dropdown isOpen={this.state.dropdownOpenForDept} toggle={(e) => this.toggleDropDownforDept(e)}>
+					{/* <DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle> */}
+					<DropdownToggle caret>
+						{this.state.departmentName}
+					</DropdownToggle>
+					<DropdownMenu right>
+						{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+						{
+							this.state.departments.map(
+								department => {
+									return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
+								}
+							)
+						}
+
+					</DropdownMenu>
+				</Dropdown>
+				}
+				</div>
+
+				</div>
+
+				{/* New Drop Down for majors */}
+				<div>
+					<span style ={{paddingLeft: "12px"}}>Majors</span>
+					<div style ={{paddingLeft: "12px"}} >
+					{
+					<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
+						<DropdownToggle caret>
+							{this.state.majorName}
+						</DropdownToggle>
+						<DropdownMenu right>
+							{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+							{
+								this.state.majors.map(
+									major => {
+										return (<DropdownItem id={major.major_code} onClick={(e) => this.selectDropdownForMajor(e, major)}>{major.major_code}</DropdownItem>)
+									}
+								)
+							}
+
+						</DropdownMenu>
+					</Dropdown>
+				}
+					</div>
+
+				</div>
+
+			</div>
+		)
+	}
 
 	render() {
 		console.log(this.state)
@@ -394,16 +583,16 @@ class CourseCreate extends React.Component {
 												<Col lg="4">
 													<div className="pl-lg-4">
 														<small className="form-control-label">Currently registered</small>
-														<h2>{this.state.data.students.length}</h2>
+														<h2>{this.state.data.registration.registered}</h2>
 													</div>
 												</Col>
 												<Col lg="4">
 													<div className="pl-lg-4">
 														<small className="form-control-label">Availability</small>
-														<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+														<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 														<Progress
 															max={this.state.data.registration.limit}
-															value={this.state.data.students.length}
+															value={this.state.data.registration.registered}
 															barClassName="bg-danger"
 														/>
 													</div>
@@ -504,54 +693,35 @@ class CourseCreate extends React.Component {
 
 
 
-										<Dropdown isOpen={this.state.departmentDropdown} toggle={e => this.toggleDepartmentsDropdown(e)}>
-											<DropdownToggle caret>
-												Add department
-											</DropdownToggle>
-											<DropdownMenu>
-												{
-													this.state.departments.map(department => {
-														return (
-															<DropdownItem
-																onClick={(e) => this.selectDepartment(e, department)}
-																key={department.id}
-															>
-																{department.name}
-															</DropdownItem>
-														)
-													})
-												}
-											</DropdownMenu>
-										</Dropdown>
-
+	{this.renderDropDown()}
 
 
 										<div className="pl-lg-4">
 											{
-												<div className="avatar-group" key={this.state.department.id} style={{ display: "inline-block", padding: '40px' }}>
-													{
-														this.state.department.name && <div>
-															<Button
-																color="danger"
-																href="#pablo"
-																onClick={e => this.removeDepartment(e)}
-																size="sm"
-															>
-																remove
-															</Button>
-															<Link to={`../departments/${this.state.department.id}`}>
-																{/* <span className="avatar avatar-sm" >
+												<div className="avatar-group" key={this.state.selectedMajor.id} style={{display: "inline-block", padding: '40px'}}>
+												{
+													this.state.selectedMajor.major_name && <div>
+													<Button
+								color="danger"
+								href="#pablo"
+								onClick={e => this.removeMajor(e)}
+								size="sm"
+							>
+								remove
+							</Button>
+								<Link to={`../majors/${this.state.selectedMajor.id}`}>
+									{/* <span className="avatar avatar-sm" >
 										<img
 											alt="..."
 											className="rounded-circle"
 											src={this.state.department.avatar}
 										/>
 									</span> */}
-																<span>{this.state.department.name}</span>
-															</Link>
-														</div>
-													}
-
+									<span>{this.state.selectedMajor.major_name}</span>
+								</Link>
+							</div>
+												}
+							
 												</div>
 											}
 										</div>
