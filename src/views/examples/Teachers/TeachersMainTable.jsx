@@ -453,7 +453,7 @@ class TeacherTables extends React.Component {
     fetchTeachersForMajor = (major_id) => {
         client({
             method: 'get',
-            url: '/coursesByMajor',
+            url: '/teacherByMajor',
             params: {
                 major_id: major_id
             }

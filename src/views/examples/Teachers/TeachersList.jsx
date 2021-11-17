@@ -125,18 +125,40 @@ class TeachersTable extends React.Component {
                                     </Media>
                                 </td>
                                 <td>
-                                    {teacher.name}
+                                <td>
+									{
+										teacher.courses?.map((course, key) => {
+											return (
+												<div key={key}>
+													<Link to={`course/${course.id}`}>
+														{course.name}
+													</Link>
+												</div>
+											)
+										})
+									}
+								</td>
                                 </td>
                                 <td>
-                                    {teacher.subject}
+                                {
+										teacher.courses?.map((course, key) => {
+											return (
+												<div key={key}>
+													<Link to={`course/${course.id}`}>
+														{course.subject}
+													</Link>
+												</div>
+											)
+										})
+									}
                                 </td>
                                 <td>
-                                    <CircleProgressBar percent={Math.round(teacher.registered / teacher.course_limit * 100)} />
+                                    <CircleProgressBar percent={Math.round((teacher.courses[0].registered / teacher.courses[0].course_limit) * 100)} />
                                 </td>
                                 <td>
                                     <Badge color="" className="badge-dot mr-4">
 
-                                        {
+                                        {/* {
                                             teacher.days.map((day, i) => {
                                                 return (
                                                     <span style={{ display: "block" }} className="pb-2 text-left">
@@ -144,7 +166,7 @@ class TeachersTable extends React.Component {
                                                     </span>
                                                 )
                                             })
-                                        }
+                                        } */}
                                     </Badge>
                                 </td>
                             </tr>
