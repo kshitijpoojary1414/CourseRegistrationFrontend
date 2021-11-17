@@ -17,6 +17,7 @@
 */
 import React from "react";
 import { Link } from "react-router-dom";
+import userProfile from "../../assets/img/theme/userProfile.svg";
 // reactstrap components
 import {
   Form,
@@ -111,7 +112,9 @@ class UserNavbar extends React.Component {
                     <span className="avatar avatar-sm rounded-circle">
                       <img
                         alt="..."
-                        src={this.props.user.avatar}
+                        src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                        // src={userProfile}
+                        style={{ width: "45px" }}
                       />
                     </span>
                     <Media className="ml-2 d-none d-lg-block">

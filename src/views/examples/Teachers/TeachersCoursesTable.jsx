@@ -32,7 +32,8 @@ class CoursesTable extends React.Component {
                 teachers: [],
                 hasRegistered: false
             }
-        ]
+        ],
+        courses: null
     }
     orderList = () => {
         let orderedList = this.state.data.sort((a, b) => {
@@ -43,7 +44,7 @@ class CoursesTable extends React.Component {
         return orderedList
     }
     componentDidMount() {
-        console.log('Component has mounted - courstTable ', this.props);
+
         // axios.get(`${process.env.REACT_APP_API_PORT}/courses`)
         client({
             method: 'get',
@@ -57,10 +58,18 @@ class CoursesTable extends React.Component {
         })
     }
 
+    fetchCoursesByMajor = (major_id) => {
+
+    }
+    componentDidUpdate = () => {
+
+        console.log('Props internal - ', this.props);
+    }
+
     renderRegistration = (course) => {
         // console.log('Course in renderreg is ', course);
         // console.log('reg % is ', Math.round(course.registration?.registered / course.registration.limit * 100));
-        if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/teacher/courses") {
+        if (this.props.location.pathname === "/teacher/courses") {
             return (
                 <td>
                     <Link to={`course/${course.id}`}>
@@ -83,6 +92,71 @@ class CoursesTable extends React.Component {
         return (
             <>
                 {
+                    this.props.courses?.map((course, key) =>
+                        <tr key={key}>
+                            <td>
+                                <Link to={`course/${course.id}`}>
+                                    {course.name}
+                                </Link>
+                            </td>
+
+                            <td>
+                                <Link to={`course/${course.id}`}>
+                                    {course.subject}
+                                </Link>
+                            </td>
+
+                            {this.props.location.pathname !== '/teacher/courses' &&
+                                <td>
+                                    {
+                                        course.teachers.map((teacher, key) => {
+                                            return (
+                                                <div className="avatar-group" key={key}>
+                                                    <Link to={`teacher/${teacher.id}`}>
+                                                        <span className="avatar avatar-sm" >
+                                                            <img
+                                                                alt="..."
+                                                                className="rounded-circle"
+                                                                src={require("../../../assets/img/theme/team-4-800x800.jpg")}
+                                                            />
+                                                        </span>
+                                                        <span>{teacher.first_name} {teacher.last_name}</span>
+                                                    </Link>
+                                                </div>
+                                            )
+                                        })
+                                    }
+
+                                </td>
+                            }
+
+                            {
+                                this.renderRegistration(course)
+                            }
+
+                            <td>
+                                <Link to={`course/${course.id}`}>
+                                    <Badge color="" className="badge-dot mr-4">
+
+                                        {
+                                            course.schedule.days.map((day, i) => {
+                                                return (
+                                                    <span style={{ display: "block" }} className="pb-2 text-left">
+                                                        {day}s: {course.schedule.startTime} - {course.schedule.endTime}
+                                                    </span>
+                                                )
+                                            })
+                                        }
+                                    </Badge>
+                                </Link>
+                            </td>
+
+
+
+                        </tr>
+                    )
+                }
+                {/* {
                     this.orderList().map((course, key) => {
                         return (
                             <tr key={key}>
@@ -148,7 +222,7 @@ class CoursesTable extends React.Component {
                             </tr>
                         )
                     })
-                }
+                } */}
             </>
         );
     }

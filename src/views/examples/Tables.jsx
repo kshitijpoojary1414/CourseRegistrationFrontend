@@ -74,6 +74,21 @@ class Tables extends React.Component {
 				teachers: [],
 				hasRegistered: false
 			}
+		],
+		teachers: [
+			{
+				students: [{}],
+				courses: [
+					{
+						schedule: [
+							{
+								days: [],
+							}
+						],
+						registration: {},
+					}
+				]
+			}
 		]
 	}
 	componentWillMount() {
@@ -87,16 +102,16 @@ class Tables extends React.Component {
 	makeTableHeadProps = () => {
 		if (this.props.location.pathname === "/admin/courses") {
 			return ["Course", "Subject", "Teachers", "Registration", "Schedule", "Price", "Department"]
-		} else if (this.props.location.pathname === "/admin/majors") {
-			return ["Major", "Code", "Advisor", "No of units"]
+		} else if (this.props.location.pathname === "/admin/subjects") {
+			return ["Subject", "Course", "Teachers", "Registration", "Schedule", "Price"]
 		} else if (this.props.location.pathname === "/admin/teachers") {
 			return ["Teacher", "Courses", "Subject", "Students", "Schedule"]
 		} else if (this.props.location.pathname === "/admin/students") {
 			return ["Student", "Courses", "Teachers", "Schedule"]
 		} else if (this.props.location.pathname === "/student/courses") {
-			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Major", "Register"]
-		} else if (this.props.location.pathname === "/student/majors") {
-			return ["Major", "Code", "Advisor", "No of units"]
+			return ["Course", "Subject", "Teachers", "Schedule", "Price", "Department", "Register"]
+		} else if (this.props.location.pathname === "/student/subjects") {
+			return ["Subject", "Course", "Teachers", "Schedule", "Price", "Register"]
 		} else if (this.props.location.pathname === "/student/majors") {
 			return ["Major", "Number of Units", "Grad advisor", "Department"]
 		} else if (this.props.location.pathname === "/student/teachers") {
@@ -106,8 +121,8 @@ class Tables extends React.Component {
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
 			return <CoursesTable courses={this.state.coursesTableData} department_id={this.state.selectedDepartment.id} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/majors" || this.props.location.pathname === "/student/majors") {
-			return <SubjectsTable courses={this.state.majors} {...this.props} />
+		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/majors") {
+			return <SubjectsTable majors={this.state.majors} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
@@ -156,12 +171,14 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
 			})
-		} else {
-			this.setState({
-				...this.state,
-				dropdownOpen: false
-			})
-		}
+		} 
+
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownOpen: false
+		// 	})
+		// }
 	}
 	toggleDropDownforMajor = (e) => {
 		e.preventDefault()
@@ -170,13 +187,14 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
 			})
-		} else {
-			this.setState({
-				...this.state,
-				dropdownMajor: false
-			})
-		}
-
+		} 
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownMajor: false
+		// 	})
+		// }
+		console.log('teachers infof', this.state);
 	}
 	selectItem = (e) => {
 		console.log(e)
@@ -233,6 +251,25 @@ class Tables extends React.Component {
 			console.log("Error")
 		})
 	}
+
+	fetchTeachers = (major_id) => {
+		client({
+			method: 'get',
+			url: '/teacherByMajor',
+			params: {
+				major_id: major_id
+			}
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				teachers: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
+	}
 	fetchMajors(department_id) {
 		client({
 			method: 'get',
@@ -250,12 +287,14 @@ class Tables extends React.Component {
 				selectedMajor: data[0],
 			})
 			this.fetchCourses(data[0].id)
+		this.fetchTeachers(data[0].id)
+
 		}).catch(err => {
 			console.log("Error", err)
 		})
 	}
 	selectDropdown = (e, department) => {
-
+		console.log('Selected DropDown', this.state)
 		this.setState({
 			...this.state,
 			dropdownOpen: false,
@@ -267,7 +306,7 @@ class Tables extends React.Component {
 	}
 
 	selectDropdownForMajor = (e, major) => {
-		console.log("Selected major", major)
+		console.log("Selected major", major.major_code)
 		this.setState({
 			...this.state,
 			dropdownMajor: false,
@@ -277,97 +316,29 @@ class Tables extends React.Component {
 		})
 
 		this.fetchCourses(major.id)
+		this.fetchTeachers(major.id)
 	}
 	renderDropDown = () => {
 		return (
-			<div style={{display: "flex", justifyContent: "space-between"}}>
-				<div>
-				<span style ={{paddingLeft: "12px"}}> Department</span>
-				<div style ={{paddingLeft: "12px"}}>
-
-				{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
-					{/* <DropdownToggle caret>
-													{this.state.majorName}
-												</DropdownToggle> */}
-					<DropdownToggle caret>
-						{this.state.departmentName}
-					</DropdownToggle>
-					<DropdownMenu right>
-						{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-						{
-							this.state.departments.map(
-								department => {
-									return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
-								}
-							)
-						}
-
-					</DropdownMenu>
-				</Dropdown>
-				}
-				</div>
-
-				</div>
-
-				{/* New Drop Down for majors */}
-				<div>
-					<span style ={{paddingLeft: "12px"}}>Majors</span>
-					<div style ={{paddingLeft: "12px"}} >
+			<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+				<DropdownToggle caret>
+					{this.state.departmentName}
+				</DropdownToggle>
+				<DropdownMenu right>
+					{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
 					{
-					<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
-						<DropdownToggle caret>
-							{this.state.majorName}
-						</DropdownToggle>
-						<DropdownMenu right>
-							{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-							{
-								this.state.majors.map(
-									major => {
-										return (<DropdownItem id={major.major_code} onClick={(e) => this.selectDropdownForMajor(e, major)}>{major.major_code}</DropdownItem>)
-									}
-								)
+						this.state.departments.map(
+							department => {
+								return (<DropdownItem id={department.name} ><div onClick={(e) => this.selectDropdown(e, department)}> {department.name}</div> </DropdownItem>)
 							}
+						)
+					}
 
-						</DropdownMenu>
-					</Dropdown>
-				}
-					</div>
-
-				</div>
-
-			</div>
-		)
-	}
-
-	renderDepartmentDropdown = () => {
-		return (
-			<div>
-				{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
-					{/* <DropdownToggle caret>
-													{this.state.majorName}
-												</DropdownToggle> */}
-					<DropdownToggle caret>
-						{this.state.departmentName}
-					</DropdownToggle>
-					<DropdownMenu right>
-						{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
-						{
-							this.state.departments.map(
-								department => {
-									return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
-								}
-							)
-						}
-
-					</DropdownMenu>
-				</Dropdown>
-				}
-
-			</div>
+				</DropdownMenu>
+			</Dropdown>
 		)
 	}
 	render() {
-		console.log("window", window.location)
 		return (
 			<>{console.log("COURSES", this.props.courses)}
 				<Header />
@@ -386,7 +357,46 @@ class Tables extends React.Component {
 											this.renderAddCourse()
 										}
 										<div>
-											{!window.location.pathname.includes('majors') ? this.renderDropDown() : this.renderDepartmentDropdown()}
+											{/* {this.renderDropDown()} */}
+											{<Dropdown isOpen={this.state.dropdownOpen} toggle={(e) => this.toggleDropDownforDept(e)}>
+												{/* <DropdownToggle caret>
+													{this.state.majorName}
+												</DropdownToggle> */}
+												<DropdownToggle caret>
+													{this.state.departmentName}
+												</DropdownToggle>
+												<DropdownMenu right>
+													{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+													{
+														this.state.departments.map(
+															department => {
+																return (<DropdownItem id={department.name} onClick={(e) => this.selectDropdown(e, department)}>{department.name}</DropdownItem>)
+															}
+														)
+													}
+
+												</DropdownMenu>
+											</Dropdown>
+											}
+											{/* New Drop Down for majors */}
+											{ !window.location.pathname.includes('majors') &&
+												<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
+													<DropdownToggle caret>
+														{this.state.majorName}
+													</DropdownToggle>
+													<DropdownMenu right>
+														{/* <DropdownItem header onClick={ event => this.selectItem(event)} >Header</DropdownItem> */}
+														{
+															this.state.majors.map(
+																major => {
+																	return (<DropdownItem id={major.major_code} onClick={(e) => this.selectDropdownForMajor(e, major)}>{major.major_code}</DropdownItem>)
+																}
+															)
+														}
+
+													</DropdownMenu>
+												</Dropdown>
+											}
 										</div>
 									</div>
 

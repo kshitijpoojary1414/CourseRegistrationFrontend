@@ -58,8 +58,13 @@ class CourseInfo extends React.Component {
 			students: [{}],
 			teachers: [{}],
 			registration: {},
-			hasRegistered: false
-		}
+			hasRegistered: false,
+			grades : {
+				grades: "",
+				comments : ""
+			}
+		},
+
 	}
 	componentDidMount() {
 		// axios.get(`${process.env.REACT_APP_API_PORT}/courses/${this.props.match.params.id}`)
@@ -328,16 +333,16 @@ class CourseInfo extends React.Component {
 													<Col lg="4">
 														<div className="pl-lg-4">
 															<small className="form-control-label">Currently registered</small>
-															<h2>{this.state.data.students.length}</h2>
+															<h2>{this.state.data.registration.registered}</h2>
 														</div>
 													</Col>
 													<Col lg="4">
 														<div className="pl-lg-4">
 															<small className="form-control-label">Availability</small>
-															<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+															<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 															<Progress
 																max={this.state.data.registration.limit}
-																value={this.state.data.students.length}
+																value={this.state.data.registration.registered}
 																barClassName="bg-danger"
 															/>
 														</div>
@@ -368,16 +373,17 @@ class CourseInfo extends React.Component {
 													{
 														this.state.data.teachers.map((teacher, key) => {
 															return (
-																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
-																	<Link to={`../teacher/${teacher.id}`}>
-																		<span className="avatar avatar-sm" >
+																<div className="avatar-group" key={key}>
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../teacher/${teacher.id}`}>
+																		<div className="avatar avatar-sm" >
 																			<img
+																				style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{teacher.first_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{teacher.first_name}</p>
 																	</Link>
 																</div>
 															)
@@ -395,16 +401,16 @@ class CourseInfo extends React.Component {
 													{
 														this.state.data.students.map((student, key) => {
 															return (
-																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
-																	<Link to={`../student/${student.id}`}>
-																		<span className="avatar avatar-sm" >
-																			<img
+																<div className=" avatar-group" key={key} >
+																	<Link style={{ display: "flex", flexDirection: 'row', padding: '10px', alignItems: 'center' }} to={`../student/${student.id}`}>
+																		<div>
+																			<img style={{ width: '40px', marginRight: '5px' }}
 																				alt="..."
 																				className="rounded-circle"
 																				src={require("../../assets/img/theme/team-4-800x800.jpg")}
 																			/>
-																		</span>
-																		<span>{student.first_name} {student.last_name}</span>
+																		</div>
+																		<p style={{ margin: '0', marginLeft: '5px' }}>{student.first_name} {student.last_name}</p>
 																	</Link>
 																</div>
 															)
@@ -433,35 +439,35 @@ class CourseInfo extends React.Component {
 												return <TeacherCard teacher={teacher} key={teacher.id} />
 											})
 										} {
-											window.location.pathname.includes('student') && 	
+											window.location.pathname.includes('student') &&
 											<div>
-																							<Card className="bg-secondary shadow">
-												<CardHeader className="bg-white border-0">
-													<span>Grades</span>
-												</CardHeader>
-												<CardBody>
-													<Row className="mb-3">
-														<Col lg="6">
-															{/* Name */}
-															<div className="pl-lg-4">
-																<small className="form-control-label">Test name</small>
-																<h1>{this.state.data.name}</h1>
-															</div>
-														</Col>
-														<Col lg="6">
-															{/* Subject */}
-															<div className="pl-lg-4">
-																<small className="form-control-label">Grade</small>
-																<h1>{"A"}</h1>
-															</div>
-														</Col>
-													</Row>
-												</CardBody>
-												<CardFooter>
-	
-												</CardFooter>
-											</Card>
-											</div>									
+												<Card className="bg-secondary shadow">
+													<CardHeader className="bg-white border-0">
+														<span>Grades</span>
+													</CardHeader>
+													<CardBody>
+														<Row className="mb-3">
+															<Col lg="6">
+																{/* Name */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Test name</small>
+																	<h1>{this.state.data.name}</h1>
+																</div>
+															</Col>
+															<Col lg="6">
+																{/* Subject */}
+																<div className="pl-lg-4">
+																	<small className="form-control-label">Grade</small>
+																	<h1>{this.state.data.grades.grades}</h1>
+																</div>
+															</Col>
+														</Row>
+													</CardBody>
+													<CardFooter>
+
+													</CardFooter>
+												</Card>
+											</div>
 
 										}
 
@@ -598,16 +604,16 @@ class CourseInfo extends React.Component {
 														<Col lg="4">
 															<div className="pl-lg-4">
 																<small className="form-control-label">Currently registered</small>
-																<h2>{this.state.data.students.length}</h2>
+																<h2>{this.state.data.registration.registered}</h2>
 															</div>
 														</Col>
 														<Col lg="4">
 															<div className="pl-lg-4">
 																<small className="form-control-label">Availability</small>
-																<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+																<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 																<Progress
 																	max={this.state.data.registration.limit}
-																	value={this.state.data.students.length}
+																	value={this.state.data.registration.registered}
 																	barClassName="bg-danger"
 																/>
 															</div>
@@ -681,7 +687,7 @@ class CourseInfo extends React.Component {
 																	>
 																		remove
 																	</Button>
-																	<Link to={`../teacher/${teacher.id}`}>
+																	<Link to={`../teacher-student/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."
