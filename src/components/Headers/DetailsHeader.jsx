@@ -25,25 +25,27 @@ class DetailsHeader extends React.Component {
     return (
       <>
         <div
-          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center bg-gradient-info"
           style={{
             minHeight: "600px",
-            backgroundImage:
-              "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
-            backgroundSize: "cover",
-            backgroundPosition: "center top"
+            // backgroundImage:
+            //   "url(" + require("../../assets/img/theme/profile-cover.jpg") + ")",
+            backgroundSize: "contain",
+            // backgroundPosition: "center top",
+            // backgroundColor: "#4C1F5E",
+            // backgroundImage: "linear-gradient(147deg, #923cb5 0%, #000000 74%)"
           }}
         >
           {/* Mask */}
-          <span className="mask bg-gradient-default opacity-8" />
+          <span className="mask bg-gradient opacity-8" />
           {/* Header container */}
           <Container className="d-flex align-items-center" fluid>
             <Row>
               <Col lg="7" md="10">
                 <h1 className="display-2 text-white">{this.props.title}</h1>
-								<h2 className="display-4 text-white">{this.props.subtitle}</h2>
+                <h2 className="display-4 text-white">{this.props.subtitle}</h2>
                 <p className="text-white mt-0 mb-5">
-									{this.props.info}
+                  {this.props.info}
                 </p>
               </Col>
             </Row>

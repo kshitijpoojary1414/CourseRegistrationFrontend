@@ -11,20 +11,20 @@
 */
 import React from "react";
 import client from "../../apis/client";
-
+import userProfile from "../../assets/img/theme/userProfile.svg";
 
 // reactstrap components
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
+	Button,
+	Card,
+	CardHeader,
+	CardBody,
 	CardFooter,
-  FormGroup,
-  Form,
-  Input,
-  Container,
-  Row,
+	FormGroup,
+	Form,
+	Input,
+	Container,
+	Row,
 	Col,
 	InputGroup,
 	InputGroupAddon,
@@ -45,21 +45,28 @@ class TeacherInfo extends React.Component {
 		}
 	}
 	componentDidMount() {
+		console.log('Teacher Info Mounted ', this.props);
+		console.log('mounted teacher info', window.location.pathname);
 		axios.get(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`)
 		client({
-			method: 'get' ,
+			method: 'get',
 			url: `/users/${this.props.match.params.id}`,
-		  })
+		})
 			.then(res => {
-					this.setState({teacher: res.data})
+				this.setState({ teacher: res.data })
 			}).catch(err => {
-				console.log("Error")
+				console.log("Error - ", err);
 			})
+	}
+	componentDidUpdate() {
+		console.log('Teacher Info Mounted update ', this.state);
+
+
 	}
 	renderEditButton = () => {
 		let teacherId = this.props.match.params.id
 		if (this.props.location.pathname === `/admin/teacher/${teacherId}`) {
-			return(
+			return (
 				<Col className="text-right" xs="4">
 					<Button
 						color="primary"
@@ -80,8 +87,8 @@ class TeacherInfo extends React.Component {
 	}
 	uploadAvatar = (e) => {
 		let newAvatar = e.target.files[0]
-		this.setState({newAvatar})
-  }
+		this.setState({ newAvatar })
+	}
 	sendInputToState = (e, stateRef, stateObj) => {
 		let teacher = this.state.teacher
 		if (stateObj) {
@@ -89,7 +96,7 @@ class TeacherInfo extends React.Component {
 		} else {
 			teacher[stateRef] = e.target.value
 		}
-		this.setState({teacher})
+		this.setState({ teacher })
 	}
 	submitUpdates = (e) => {
 		e.preventDefault()
@@ -100,7 +107,7 @@ class TeacherInfo extends React.Component {
 				.then(res => {
 					let teacher = this.state.teacher
 					teacher.avatar = res.data.avatar
-					this.setState({teacher})
+					this.setState({ teacher })
 				})
 				.catch(err => {
 					console.log("Error uploading avatar")
@@ -108,9 +115,9 @@ class TeacherInfo extends React.Component {
 		}
 		axios.patch(`${process.env.REACT_APP_API_PORT}/teachers/${this.props.match.params.id}`, this.state.teacher)
 			.then(data => {
-					this.setState({
-						editable: !this.state.editable
-					})
+				this.setState({
+					editable: !this.state.editable
+				})
 			}).catch(err => {
 				console.log("Error")
 			})
@@ -119,26 +126,26 @@ class TeacherInfo extends React.Component {
 		e.preventDefault()
 		axios.get(`${process.env.REACT_APP_API_PORT}/user/${this.props.match.params.id}`)
 			.then(res => {
-					this.setState({
-						teacher: res.data,
-						editable: !this.state.editable
-					})
+				this.setState({
+					teacher: res.data,
+					editable: !this.state.editable
+				})
 			}).catch(err => {
 				console.log("Error")
 			})
 	}
 	renderStudents = () => {
 		if (this.state.teacher.students) {
-			return(
+			return (
 				this.state.teacher.students.map((student, key) => {
-					return(
-						<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+					return (
+						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
 							<Link to={`../student/${student.id}`}>
 								<span className="avatar avatar-sm" >
 									<img
 										alt="..."
 										className="rounded-circle"
-										src={student.avatar}
+										src={require("../../assets/img/theme/team-4-800x800.jpg")}
 									/>
 								</span>
 								<span>{student.first_name} {student.last_name}</span>
@@ -162,10 +169,10 @@ class TeacherInfo extends React.Component {
 		if (this.state.teacher.courses) {
 			return (
 				this.state.teacher.courses.map((course, key) => {
-					return(
-						<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+					return (
+						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
 							<Link to={`../course/${course.id}`}>
-								<p>{course.name}</p>
+								<h2>{course.name}</h2>
 							</Link>
 						</div>
 					)
@@ -175,106 +182,106 @@ class TeacherInfo extends React.Component {
 			return null
 		}
 	}
-  render() {
-    return (
-      <>
-        <DetailsHeader title={`${this.state.teacher.first_name} ${this.state.teacher.last_name}`} info={this.state.teacher.about} />
-        {/* Page content */}
+	render() {
+		return (
+			<>
+				<DetailsHeader title={`${this.state.teacher.first_name} ${this.state.teacher.last_name}`} info={this.state.teacher.about} />
+				{/* Page content */}
 				{
 					!this.state.editable ? (
 						<Container className="mt--7" fluid>
-		          <Row>
-		            <Col className="order-xl-1 mb-6" xl="10">
-		              <Card className="bg-secondary shadow">
-		                <CardHeader className="bg-white border-0">
-		                  <Row className="align-items-center">
-		                    <Col xs="8">
+							<Row>
+								<Col className="order-xl-1 mb-6" xl="10">
+									<Card className="bg-secondary shadow">
+										<CardHeader className="bg-white border-0">
+											<Row className="align-items-center">
+												<Col xs="8">
 													<span className="avatar avatar-sm rounded-circle">
 														<img
 															alt="..."
-															src={this.state.teacher.avatar}
+															src={require("../../assets/img/theme/team-4-800x800.jpg")}
 														/>
 													</span>
-		                      <h3 className="mb-0">Teacher</h3>
-		                    </Col>
-		                    {
+													<h3 className="mb-0">Teacher</h3>
+												</Col>
+												{
 													this.renderEditButton()
 												}
-		                  </Row>
-		                </CardHeader>
-		                <CardBody>
-		                  <Form>
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Teacher information
-		                    </h6>
-		                    <div className="pl-lg-4">
+											</Row>
+										</CardHeader>
+										<CardBody>
+											<Form>
+												<h6 className="heading-small text-muted mb-4">
+													Teacher information
+												</h6>
+												<div className="pl-lg-4">
 													<Row>
-		                        <Col lg="4">
+														<Col lg="4">
 															<div>
 																<small className="form-control-label">First name</small>
 																<h1>{this.state.teacher.first_name}</h1>
-			                        </div>
-		                        </Col>
-		                        <Col lg="4">
+															</div>
+														</Col>
+														<Col lg="4">
 															<div>
 																<small className="form-control-label">Middle name</small>
 																<h1>{this.state.teacher.middle_name}</h1>
-			                        </div>
-		                        </Col>
-		                        <Col lg="4">
+															</div>
+														</Col>
+														<Col lg="4">
 															<div>
 																<small className="form-control-label">Last name</small>
 																<h1>{this.state.teacher.last_name}</h1>
-			                        </div>
-		                        </Col>
-		                      </Row>
-		                      <Row>
-		                        <Col lg="12">
+															</div>
+														</Col>
+													</Row>
+													<Row>
+														<Col lg="12">
 															<div>
 																<small className="form-control-label">Email address</small>
 																<h1>{this.state.teacher.email}</h1>
-			                        </div>
-		                        </Col>
-		                      </Row>
+															</div>
+														</Col>
+													</Row>
 													<Row>
 														<Col md="12">
 															<div>
 																<small className="form-control-label">About</small>
 																<h3>{this.state.teacher.about}</h3>
-			                        </div>
+															</div>
 														</Col>
 													</Row>
-		                    </div>
+												</div>
 												{/* CONTACT INFO ONLY AVAILABLE TO ADMIN */}
-		                    <hr className="my-4" />
-		                    {/* Address */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Contact information
-		                    </h6>
+												<hr className="my-4" />
+												{/* Address */}
+												<h6 className="heading-small text-muted mb-4">
+													Contact information
+												</h6>
 												<div className="pl-lg-4">
-												<Row>
-		                        <Col md="12">
+													<Row>
+														<Col md="12">
 															<div>
 																<small className="form-control-label">Street address</small>
 																<h2>{this.renderAddressInfo("streetAddress")}</h2>
-			                        </div>
-		                        </Col>
-		                      </Row>
-		                      <Row>
-		                        <Col lg="6">
-		                          <FormGroup>
+															</div>
+														</Col>
+													</Row>
+													<Row>
+														<Col lg="6">
+															<FormGroup>
 																<div>
 																	<small className="form-control-label">City</small>
 																	<h2>{this.renderAddressInfo("city")}</h2>
-				                        </div>
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="6">
+																</div>
+															</FormGroup>
+														</Col>
+														<Col lg="6">
 															<div>
 																<small className="form-control-label">State</small>
 																<h2>{this.renderAddressInfo("state")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
 													<Row>
 														<Col lg="6">
@@ -282,40 +289,40 @@ class TeacherInfo extends React.Component {
 																<small className="form-control-label">Country</small>
 																<h2>{this.renderAddressInfo("country")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 														<Col lg="6">
 															<div>
 																<small className="form-control-label">Postal code</small>
 																<h2>{this.renderAddressInfo("zipCode")}</h2>
 															</div>
-		                        </Col>
+														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
-		                    {/* Courses */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Courses taught by this teacher
-		                    </h6>
-		                    <div className="pl-lg-4">
+												{/* Courses */}
+												<h6 className="heading-small text-muted mb-4">
+													Courses taught by this teacher
+												</h6>
+												<div className="pl-lg-4">
 													{
 														this.renderCourses()
 													}
-		                    </div>
+												</div>
 
 												{/* THIS SECTION MUST ONLY BE AVAILABLE TO TEACHERS/ADMINS */}
 
 												<hr className="my-4" />
-		                    {/* Students */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Students
-		                    </h6>
-		                    <div className="pl-lg-4">
+												{/* Students */}
+												<h6 className="heading-small text-muted mb-4">
+													Students
+												</h6>
+												<div className="pl-lg-4">
 													{
 														this.renderStudents()
 													}
-		                    </div>
-		                  </Form>
-		                </CardBody>
+												</div>
+											</Form>
+										</CardBody>
 										<CardFooter>
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
@@ -324,22 +331,22 @@ class TeacherInfo extends React.Component {
 												}
 											</Row>
 										</CardFooter>
-		              </Card>
-		            </Col>
-		          </Row>
-		        </Container>
+									</Card>
+								</Col>
+							</Row>
+						</Container>
 					) : (
 						<Container className="mt--7" fluid>
-		          <Row>
-		            <Col className="order-xl-1 mb-6" xl="10">
-		              <Card className="bg-secondary shadow">
-		                <CardHeader className="bg-white border-0">
-		                  <Row className="align-items-center">
-		                    <Col xs="8">
+							<Row>
+								<Col className="order-xl-1 mb-6" xl="10">
+									<Card className="bg-secondary shadow">
+										<CardHeader className="bg-white border-0">
+											<Row className="align-items-center">
+												<Col xs="8">
 													<span className="avatar avatar-sm rounded-circle">
 														<img
 															alt="..."
-															src={this.state.teacher.avatar}
+															src={require("../../assets/img/theme/team-4-800x800.jpg")}
 														/>
 													</span>
 													<FormGroup>
@@ -349,143 +356,143 @@ class TeacherInfo extends React.Component {
 																	<i className="ni ni-single-02" />
 																</InputGroupText>
 															</InputGroupAddon>
-															<small style={{paddingTop: "10px", paddingLeft: "10px"}}>Profile Picture</small>
+															<small style={{ paddingTop: "10px", paddingLeft: "10px" }}>Profile Picture</small>
 															<Input type="file" onChange={this.uploadAvatar} />
 														</InputGroup>
-													</FormGroup>	
-		                      <h3 className="mb-0">Teacher</h3>
-		                    </Col>
+													</FormGroup>
+													<h3 className="mb-0">Teacher</h3>
+												</Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
-		                  </Row>
-		                </CardHeader>
+													>
+														Save changes
+													</Button>
+												</Col>
+											</Row>
+										</CardHeader>
 										<CardBody>
-		                  <Form>
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Teacher information
-		                    </h6>
-		                    <div className="pl-lg-4">
+											<Form>
+												<h6 className="heading-small text-muted mb-4">
+													Teacher information
+												</h6>
+												<div className="pl-lg-4">
 													<Row>
-		                        <Col lg="4">
+														<Col lg="4">
 															<FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-first-name"
-		                            >
-		                              First name
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
-		                              defaultValue={this.state.teacher.first_name}
-		                              id="input-first-name"
-		                              placeholder="First name"
-		                              type="text"
+																<label
+																	className="form-control-label"
+																	htmlFor="input-first-name"
+																>
+																	First name
+																</label>
+																<Input
+																	className="form-control-alternative"
+																	defaultValue={this.state.teacher.first_name}
+																	id="input-first-name"
+																	placeholder="First name"
+																	type="text"
 																	onChange={e => this.sendInputToState(e, "first_name")}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="4">
+																/>
+															</FormGroup>
+														</Col>
+														<Col lg="4">
 															<FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-middle-name"
-		                            >
-		                              Middle name
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
-		                              defaultValue={this.state.teacher.middle_name}
-		                              id="input-middle-name"
-		                              placeholder="Middle name"
-		                              type="text"
+																<label
+																	className="form-control-label"
+																	htmlFor="input-middle-name"
+																>
+																	Middle name
+																</label>
+																<Input
+																	className="form-control-alternative"
+																	defaultValue={this.state.teacher.middle_name}
+																	id="input-middle-name"
+																	placeholder="Middle name"
+																	type="text"
 																	onChange={e => this.sendInputToState(e, "middle_name")}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                        <Col lg="4">
+																/>
+															</FormGroup>
+														</Col>
+														<Col lg="4">
 															<FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-last-name"
-		                            >
-		                              Last name
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
-		                              defaultValue={this.state.teacher.last_name}
-		                              id="input-last-name"
-		                              placeholder="Last name"
-		                              type="text"
+																<label
+																	className="form-control-label"
+																	htmlFor="input-last-name"
+																>
+																	Last name
+																</label>
+																<Input
+																	className="form-control-alternative"
+																	defaultValue={this.state.teacher.last_name}
+																	id="input-last-name"
+																	placeholder="Last name"
+																	type="text"
 																	onChange={e => this.sendInputToState(e, "last_name")}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                      </Row>
-		                      <Row>
-		                        <Col lg="6">
-		                          <FormGroup>
-		                            <label
-		                              className="form-control-label"
-		                              htmlFor="input-email"
-		                            >
-		                              Email address
-		                            </label>
-		                            <Input
-		                              className="form-control-alternative"
+																/>
+															</FormGroup>
+														</Col>
+													</Row>
+													<Row>
+														<Col lg="6">
+															<FormGroup>
+																<label
+																	className="form-control-label"
+																	htmlFor="input-email"
+																>
+																	Email address
+																</label>
+																<Input
+																	className="form-control-alternative"
 																	defaultValue={this.state.teacher.email}
-		                              id="input-email"
-		                              placeholder="name@example.com"
-		                              type="email"
+																	id="input-email"
+																	placeholder="name@example.com"
+																	type="email"
 																	onChange={e => this.sendInputToState(e, "email")}
-		                            />
-		                          </FormGroup>
-		                        </Col>
-		                      </Row>
+																/>
+															</FormGroup>
+														</Col>
+													</Row>
 													<Row>
 														<Col md="12">
 															<FormGroup>
 																<label
-		                              className="form-control-label"
-		                              htmlFor="input-about"
-		                            >
+																	className="form-control-label"
+																	htmlFor="input-about"
+																>
 																	About
 																</label>
-				                        <Input
-				                          className="form-control-alternative"
-				                          placeholder="Tell a little bit about yourself..."
-				                          rows="4"
-				                          defaultValue={this.state.teacher.about}
-				                          type="textarea"
+																<Input
+																	className="form-control-alternative"
+																	placeholder="Tell a little bit about yourself..."
+																	rows="4"
+																	defaultValue={this.state.teacher.about}
+																	type="textarea"
 																	onChange={e => this.sendInputToState(e, "about")}
-				                        />
-				                      </FormGroup>
+																/>
+															</FormGroup>
 														</Col>
 													</Row>
-		                    </div>
-		                    <hr className="my-4" />
-		                    {/* Address */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Contact information
-		                    </h6>
-		                    <div className="pl-lg-4">
-												<Row>
+												</div>
+												<hr className="my-4" />
+												{/* Address */}
+												<h6 className="heading-small text-muted mb-4">
+													Contact information
+												</h6>
+												<div className="pl-lg-4">
+													<Row>
 														<Col md="12">
 															<FormGroup>
 																<label
@@ -581,17 +588,17 @@ class TeacherInfo extends React.Component {
 															</FormGroup>
 														</Col>
 													</Row>
-		                    </div>
+												</div>
 												<hr className="my-4" />
-		                    {/* Students */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Courses taught by this teacher
-		                    </h6>
+												{/* Students */}
+												<h6 className="heading-small text-muted mb-4">
+													Courses taught by this teacher
+												</h6>
 												<div className="pl-lg-4">
 													{
 														this.state.teacher.courses.map((course, key) => {
-															return(
-																<div className="avatar-group" key={key} style={{display: "inline-block", padding: '40px'}}>
+															return (
+																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
 																	<Link to={`../course/${course.id}`}>
 																		<p>{course.name}</p>
 																	</Link>
@@ -599,54 +606,54 @@ class TeacherInfo extends React.Component {
 															)
 														})
 													}
-		                    </div>
+												</div>
 
 												{/* THIS SECTION MUST ONLY BE AVAILABLE TO TEACHERS/ADMINS */}
 
 												<hr className="my-4" />
-		                    {/* Students */}
-		                    <h6 className="heading-small text-muted mb-4">
-		                      Students
-		                    </h6>
+												{/* Students */}
+												<h6 className="heading-small text-muted mb-4">
+													Students
+												</h6>
 												<div className="pl-lg-4">
 													{
 														this.renderStudents()
 													}
-		                    </div>
-		                  </Form>
-		                </CardBody>
+												</div>
+											</Form>
+										</CardBody>
 										<CardFooter>
 											<Row className="align-items-center">
 												<Col xs="8"></Col>
 												<Col className="text-right" xs="4">
-		                      <Button
-		                        color="default"
-		                        href="#pablo"
-		                        onClick={this.cancelUpdates}
-		                        size="sm"
-		                      >
-		                        Cancel changes
-		                      </Button>
-		                      <Button
-		                        color="primary"
-		                        form="course-edit"
-		                        type="submit"
-		                        size="sm"
+													<Button
+														color="default"
+														href="#pablo"
+														onClick={this.cancelUpdates}
+														size="sm"
+													>
+														Cancel changes
+													</Button>
+													<Button
+														color="primary"
+														form="course-edit"
+														type="submit"
+														size="sm"
 														onClick={this.submitUpdates}
-		                      >
-		                        Save changes
-		                      </Button>
-		                    </Col>
+													>
+														Save changes
+													</Button>
+												</Col>
 											</Row>
 										</CardFooter>
-		              </Card>
-		            </Col>
-		          </Row>
-		        </Container>
+									</Card>
+								</Col>
+							</Row>
+						</Container>
 					)
 				}
-      </>
-    );
-  }
+			</>
+		);
+	}
 }
 export default TeacherInfo;

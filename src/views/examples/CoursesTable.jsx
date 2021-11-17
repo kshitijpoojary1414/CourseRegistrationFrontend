@@ -247,7 +247,7 @@ class CoursesTable extends React.Component {
 											course.teachers.map((teacher, key) => {
 												return(
 													<div className="avatar-group" key={key}>
-														<Link to={`teacher/${teacher.id}`}>
+														<Link to={`teacher-student/${teacher.id}`}>
 															<span className="avatar avatar-sm" >
 																<img
 																	alt="..."
