@@ -45,7 +45,7 @@ class TeacherInfo extends React.Component {
 		}
 	}
 	componentDidMount() {
-		console.log('Teacher Info Mounted ', this.props.match);
+		console.log('Teacher Info Mounted ', this.props);
 		console.log('mounted teacher info', window.location.pathname);
 		axios.get(`${process.env.REACT_APP_API_PORT}/users/${this.props.match.params.id}`)
 		client({
@@ -59,7 +59,7 @@ class TeacherInfo extends React.Component {
 			})
 	}
 	componentDidUpdate() {
-		console.log('Teacher Info Mounted update ', this.props);
+		console.log('Teacher Info Mounted update ', this.state);
 
 
 	}
@@ -139,13 +139,13 @@ class TeacherInfo extends React.Component {
 			return (
 				this.state.teacher.students.map((student, key) => {
 					return (
-						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
+						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
 							<Link to={`../student/${student.id}`}>
 								<span className="avatar avatar-sm" >
 									<img
 										alt="..."
 										className="rounded-circle"
-										src={student.avatar}
+										src={require("../../assets/img/theme/team-4-800x800.jpg")}
 									/>
 								</span>
 								<span>{student.first_name} {student.last_name}</span>
@@ -170,9 +170,9 @@ class TeacherInfo extends React.Component {
 			return (
 				this.state.teacher.courses.map((course, key) => {
 					return (
-						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '40px' }}>
+						<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
 							<Link to={`../course/${course.id}`}>
-								<p>{course.name}</p>
+								<h2>{course.name}</h2>
 							</Link>
 						</div>
 					)
@@ -199,7 +199,7 @@ class TeacherInfo extends React.Component {
 													<span className="avatar avatar-sm rounded-circle">
 														<img
 															alt="..."
-															src={this.state.teacher.avatar}
+															src={require("../../assets/img/theme/team-4-800x800.jpg")}
 														/>
 													</span>
 													<h3 className="mb-0">Teacher</h3>
@@ -346,7 +346,7 @@ class TeacherInfo extends React.Component {
 													<span className="avatar avatar-sm rounded-circle">
 														<img
 															alt="..."
-															src={this.state.teacher.avatar}
+															src={require("../../assets/img/theme/team-4-800x800.jpg")}
 														/>
 													</span>
 													<FormGroup>
