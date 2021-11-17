@@ -497,7 +497,7 @@ class TeacherTables extends React.Component {
             method: 'get',
             url: '/grades',
             params: {
-                course_id: "d48a0ddf-dd83-4e42-9b31-ee0e653a3835"
+                course_id,
             }
         }).then(res => {
             const data = res.data;

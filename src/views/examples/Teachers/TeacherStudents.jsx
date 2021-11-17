@@ -222,7 +222,7 @@ class TeacherStudents extends React.Component {
                                         </Link>
                                         <Media>
                                             <span className="mb-0 text-sm">
-                                                <Link to={`student/${student.id}`}>
+                                                <Link to={`student-teacher/${student.user_id}`}>
                                                     {student.first_name} {student.last_name}
                                                 </Link>
                                             </span>

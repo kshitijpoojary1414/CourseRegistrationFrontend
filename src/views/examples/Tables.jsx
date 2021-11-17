@@ -74,6 +74,21 @@ class Tables extends React.Component {
 				teachers: [],
 				hasRegistered: false
 			}
+		],
+		teachers: [
+			{
+				students: [{}],
+				courses: [
+					{
+						schedule: [
+							{
+								days: [],
+							}
+						],
+						registration: {},
+					}
+				]
+			}
 		]
 	}
 	componentWillMount() {
@@ -106,8 +121,8 @@ class Tables extends React.Component {
 	renderTableData = () => {
 		if (this.props.location.pathname === "/admin/courses" || this.props.location.pathname === "/student/courses") {
 			return <CoursesTable courses={this.state.coursesTableData} department_id={this.state.selectedDepartment.id} {...this.props} />
-		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/subjects") {
-			return <SubjectsTable courses={this.state.courses} {...this.props} />
+		} else if (this.props.location.pathname === "/admin/subjects" || this.props.location.pathname === "/student/majors") {
+			return <SubjectsTable majors={this.state.majors} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/teachers" || this.props.location.pathname === "/student/teachers") {
 			return <TeachersTable teachers={this.state.teachers} {...this.props} />
 		} else if (this.props.location.pathname === "/admin/students") {
@@ -156,13 +171,14 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownOpen: !this.state.dropdownOpen
 			})
-		} else {
-			this.setState({
-				...this.state,
-				dropdownOpen: false
-			})
-		}
+		} 
 
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownOpen: false
+		// 	})
+		// }
 	}
 	toggleDropDownforMajor = (e) => {
 		e.preventDefault()
@@ -171,12 +187,13 @@ class Tables extends React.Component {
 				...this.state,
 				dropdownMajor: !this.state.dropdownMajor
 			})
-		} else {
-			this.setState({
-				...this.state,
-				dropdownMajor: false
-			})
-		}
+		} 
+		// else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		dropdownMajor: false
+		// 	})
+		// }
 		console.log('teachers infof', this.state);
 	}
 	selectItem = (e) => {
@@ -234,6 +251,25 @@ class Tables extends React.Component {
 			console.log("Error")
 		})
 	}
+
+	fetchTeachers = (major_id) => {
+		client({
+			method: 'get',
+			url: '/teacherByMajor',
+			params: {
+				major_id: major_id
+			}
+		}).then(res => {
+			const data = res.data;
+			console.log("og data", data)
+			this.setState({
+				...this.state,
+				teachers: data
+			})
+		}).catch(err => {
+			console.log("Error")
+		})
+	}
 	fetchMajors(department_id) {
 		client({
 			method: 'get',
@@ -251,6 +287,8 @@ class Tables extends React.Component {
 				selectedMajor: data[0],
 			})
 			this.fetchCourses(data[0].id)
+		this.fetchTeachers(data[0].id)
+
 		}).catch(err => {
 			console.log("Error", err)
 		})
@@ -278,6 +316,7 @@ class Tables extends React.Component {
 		})
 
 		this.fetchCourses(major.id)
+		this.fetchTeachers(major.id)
 	}
 	renderDropDown = () => {
 		return (
@@ -340,7 +379,7 @@ class Tables extends React.Component {
 											</Dropdown>
 											}
 											{/* New Drop Down for majors */}
-											{
+											{ !window.location.pathname.includes('majors') &&
 												<Dropdown isOpen={this.state.dropdownMajor} toggle={(e) => this.toggleDropDownforMajor(e)}>
 													<DropdownToggle caret>
 														{this.state.majorName}

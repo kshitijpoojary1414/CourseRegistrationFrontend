@@ -583,16 +583,16 @@ class CourseCreate extends React.Component {
 												<Col lg="4">
 													<div className="pl-lg-4">
 														<small className="form-control-label">Currently registered</small>
-														<h2>{this.state.data.students.length}</h2>
+														<h2>{this.state.data.registration.registered}</h2>
 													</div>
 												</Col>
 												<Col lg="4">
 													<div className="pl-lg-4">
 														<small className="form-control-label">Availability</small>
-														<h2>{Math.round(100 - (this.state.data.students.length / this.state.data.registration.limit * 100))}%</h2>
+														<h2>{Math.round(100 - (this.state.data.registration.registered / this.state.data.registration.limit * 100))}%</h2>
 														<Progress
 															max={this.state.data.registration.limit}
-															value={this.state.data.students.length}
+															value={this.state.data.registration.registered}
 															barClassName="bg-danger"
 														/>
 													</div>

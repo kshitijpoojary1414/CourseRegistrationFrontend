@@ -345,7 +345,7 @@ class StudentInfo extends React.Component {
 														this.getTeachersFromCourses().map((teacher, key) => {
 															return (
 																<div className="avatar-group" key={key} style={{ display: "inline-block", padding: '10px' }}>
-																	<Link to={`../teacher/${teacher.id}`}>
+																	<Link to={`../teacher-student/${teacher.id}`}>
 																		<span className="avatar avatar-sm" >
 																			<img
 																				alt="..."

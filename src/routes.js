@@ -84,14 +84,14 @@ var routes = [
 		layout: "/admin",
 		invisible: false
 	},
-	{
-		path: "/subjects",
-		name: "Subjects",
-		icon: "ni ni-bullet-list-67 text-red",
-		component: Tables,
-		layout: "/admin",
-		invisible: false
-	},
+	// {
+	// 	path: "/subjects",
+	// 	name: "Subjects",
+	// 	icon: "ni ni-bullet-list-67 text-red",
+	// 	component: Tables,
+	// 	layout: "/admin",
+	// 	invisible: false
+	// },
 	{
 		path: "/teachers",
 		name: "Teachers",
@@ -108,14 +108,14 @@ var routes = [
 		layout: "/admin",
 		invisible: false
 	},
-	{
-		path: "/settings",
-		name: "Settings",
-		icon: "ni ni-single-02 text-yellow",
-		component: AdminSettings,
-		layout: "/admin",
-		invisible: false
-	},
+	// {
+	// 	path: "/settings",
+	// 	name: "Settings",
+	// 	icon: "ni ni-single-02 text-yellow",
+	// 	component: AdminSettings,
+	// 	layout: "/admin",
+	// 	invisible: false
+	// },
 	{
 		path: "/course/:id",
 		name: "Course Info",
@@ -167,7 +167,7 @@ var routes = [
 		invisible: true
 	},
 	{
-		path: "/student/:id",
+		path: "/student-teacher/:id",
 		name: "Student Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: StudentInfo,
@@ -224,7 +224,7 @@ var routes = [
 		invisible: true
 	},
 	{
-		path: "/teacher/:id",
+		path: "/teacher-student/:id",
 		name: "Teacher Info",
 		icon: "ni ni-bullet-list-67 text-red",
 		component: TeacherInfo,
